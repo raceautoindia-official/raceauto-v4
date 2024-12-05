@@ -1,0 +1,72 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+/* Light Theme */
+html.light {
+  --bg-color: #ffffff;
+  --text-color: #212529;
+}
+
+/* Dark Theme */
+html.dark {
+  --bg-color: #212529;
+  --text-color: #f8f9fa;
+}
+
+/* Apply to Bootstrap components */
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.card {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+.font-inter {
+  font-family: "Inter", sans-serif;
+}
+
+.font-roboto {
+  font-family: "Roboto", sans-serif;
+}
+
+/* Add other fallback fonts here as needed */
+
+/* .main_content__position {
+  background-color: var(--bg-color);
+  min-height: 100vh;
+  padding-top: 0;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 290px;
+}
+
+@media only screen and (max-width: 840px) {
+  .main_content__position {
+    min-height: 100vh;
+    padding-top: 0;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 390px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .main_content__position {
+    min-height: 100vh;
+    padding-top: 0;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 550px;
+  }
+} */

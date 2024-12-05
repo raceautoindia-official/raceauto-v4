@@ -1,0 +1,32 @@
+.magazinecard:hover {
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  -webkit-font-smoothing: antialiased;
+}
+
+.magazinecard {
+  -webkit-box-shadow: 0px 0px 30px rgba(115, 128, 157, 0.1);
+  box-shadow: 0px 0px 30px rgba(115, 128, 157, 0.1);
+}
+
+.magazinecardcontainer {
+  overflow: hidden;
+}
+
+
+.button_category{
+  animation: shrinkGrow 1.5s infinite ease-in-out;
+}
+
+@keyframes shrinkGrow {
+  0% {
+    transform: scale(1); /* Original size */
+  }
+  50% {
+    transform: scale(1.1); /* Grow */
+  }
+  100% {
+    transform: scale(1); /* Back to original size */
+  }
+}
