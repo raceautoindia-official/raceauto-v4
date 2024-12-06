@@ -42,7 +42,7 @@ function Test() {
   const pdfData = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/magazine/${title_slug}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/magazine/${title_slug}`,
       );
       setPdf_url(res.data[0].pdf_url);
     } catch (err) {
@@ -128,7 +128,7 @@ function Test() {
   return (
     <>
       <Document
-        file={`${process.env.BACKEND_URL}${pdf_url}`}
+        file={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${pdf_url}`}
         style={{ width: "100%", aspectRatio: "1.4/1" }}
         onLoadSuccess={handleLoadSuccess}
         onLoadProgress={handleLoadProgress}
@@ -248,7 +248,7 @@ function Test() {
             />
           )} */}
           {/* <a
-            href={`${process.env.BACKEND_URL}${pdf_url}`}
+            href={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${pdf_url}`}
             style={{
               cursor: "pointer",
               textDecoration: "none",

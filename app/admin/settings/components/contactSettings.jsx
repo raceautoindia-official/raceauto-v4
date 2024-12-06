@@ -15,7 +15,7 @@ const ContactForm = () => {
   const getContactInfo = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/admin/settings/contact`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/settings/contact`,
       );
       const { contact_address, contact_email, contact_phone, contact_text } = res.data[0];
       setContactAddress(contact_address);
@@ -33,7 +33,7 @@ const ContactForm = () => {
   const handleSubmit = async () => {
     try {
       await axios.put(
-        `${process.env.BACKEND_URL}api/admin/settings/contact`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/settings/contact`,
         {
           contact_address: contactAddress,
           contact_email: contactEmail,
@@ -75,7 +75,7 @@ const ContactForm = () => {
 
   return (
     <>
-  
+
       <div className="col-12">
         <div className="shadow-sm p-3 mb-5 mt-5 bg-white rounded border-0">
           <div className="row">
@@ -113,55 +113,55 @@ const ContactForm = () => {
               />
             </div>
             <Form.Group controlId="formContent " className="my-3">
-                <Form.Label>Content</Form.Label>
+              <Form.Label>Content</Form.Label>
 
-                <Editor
-                  apiKey='3fr142nwyhd2jop9d509ekq6i2ks2u6dmrbgm8c74gu5xrml'
-                  onInit={(_evt, editor) => editorRef.current = editor}
-                  value={contactText}
-                  init={{
-                    height: 500,
-                    menubar: true,
-                    plugins: [
-                      'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                      'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                      'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
-                    ],
-                    toolbar: 'undo redo | blocks | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
-                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
-                    file_picker_callback: (callback, value, meta) => {
-                      if (meta.filetype === 'image') {
-                        const input = document.createElement('input');
-                        input.setAttribute('type', 'file');
-                        input.setAttribute('accept', 'image/*');
-                        input.onchange = function () {
-                          const file = this.files[0];
-                          const reader = new FileReader();
-                          reader.onload = function () {
-                            const id = 'blobid' + (new Date()).getTime();
-                            const blobCache = editorRef.current.editorUpload.blobCache;
-                            const base64 = reader.result.split(',')[1];
-                            const blobInfo = blobCache.create(id, file, base64);
-                            blobCache.add(blobInfo);
-                            callback(blobInfo.blobUri(), { title: file.name });
-                          };
-                          reader.readAsDataURL(file);
+              <Editor
+                apiKey='3fr142nwyhd2jop9d509ekq6i2ks2u6dmrbgm8c74gu5xrml'
+                onInit={(_evt, editor) => editorRef.current = editor}
+                value={contactText}
+                init={{
+                  height: 500,
+                  menubar: true,
+                  plugins: [
+                    'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                    'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                    'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
+                  ],
+                  toolbar: 'undo redo | blocks | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+                  content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                  file_picker_callback: (callback, value, meta) => {
+                    if (meta.filetype === 'image') {
+                      const input = document.createElement('input');
+                      input.setAttribute('type', 'file');
+                      input.setAttribute('accept', 'image/*');
+                      input.onchange = function () {
+                        const file = this.files[0];
+                        const reader = new FileReader();
+                        reader.onload = function () {
+                          const id = 'blobid' + (new Date()).getTime();
+                          const blobCache = editorRef.current.editorUpload.blobCache;
+                          const base64 = reader.result.split(',')[1];
+                          const blobInfo = blobCache.create(id, file, base64);
+                          blobCache.add(blobInfo);
+                          callback(blobInfo.blobUri(), { title: file.name });
                         };
-                        input.click();
-                      }
-                    },
-                  }}
-                  onEditorChange={handleEditorChange}
-                />
+                        reader.readAsDataURL(file);
+                      };
+                      input.click();
+                    }
+                  },
+                }}
+                onEditorChange={handleEditorChange}
+              />
 
-              </Form.Group>
-              
-            </div>
-            <button className="btn btn-primary mt-3" onClick={handleSubmit}>
-                Save Changes
-              </button>
+            </Form.Group>
+
           </div>
+          <button className="btn btn-primary mt-3" onClick={handleSubmit}>
+            Save Changes
+          </button>
         </div>
+      </div>
 
     </>
   );

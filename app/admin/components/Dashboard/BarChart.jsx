@@ -33,7 +33,7 @@ const MyBarChart = () => {
   const currentYear = new Date().getFullYear();
 
   const [selectedYear, setSelectedYear] = useState(currentYear);
-  const chartValue= [];
+  const chartValue = [];
   const optionSelect = [];
   for (let year = currentYear; year >= currentYear - 3; year--) {
     optionSelect.push(
@@ -46,7 +46,7 @@ const MyBarChart = () => {
   const chartapi = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/admin/dashboard/bar-chart/${selectedYear}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/dashboard/bar-chart/${selectedYear}`
       );
       setValue(res.data);
     } catch (err) {
@@ -125,7 +125,7 @@ const MyBarChart = () => {
         aria-label="Default select example"
         value={selectedYear}
         onChange={handleYearChange}
-        style={{width:100}}
+        style={{ width: 100 }}
       >
         {optionSelect}
       </select>

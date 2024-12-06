@@ -25,7 +25,7 @@ const Create_Main = () => {
     try {
       const apidata = { ...formData, color };
       await axios.post(
-        `${process.env.BACKEND_URL}api/category/main-category`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/main-category`,
         apidata
       );
       toast.success("Category created!", {
@@ -64,9 +64,9 @@ const Create_Main = () => {
       <div className="row justify-content-center">
         <div className="col-lg-6">
           <div className="shadow-sm p-3 mb-5  mt-5 bg-white rounded border-0">
-          <Link href="/admin/category/main-category">
-            <button className="btn btn-secondary mt-3">Back</button>
-          </Link>
+            <Link href="/admin/category/main-category">
+              <button className="btn btn-secondary mt-3">Back</button>
+            </Link>
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="formName">
                 <Form.Label>Name</Form.Label>

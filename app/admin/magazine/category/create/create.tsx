@@ -13,10 +13,13 @@ const Create_newsLetterCategory = () => {
 
   const createApi = async () => {
     try {
-      await axios.post(`${process.env.BACKEND_URL}api/magazine/category`, {
-        title,
-        color,
-      });
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/magazine/category`,
+        {
+          title,
+          color,
+        }
+      );
       toast.success("Category created!", {
         position: "top-right",
         autoClose: 4000,

@@ -8,11 +8,14 @@ type magazineAd = {
   thumbnail: string;
 };
 const MagazineAd = async () => {
-  const res = await fetch(`${process.env.BACKEND_URL}api/magazine-ad`, {
-    next: {
-      revalidate: 600,
-    },
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/magazine-ad`,
+    {
+      next: {
+        revalidate: 600,
+      },
+    }
+  );
   const data: magazineAd[] = await res.json();
 
   return (
@@ -31,7 +34,7 @@ const MagazineAd = async () => {
             style={{ width: "100%", position: "relative", aspectRatio: "1/1" }}
           >
             <Image
-              src={`${process.env.BACKEND_URL}${data[0].thumbnail}`}
+              src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${data[0].thumbnail}`}
               alt="Responsive image"
               quality={75}
               fill

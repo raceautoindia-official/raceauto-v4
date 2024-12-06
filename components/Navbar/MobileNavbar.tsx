@@ -26,19 +26,19 @@ const MobileNavbar = ({
       <div className={styles.mobile_navbar}>
         <div className={styles.mobile_nav_menu}>
           <Image
-            src={`${process.env.BACKEND_URL}${logoData.logo}`}
+            src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${logoData.logo}`}
             alt="logo header"
             width={40}
             height={40}
             className="ms-4 my-2"
           />
 
-            <ThemeToggle/>
-            <Link href="/subscription">
-              <button className={styles.subscribeButton}>Subscribe</button>
-            </Link>
-            <SearchBarServer />
-            <LoginNavButton/>
+          <ThemeToggle />
+          <Link href="/subscription">
+            <button className={styles.subscribeButton}>Subscribe</button>
+          </Link>
+          <SearchBarServer />
+          <LoginNavButton />
 
           <IoMdMenu
             data-bs-toggle="offcanvas"

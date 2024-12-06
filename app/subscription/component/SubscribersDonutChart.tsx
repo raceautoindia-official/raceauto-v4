@@ -1,12 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
-} from "chart.js";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import axios from "axios";
 import Skeleton from "react-loading-skeleton";
@@ -25,7 +20,9 @@ const DonutChart = () => {
     setLoading(true); // Start loading
     try {
       // First API call
-      const marketRes = await axios.get(`${process.env.BACKEND_URL}api/market`);
+      const marketRes = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/market`
+      );
       const filteredName = marketRes.data.map((item: any) => item.title);
       const filteredId = marketRes.data.map((item: any) => item.id);
 
@@ -34,7 +31,7 @@ const DonutChart = () => {
 
       // Second API call using IDs from the first response
       const subscriberRes = await axios.get(
-        `${process.env.BACKEND_URL}api/subscribers/market?ids=${filteredId}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/subscribers/market?ids=${filteredId}`
       );
       const values = subscriberRes.data.map((item: any) => item.count);
       setMarketValue(values);
@@ -84,7 +81,13 @@ const DonutChart = () => {
       <div style={{ position: "relative" }}>
         {loading ? (
           // Circular skeleton while loading
-          <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <Skeleton
               circle
               height={250}

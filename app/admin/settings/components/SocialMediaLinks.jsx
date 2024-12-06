@@ -16,7 +16,7 @@ const SocialMediaForm = () => {
   const getSocialMediaLinks = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/admin/settings/social-media`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/settings/social-media`,
 
       );
       const {
@@ -46,7 +46,7 @@ const SocialMediaForm = () => {
   const handleSubmit = async () => {
     try {
       await axios.put(
-        `${process.env.BACKEND_URL}api/admin/settings/social-media`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/settings/social-media`,
         {
           facebook_url: facebookUrl,
           twitter_url: twitterUrl,

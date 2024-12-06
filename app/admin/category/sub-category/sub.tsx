@@ -15,7 +15,7 @@ const Sub_Category = () => {
   const subCategoryApi = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/category/sub-category`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/sub-category`
       );
       setData(res.data);
     } catch (err) {
@@ -28,7 +28,7 @@ const Sub_Category = () => {
     const toastId = toast.loading("Processing...");
     try {
       await axios.delete(
-        `${process.env.BACKEND_URL}api/category/sub-category/${deleteId}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/sub-category/${deleteId}`
       );
       toast.update(toastId, {
         render: "Successfully removed!",
@@ -103,9 +103,7 @@ const Sub_Category = () => {
                   </td>
                   <td>{item.parent}</td>
                   <td>
-                    <Link
-                      href={`/admin/category/sub-category/${item.id}`}
-                    >
+                    <Link href={`/admin/category/sub-category/${item.id}`}>
                       <button className="btn btn-primary me-3">
                         <MdModeEdit size={20} />
                       </button>

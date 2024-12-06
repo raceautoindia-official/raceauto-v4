@@ -19,13 +19,13 @@ const LogoSettings = () => {
     const getCode = async () => {
         try {
             const res = await axios.get(
-                `${process.env.BACKEND_URL}api/admin/settings/logo`,
-                
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/settings/logo`,
+
             );
-            setLogoPreview(`${process.env.BACKEND_URL}${res.data[0].logo}`);
-            setLogoFooterPreview(`${process.env.BACKEND_URL}${res.data[0].logo_footer}`);
-            setLogoEmailPreview(`${process.env.BACKEND_URL}${res.data[0].logo_email}`);
-            setFaviconPreview(`${process.env.BACKEND_URL}${res.data[0].favicon}`);
+            setLogoPreview(`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${res.data[0].logo}`);
+            setLogoFooterPreview(`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${res.data[0].logo_footer}`);
+            setLogoEmailPreview(`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${res.data[0].logo_email}`);
+            setFaviconPreview(`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${res.data[0].favicon}`);
         } catch (err) {
             console.log(err);
         }
@@ -35,13 +35,13 @@ const LogoSettings = () => {
         try {
             const formData = new FormData()
 
-            formData.append('logo',logo);
+            formData.append('logo', logo);
             formData.append('logo_footer', logoFooter)
-            formData.append("logo_email",logoEmail);
-            formData.append('favicon',favicon)
+            formData.append("logo_email", logoEmail);
+            formData.append('favicon', favicon)
 
             await axios.put(
-                `${process.env.BACKEND_URL}api/admin/settings/logo`,
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/settings/logo`,
                 formData,
             );
             toast.success("logo updated", {
@@ -91,7 +91,7 @@ const LogoSettings = () => {
 
     return (
         <>
-   
+
             <div className="col-12">
                 <div className="shadow-sm p-3 mb-5 mt-5 bg-white rounded border-0">
                     <div className="row">
@@ -112,7 +112,7 @@ const LogoSettings = () => {
                                 />
                             </div>
                             <div className="mt-4">
-                            <h5>Logo Footer</h5>
+                                <h5>Logo Footer</h5>
                                 <img
                                     src={logoFooterPreview}
                                     alt="logo footer preview"
@@ -129,7 +129,7 @@ const LogoSettings = () => {
                                 />
                             </div>
                             <div className="mt-4">
-                            <h5>Logo Email</h5>
+                                <h5>Logo Email</h5>
                                 <img
                                     src={logoEmailPreview}
                                     alt="logo email preview"
@@ -146,7 +146,7 @@ const LogoSettings = () => {
                                 />
                             </div>
                             <div className="mt-4">
-                            <h5>Favicon</h5>
+                                <h5>Favicon</h5>
                                 <img
                                     src={faviconPreview}
                                     alt="fevicon preview"

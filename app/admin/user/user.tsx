@@ -42,7 +42,7 @@ const UserTable = () => {
   const usersData = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/admin/user`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/user`
       );
       setUsers(res.data);
     } catch (err) {
@@ -53,7 +53,7 @@ const UserTable = () => {
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `${process.env.BACKEND_URL}api/admin/user/${userIdToDelete}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/user/${userIdToDelete}`
       );
       toast.success("User removed!", {
         position: "top-right",
@@ -111,7 +111,7 @@ const UserTable = () => {
                   <td>
                     {user.avatar ? (
                       <Image
-                        src={`${process.env.BACKEND_URL}/${user.avatar}`}
+                        src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${user.avatar}`}
                         alt="avatar"
                         width={50}
                         height={50}
@@ -124,7 +124,9 @@ const UserTable = () => {
                   <td>{user.role}</td>
                   {/* <td>{user.created_date}</td> */}
                   <td>
-                    <Link href={`/admin/user/${user.id}`}><Button variant="warning">Edit</Button></Link>{" "}
+                    <Link href={`/admin/user/${user.id}`}>
+                      <Button variant="warning">Edit</Button>
+                    </Link>{" "}
                     <Button
                       variant="danger"
                       onClick={() => handleShow(user.id)}

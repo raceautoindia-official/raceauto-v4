@@ -15,11 +15,11 @@ const AdminPageEdit = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [keywords, setKeywords] = useState("");
-  const [parentLink, setParentLink] = useState  (7);
+  const [parentLink, setParentLink] = useState(7);
   const [location, setLocation] = useState("top menu");
-  const [visibility, setVisibility] = useState  (0);
+  const [visibility, setVisibility] = useState(0);
   const [page_content, setpage_content] = useState("");
-  const editorRef = useRef  (null);
+  const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleEditorChange = (editContent) => {
@@ -33,7 +33,7 @@ const AdminPageEdit = () => {
 
     try {
       await axios.put(
-        `${process.env.BACKEND_URL}api/admin/pages/${id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/pages/${id}`,
         formData,
       );
       toast.success("Article updated", {
@@ -66,7 +66,7 @@ const AdminPageEdit = () => {
   const formDetailApi = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/admin/pages/${id}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/pages/${id}`
       );
 
       const data = res.data[0];

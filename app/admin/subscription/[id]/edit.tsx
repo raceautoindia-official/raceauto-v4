@@ -21,7 +21,7 @@ const EditPlan = () => {
   const handleInputChange = (e: any) => {
     const { value, checked, type } = e.target;
     if (type === "checkbox") {
-      setPlanTypes((prevPlanTypes:any) => ({
+      setPlanTypes((prevPlanTypes: any) => ({
         ...prevPlanTypes,
         [value]: checked,
       }));
@@ -33,7 +33,7 @@ const EditPlan = () => {
   const TableData = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/admin/subscription/${id}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/subscription/${id}`
       );
       setPlanTypes({
         ...planTypes,
@@ -52,7 +52,7 @@ const EditPlan = () => {
     const formdata = { ...planTypes, plan: planName };
     try {
       await axios.put(
-        `${process.env.BACKEND_URL}api/admin/subscription/${id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/subscription/${id}`,
         formdata
       );
       toast.success("updated!", {
@@ -96,7 +96,9 @@ const EditPlan = () => {
     <>
       <div className="col-12">
         <div className="shadow-sm p-3 mb-5 rounded border-0">
-        <Link href='/admin/subscription'><button className="btn btn-primary my-3">Back</button></Link>
+          <Link href="/admin/subscription">
+            <button className="btn btn-primary my-3">Back</button>
+          </Link>
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -122,7 +124,7 @@ const EditPlan = () => {
                     />
                   </Form.Group>
                 </td>
-                {planName  !== 'Monthly price' && planName !== 'Annual price' ? (
+                {planName !== "Monthly price" && planName !== "Annual price" ? (
                   <>
                     <td>
                       <Form.Check

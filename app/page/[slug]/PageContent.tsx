@@ -1,32 +1,28 @@
+import React from "react";
+import parse from "html-react-parser";
+import Contact from "../contact/contact";
+import Event from "../event/event";
+import AboutUs from "../about-us/aboutus";
 
-import React from 'react'
-import parse from "html-react-parser"
-import Contact from '../contact/contact'
-import Event from '../event/event'
-import AboutUs from '../about-us/aboutus'
+const PageContent = async ({ slug }: { slug: string }) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/pages/${slug}`
+  );
+  const data = await res.json();
 
-const PageContent = async({slug}:{
-  slug:string
-}) => {
+  if (slug == "contact") {
+    return <Contact />;
+  }
 
-const  res= await fetch(`${process.env.BACKEND_URL}api/pages/${slug}`)
-const data = await res.json()
+  if (slug == "event") {
+    return <Event />;
+  }
 
-if(slug=='contact'){
-  return(<Contact/>)
-}
+  if (slug == "about-us") {
+    return <AboutUs />;
+  }
 
-if(slug=='event'){
-  return(<Event/>)
-}
+  return <div className="">{parse(String(data[0].page_content))}</div>;
+};
 
-if(slug=='about-us'){
-  return(<AboutUs/>)
-}
-
-  return (
-    <div className=''>{parse(String(data[0].page_content))}</div>
-  )
-}
-
-export default PageContent
+export default PageContent;

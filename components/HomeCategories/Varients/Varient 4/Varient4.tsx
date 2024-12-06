@@ -11,7 +11,7 @@ const Varient4 = ({ item }: varientproptype) => {
         <Link className="link-style" href={`/post/${item.title_slug}`}>
           <div className="image-container">
             <Image
-              src={`${process.env.BACKEND_URL}${item.image_mid}`}
+              src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${item.image_mid}`}
               className="varient-image"
               alt={
                 item.title.length > 40

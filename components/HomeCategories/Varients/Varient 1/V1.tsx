@@ -5,14 +5,13 @@ import { varientproptype } from "@/types/varient";
 import { formatDate } from "@/components/Time";
 
 const Varient1 = ({ item }: varientproptype) => {
-
   return (
     <div className="mb-3 col-md-4">
       <div className="card border-0 card-no-bg">
         <Link className="link-style" href={`/post/${item.title_slug}`}>
           <div className="image-container">
             <Image
-              src={`${process.env.BACKEND_URL}${item.image_mid}`}
+              src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${item.image_mid}`}
               className="varient-image"
               alt={
                 item.title.length > 40

@@ -19,7 +19,9 @@ const SearchPage = async ({ title, page }: { title: string; page: string }) => {
 
   try {
     const res = await fetch(
-      `${process.env.BACKEND_URL}api/search/${title}?page=${page || 1}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}api/search/${title}?page=${
+        page || 1
+      }`,
       { cache: "no-store" }
     );
 

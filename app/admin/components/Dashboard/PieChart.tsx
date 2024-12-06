@@ -26,7 +26,7 @@ const PieChartAdmin = () => {
   const chartapi = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/admin/dashboard/pie-chart`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/dashboard/pie-chart`
       );
       const username = res.data.userPostCountv2.map(
         (item: { username: string }) => item.username
@@ -56,13 +56,12 @@ const PieChartAdmin = () => {
     chartapi();
   }, []);
   return (
-    <div className="card shadow border-0 p-1" style={{height:'100%'}}>
+    <div className="card shadow border-0 p-1" style={{ height: "100%" }}>
       <div
         className="chart-container mt-2"
         style={{ position: "relative", width: "100%", aspectRatio: "1/1" }}
       >
         <Pie data={data} />
-        
       </div>
       <p className="mt-4 ms-2">Stats as per current month*</p>
     </div>

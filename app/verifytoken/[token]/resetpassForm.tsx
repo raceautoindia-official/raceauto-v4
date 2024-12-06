@@ -14,7 +14,7 @@ const VerifyToken = () => {
     const verifyToken = async () => {
       try {
         const response = await axios.get(
-          `${process.env.BACKEND_URL}api/login/verify-token/${token}`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}api/login/verify-token/${token}`
         );
 
         setVerified(true);

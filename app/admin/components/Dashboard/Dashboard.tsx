@@ -8,7 +8,6 @@ import { FaClipboardList, FaUser } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { MdEventAvailable } from "react-icons/md";
 
-
 export type viewsCardType = {
   id: number;
   image_mid: string;
@@ -18,13 +17,13 @@ export type viewsCardType = {
 
 const Dashboard = async () => {
   const cardResponse = await fetch(
-    `${process.env.BACKEND_URL}api/admin/dashboard/card-numbers`
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/dashboard/card-numbers`
   );
 
   const cardData = await cardResponse.json();
 
   const viewsCardResponse = await fetch(
-    `${process.env.BACKEND_URL}api/admin/dashboard/most-views`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/dashboard/most-views`,
     { cache: "no-store" }
   );
 

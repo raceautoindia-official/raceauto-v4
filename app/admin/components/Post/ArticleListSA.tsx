@@ -56,9 +56,12 @@ const ArticleListV2 = ({ page }: { page: string }) => {
   const handleRemoveAvailable = async (id: number, type: string) => {
     const toastId = toast.loading("Processing...");
     try {
-      await axios.put(`${process.env.BACKEND_URL}api/admin/available/${type}`, {
-        id: id,
-      });
+      await axios.put(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/available/${type}`,
+        {
+          id: id,
+        }
+      );
       toast.update(toastId, {
         render: "Successfully removed!",
         type: "success",
@@ -81,7 +84,7 @@ const ArticleListV2 = ({ page }: { page: string }) => {
     const toastId = toast.loading("Processing...");
     try {
       await axios.put(
-        `${process.env.BACKEND_URL}api/admin/add-available/${type}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/add-available/${type}`,
         {
           id: id,
         }
@@ -107,7 +110,7 @@ const ArticleListV2 = ({ page }: { page: string }) => {
   const postApi = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/admin/admin-post?${query}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/admin-post?${query}`
       );
       setData(res.data.data);
       setTotalCount(res.data.totalPost);
@@ -119,7 +122,7 @@ const ArticleListV2 = ({ page }: { page: string }) => {
   const userApi = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/admin/post/post-user`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/post/post-user`
       );
       setUsers(res.data);
     } catch (err) {
@@ -130,7 +133,7 @@ const ArticleListV2 = ({ page }: { page: string }) => {
   const categoryApi = async () => {
     try {
       const mainCategoryRes = await axios.get(
-        `${process.env.BACKEND_URL}api/category/main-category`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/main-category`
       );
       setMainCategory_array(mainCategoryRes.data);
     } catch (err) {
@@ -141,7 +144,7 @@ const ArticleListV2 = ({ page }: { page: string }) => {
   const marketApi = async () => {
     try {
       const marketRes = await axios.get(
-        `${process.env.BACKEND_URL}api/category/market`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/market`
       );
       setMarketArray(marketRes.data);
     } catch (err) {
@@ -161,7 +164,7 @@ const ArticleListV2 = ({ page }: { page: string }) => {
 
     try {
       const subCategoryRes = await axios.get(
-        `${process.env.BACKEND_URL}api/category/sub-category/parent/${category_main}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/sub-category/parent/${category_main}`
       );
       setSubCategory_array(subCategoryRes.data); // Set subcategory data if API call is successful
     } catch (err) {
@@ -174,7 +177,7 @@ const ArticleListV2 = ({ page }: { page: string }) => {
     const toastId = toast.loading("Processing...");
     try {
       await axios.delete(
-        `${process.env.BACKEND_URL}api/admin/post/delete/${deleteId}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/post/delete/${deleteId}`
       );
       toast.update(toastId, {
         render: "Successfully removed!",
@@ -370,7 +373,7 @@ const ArticleListV2 = ({ page }: { page: string }) => {
                       href={`/post/${item.title_slug}`}
                     >
                       <Image
-                        src={`${process.env.BACKEND_URL}${item.image_small}`}
+                        src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${item.image_small}`}
                         width={80}
                         height={45}
                         alt={item.title}

@@ -22,7 +22,7 @@ import { Editor } from "@tinymce/tinymce-react";
 import Link from "next/link";
 import { jwtDecode } from "jwt-decode";
 
-export default function AdminPost({token}) {
+export default function AdminPost({ token }) {
   const decoded = jwtDecode(token);
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
@@ -225,7 +225,7 @@ export default function AdminPost({token}) {
   const categoryApi = async () => {
     try {
       const mainCategoryRes = await axios.get(
-        `${process.env.BACKEND_URL}api/category/main-category`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/main-category`
       );
       setMainCategory_array(mainCategoryRes.data);
     } catch (err) {
@@ -236,7 +236,7 @@ export default function AdminPost({token}) {
   const marketApi = async () => {
     try {
       const marketRes = await axios.get(
-        `${process.env.BACKEND_URL}api/category/market`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/market`
       );
       setMarketArray(marketRes.data);
     } catch (err) {
@@ -256,7 +256,7 @@ export default function AdminPost({token}) {
 
     try {
       const subCategoryRes = await axios.get(
-        `${process.env.BACKEND_URL}api/category/sub-category/parent/${category_main}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/sub-category/parent/${category_main}`
       );
       setSubCategory_array(subCategoryRes.data); // Set subcategory data if API call is successful
     } catch (err) {
@@ -338,7 +338,7 @@ export default function AdminPost({token}) {
     try {
       // Await for the post request
       await axios.post(
-        `${process.env.BACKEND_URL}api/admin/post/create`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/post/create`,
         formData
       );
 

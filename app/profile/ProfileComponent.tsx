@@ -28,7 +28,7 @@ function ProfileDashboard({ token }: { token: string }) {
   const userInfo = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/profile/${decoded.email}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/profile/${decoded.email}`
       );
       setData(res.data);
       setEmail(res.data[0].email || "");
@@ -100,7 +100,9 @@ function ProfileDashboard({ token }: { token: string }) {
                   className="me-2"
                 />
 
-                <Link href='/user/settings'><FaPen className="text-muted" style={{ cursor: "pointer" }} /></Link>
+                <Link href="/user/settings">
+                  <FaPen className="text-muted" style={{ cursor: "pointer" }} />
+                </Link>
               </div>
               <div className="d-flex align-items-center my-3">
                 <Form.Control
@@ -110,7 +112,9 @@ function ProfileDashboard({ token }: { token: string }) {
                   value={email}
                   className="me-2"
                 />
-                <Link href='/user/settings'><FaPen className="text-muted" style={{ cursor: "pointer" }} /></Link>
+                <Link href="/user/settings">
+                  <FaPen className="text-muted" style={{ cursor: "pointer" }} />
+                </Link>
               </div>
               <div className="d-flex align-items-center my-3">
                 <Form.Control
@@ -120,7 +124,9 @@ function ProfileDashboard({ token }: { token: string }) {
                   value={aboutme}
                   className="me-2"
                 />
-                <Link href='/user/settings'><FaPen className="text-muted" style={{ cursor: "pointer" }} /></Link>
+                <Link href="/user/settings">
+                  <FaPen className="text-muted" style={{ cursor: "pointer" }} />
+                </Link>
               </div>
             </Form>
           </Card.Body>
@@ -142,7 +148,9 @@ function ProfileDashboard({ token }: { token: string }) {
                   value={facebook}
                   className="me-2"
                 />{" "}
-                <Link href='/user/settings'><FaPen className="text-muted" style={{ cursor: "pointer" }} /></Link>
+                <Link href="/user/settings">
+                  <FaPen className="text-muted" style={{ cursor: "pointer" }} />
+                </Link>
               </div>
               <div className="d-flex align-items-center my-2">
                 <FaInstagram size={24} className="me-2" />{" "}
@@ -153,7 +161,9 @@ function ProfileDashboard({ token }: { token: string }) {
                   disabled
                   className="me-2"
                 />{" "}
-                <Link href='/user/settings'><FaPen className="text-muted" style={{ cursor: "pointer" }} /></Link>
+                <Link href="/user/settings">
+                  <FaPen className="text-muted" style={{ cursor: "pointer" }} />
+                </Link>
               </div>
               <div className="d-flex align-items-center my-2">
                 <FaXTwitter size={24} className="me-2" />{" "}
@@ -164,7 +174,9 @@ function ProfileDashboard({ token }: { token: string }) {
                   value={twitter}
                   className="me-2"
                 />{" "}
-                <Link href='/user/settings'><FaPen className="text-muted" style={{ cursor: "pointer" }} /></Link>
+                <Link href="/user/settings">
+                  <FaPen className="text-muted" style={{ cursor: "pointer" }} />
+                </Link>
               </div>
               <div className="d-flex align-items-center my-2">
                 <FaLinkedin size={24} className="me-2" />{" "}
@@ -175,7 +187,9 @@ function ProfileDashboard({ token }: { token: string }) {
                   value={linkedin}
                   className="me-2"
                 />{" "}
-                <Link href='/user/settings'><FaPen className="text-muted" style={{ cursor: "pointer" }} /></Link>
+                <Link href="/user/settings">
+                  <FaPen className="text-muted" style={{ cursor: "pointer" }} />
+                </Link>
               </div>
             </div>
           </Card.Body>

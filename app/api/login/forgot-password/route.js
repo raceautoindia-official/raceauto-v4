@@ -20,7 +20,7 @@ export async function POST(req) {
     const resetToken = jwt.sign({ email: email }, process.env.JWT_KEY, {
       expiresIn: "1hr",
     });
-    const link = `${process.env.BACKEND_URL}verifytoken/${resetToken}`;
+    const link = `${process.env.NEXT_PUBLIC_BACKEND_URL}verifytoken/${resetToken}`;
     mailTransporter.sendMail(
       {
         ...mailDetails,

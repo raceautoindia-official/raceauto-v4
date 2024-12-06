@@ -18,7 +18,7 @@ const validationSchema = Yup.object({
         .required("Confirm Password is required"),
 });
 
-function ProtectedForm({email}) {
+function ProtectedForm({ email }) {
     const passToken = localStorage.getItem("verifyToken")
     const formik = useFormik({
         initialValues: {
@@ -29,7 +29,7 @@ function ProtectedForm({email}) {
         onSubmit: async (values) => {
             try {
                 const formData = { ...values, email, token: passToken }
-                await axios.put(`${process.env.BACKEND_URL}api/user/update-password`, formData);
+                await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/user/update-password`, formData);
                 alert("Password changed successfully");
             } catch (error) {
                 console.error("Error updating password:", error);

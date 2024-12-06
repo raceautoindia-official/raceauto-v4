@@ -11,7 +11,7 @@ export async function generateMetadata({
 
   // Simulating data fetch (Replace with your actual API call)
   const res = await fetch(
-    `${process.env.BACKEND_URL}api/post/single-post/${title_slug}`
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/post/single-post/${title_slug}`
   );
   const data: postType[] = await res.json();
 
@@ -25,23 +25,23 @@ export async function generateMetadata({
       description: summary,
       images: [
         {
-          url: `${process.env.BACKEND_URL}${image_mid}`,
+          url: `${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${image_mid}`,
           width: 1200,
           height: 630,
           alt: title,
         },
       ],
-      url: `${process.env.BACKEND_URL}post/${title_slug}`,
+      url: `${process.env.NEXT_PUBLIC_BACKEND_URL}post/${title_slug}`,
       type: "article",
     },
     twitter: {
       card: "summary_large_image",
       title: title,
       description: summary,
-      images: [`${process.env.BACKEND_URL}${image_mid}`],
+      images: [`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${image_mid}`],
     },
     alternates: {
-      canonical: `${process.env.BACKEND_URL}post/${title_slug}`,
+      canonical: `${process.env.NEXT_PUBLIC_BACKEND_URL}post/${title_slug}`,
     },
   };
 }

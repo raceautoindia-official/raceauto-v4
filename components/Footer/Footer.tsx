@@ -38,21 +38,23 @@ interface PageData {
 
 const Footer = async () => {
   const logoResponse = await fetch(
-    `${process.env.BACKEND_URL}api/general-settings/logo`
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/general-settings/logo`
   );
   const logoData: LogoData[] = await logoResponse.json();
 
   const settingsResponse = await fetch(
-    `${process.env.BACKEND_URL}api/general-settings`
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/general-settings`
   );
   const settingsData: SettingsData[] = await settingsResponse.json();
 
   const socialResponse = await fetch(
-    `${process.env.BACKEND_URL}api/general-settings/social-media`
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/general-settings/social-media`
   );
   const socialData: SocialData[] = await socialResponse.json();
 
-  const pageResponse = await fetch(`${process.env.BACKEND_URL}api/pages`);
+  const pageResponse = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/pages`
+  );
   const pageData: PageData[] = await pageResponse.json();
   const pageVisible = pageData.filter(
     (item) => item.location == "footer" && item.visibility == 1
@@ -65,7 +67,7 @@ const Footer = async () => {
           <div className=" col-md-2 mt-3">
             <div className="d-flex justify-content-center">
               <Image
-                src={`${process.env.BACKEND_URL}${logoData[0].logo_footer}`}
+                src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${logoData[0].logo_footer}`}
                 width={130}
                 height={152}
                 priority
@@ -134,7 +136,11 @@ const Footer = async () => {
                 <Link
                   href={`/page/${item.slug}`}
                   className="text-center px-1"
-                  style={{ cursor: "pointer", fontSize:"smaller", fontWeight:800}}
+                  style={{
+                    cursor: "pointer",
+                    fontSize: "smaller",
+                    fontWeight: 800,
+                  }}
                 >
                   {item.title}
                 </Link>

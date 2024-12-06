@@ -1,16 +1,16 @@
 'use client'
 import { useEffect, useState } from "react";
 import axios from "axios";
-import {  toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const HeaderCode = () => {
   const [headerCode, setHeaderCode] = useState("");
 
   const getCode = async () => {
     try {
-      const res=await axios.get(
-        `${process.env.BACKEND_URL}api/admin/settings/headercode`,
-        
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/settings/headercode`,
+
       );
       setHeaderCode(res.data[0].custom_header_codes)
     } catch (err) {
@@ -21,9 +21,9 @@ const HeaderCode = () => {
   const handleSubmit = async () => {
     try {
       await axios.put(
-        `${process.env.BACKEND_URL}api/admin/settings/headercode`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/settings/headercode`,
         { headerCode },
-        
+
       );
       toast.success("Header submitted", {
         position: "top-right",
@@ -53,13 +53,13 @@ const HeaderCode = () => {
     }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     getCode()
-  },[])
+  }, [])
 
   return (
     <>
-   
+
       <div className="col-12">
         <div className="shadow-sm p-3 mb-5 mt-5 bg-white rounded border-0">
           <div className="row">

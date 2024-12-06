@@ -10,14 +10,14 @@ export type contactType = {
 
 const Contact = async () => {
   const res = await fetch(
-    `${process.env.BACKEND_URL}api/general-settings/contact`
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/general-settings/contact`
   );
   const data: contactType[] = await res.json();
 
   return (
     <>
-    <div className="container-fluid">
-      <Content data={data[0]} />
+      <div className="container-fluid">
+        <Content data={data[0]} />
       </div>
     </>
   );

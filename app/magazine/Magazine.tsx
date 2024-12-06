@@ -7,15 +7,18 @@ export type magazineCardType = {
   title: string;
   title_slug: string;
   keywords: string;
-  created_date:any;
+  created_date: any;
 };
 
 const Magazine = async () => {
-  const res = await fetch(`${process.env.BACKEND_URL}api/magazine`, {
-    next: {
-      revalidate: 600,
-    },
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/magazine`,
+    {
+      next: {
+        revalidate: 600,
+      },
+    }
+  );
   const data: magazineCardType[] = await res.json();
 
   return (

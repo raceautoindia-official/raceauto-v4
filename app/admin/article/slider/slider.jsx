@@ -50,7 +50,7 @@ const SliderArticles = () => {
 
         try {
             await axios.put(
-                `${process.env.BACKEND_URL}api/admin/post/update-order/${id}`,
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/post/update-order/${id}`,
                 {
                     order_values: newValue,
                     postType: 'is_slider',
@@ -64,7 +64,7 @@ const SliderArticles = () => {
     const sliderApi = async () => {
         try {
             const res = await axios.get(
-                `${process.env.BACKEND_URL}api/admin/post/slider`, 
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/post/slider`,
             );
             setSelectedOption(res.data[0].slider_type);
         } catch (err) {
@@ -75,7 +75,7 @@ const SliderArticles = () => {
     const SliderChangeApi = async () => {
         try {
             await axios.put(
-                `${process.env.BACKEND_URL}api/admin/post/slider`,
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/post/slider`,
                 {
                     slider_type: selectedOption,
                 }
@@ -112,7 +112,7 @@ const SliderArticles = () => {
     }
 
 
-  
+
 
     useEffect(() => {
         handlePostType()
@@ -120,7 +120,7 @@ const SliderArticles = () => {
     }, [])
     return (
         <>
-           
+
             {/* <div className="d-flex">
                 <h6>Slider Type</h6>
                 <Form.Check
@@ -179,7 +179,7 @@ const SliderArticles = () => {
                                     <div className="d-flex align-items-center">
                                         <Link className="link-style" href={`/post/${item.title_slug}`}>
                                             <img
-                                                src={`${process.env.BACKEND_URL}${item.image_small
+                                                src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${item.image_small
                                                     }`}
                                                 className="image-fluid"
                                                 style={{ width: 80 }}
@@ -265,7 +265,7 @@ const SliderArticles = () => {
                                     />
                                 </td>
                                 <td>{formatDate(item.created_at)}</td>
-                        
+
                             </tr>
                         ))}
                     </tbody>

@@ -5,8 +5,6 @@ import "./Varient2.css";
 import "../Varient.css";
 import { formatDate } from "@/components/Time";
 const SubcardV2_1 = ({ item }: varientproptype) => {
-
-
   return (
     <>
       <div className="col-md-6 mb-3 mx-0 p-0">
@@ -17,7 +15,7 @@ const SubcardV2_1 = ({ item }: varientproptype) => {
                 <div className="col-6 p-0">
                   <div className="image-container">
                     <Image
-                      src={`${process.env.BACKEND_URL}${item.image_mid}`}
+                      src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${item.image_mid}`}
                       className="varient-image"
                       alt={
                         item.title.length > 40

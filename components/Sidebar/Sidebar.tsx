@@ -21,31 +21,31 @@ export type RecommendedType = {
 
 const Sidebar = async () => {
   const latestnewsResponse = await fetch(
-    `${process.env.BACKEND_URL}api/latest-news`
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/latest-news`
   );
   const latestNewsData: LatestNewsType[] = await latestnewsResponse.json();
 
   const recommendedResponse = await fetch(
-    `${process.env.BACKEND_URL}api/recommended-news`
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/recommended-news`
   );
 
   const recommendedNewsData: RecommendedType[] =
     await recommendedResponse.json();
 
   const sidebarTopres = await fetch(
-    `${process.env.BACKEND_URL}api/admin/adspace/sidebar_top`
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/adspace/sidebar_top`
   );
 
   const sidebarTopData = await sidebarTopres.json();
 
   const sidebarbottomres = await fetch(
-    `${process.env.BACKEND_URL}api/admin/adspace/sidebar_bottom`
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/adspace/sidebar_bottom`
   );
 
   const sidebarbottomData = await sidebarbottomres.json();
 
   const eventSettingsRes = await fetch(
-    `${process.env.BACKEND_URL}api/admin/event/settings`
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/event/settings`
   );
   const eventSettingsData = await eventSettingsRes.json();
 
@@ -57,7 +57,7 @@ const Sidebar = async () => {
       >
         <Image
           unoptimized
-          src={`${process.env.BACKEND_URL}${sidebarTopData[0].ad_code_300}`}
+          src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${sidebarTopData[0].ad_code_300}`}
           alt="sidebar top"
           fill
         />
@@ -111,7 +111,7 @@ const Sidebar = async () => {
         >
           <Image
             unoptimized
-            src={`${process.env.BACKEND_URL}${eventSettingsData[0].upcoming_event_1}`}
+            src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${eventSettingsData[0].upcoming_event_1}`}
             alt="sidebar top"
             fill
           />
@@ -124,7 +124,7 @@ const Sidebar = async () => {
         >
           <Image
             unoptimized
-            src={`${process.env.BACKEND_URL}${eventSettingsData[0].upcoming_event_2}`}
+            src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${eventSettingsData[0].upcoming_event_2}`}
             alt="sidebar top"
             fill
           />
@@ -137,7 +137,7 @@ const Sidebar = async () => {
       >
         <Image
           unoptimized
-          src={`${process.env.BACKEND_URL}${sidebarbottomData[0].ad_code_300}`}
+          src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${sidebarbottomData[0].ad_code_300}`}
           alt="sidebar top"
           fill
         />

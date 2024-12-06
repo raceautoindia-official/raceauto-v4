@@ -16,7 +16,7 @@ const Edit_Market = () => {
   const formDataApi = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/admin/market/${id}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/market/${id}`
       );
       setTitle(res.data[0].title);
 
@@ -31,7 +31,7 @@ const Edit_Market = () => {
     setIsSubmitting(true);
     try {
       await axios.put(
-        `${process.env.BACKEND_URL}api/admin/market/${id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/market/${id}`,
         {
           title,
           color,
@@ -79,9 +79,10 @@ const Edit_Market = () => {
   return (
     <div className="row justify-content-center">
       <div className="col-lg-6">
-        
         <div className="shadow-sm p-3 mb-5  mt-5 bg-white rounded border-0">
-        <Link href='/admin/market'><button className="btn btn-secondary mb-3">Back</button></Link>
+          <Link href="/admin/market">
+            <button className="btn btn-secondary mb-3">Back</button>
+          </Link>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="title" className="form-label">

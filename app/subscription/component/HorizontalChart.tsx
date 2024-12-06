@@ -15,7 +15,14 @@ import axios from "axios";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 interface ValueObject {
   [key: string]: number;
@@ -30,7 +37,9 @@ const MyHorizontalBarChart = () => {
 
   const mainCategoryApi = async () => {
     try {
-      const res = await axios.get(`${process.env.BACKEND_URL}api/category/main-category`);
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/main-category`
+      );
       setMainCategory(res.data);
       setSelectedMainCategory(res.data[0].id);
     } catch (err) {
@@ -42,14 +51,14 @@ const MyHorizontalBarChart = () => {
     setLoading(true); // Start loading
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/category/sub-category/parent/${selectedMainCategory}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/sub-category/parent/${selectedMainCategory}`
       );
       const labels = res.data.map((item: any) => item.name);
       setChartLabels(labels);
 
       const subIds = res.data.map((item: any) => item.id);
       const subscriberRes = await axios.get(
-        `${process.env.BACKEND_URL}api/subscribers/sub-category?ids=${subIds}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/subscribers/sub-category?ids=${subIds}`
       );
       const values = subscriberRes.data.map((item: any) => item.count);
       setSubCategoryValues(values);
@@ -130,7 +139,11 @@ const MyHorizontalBarChart = () => {
         style={{ position: "relative", width: "100%", aspectRatio: "16/9" }}
       >
         {loading ? (
-          <Skeleton height="100%" width="100%" style={{ aspectRatio: "16/9" }} />
+          <Skeleton
+            height="100%"
+            width="100%"
+            style={{ aspectRatio: "16/9" }}
+          />
         ) : (
           <Bar data={data} options={options} />
         )}

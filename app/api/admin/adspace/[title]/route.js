@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import path from "path";
-import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 import db from "@/lib/db";
+import s3Client from "@/lib/s3Client";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
 
 export async function GET(req) {
   try {
@@ -19,6 +20,7 @@ export async function GET(req) {
   }
 }
 
+
 export async function PUT(req) {
   try {
     const { pathname } = new URL(req.url);
@@ -34,92 +36,54 @@ export async function PUT(req) {
     const size_300 = formData.get("size_300");
     const size_234 = formData.get("size_234");
 
-    const primaryUploadDir = path.join(process.cwd(), "public/uploads/blocks");
-
-    if (!fs.existsSync(primaryUploadDir)) {
-      fs.mkdirSync(primaryUploadDir, { recursive: true });
-
-      const htmlContent = `<!DOCTYPE html>
-                <html>
-                <head>
-                  <title>403 Forbidden</title>
-                </head>
-                <body>
-                  <p>Directory access is forbidden.</p>
-                </body>
-                </html>`;
-
-      fs.writeFileSync(`${primaryUploadDir}/index.html`, htmlContent);
-    }
+    const bucketName = process.env.AWS_S3_BUCKET_NAME;
 
     let query = "UPDATE ad_spaces SET";
     let queryParams = [];
 
+    // Helper function to handle S3 uploads
+    const uploadToS3 = async (file, folder) => {
+      const fileExtension = path.extname(file.name);
+      const newFileName = `${uuidv4()}${fileExtension}`;
+      const s3Key = `${folder}/${newFileName}`;
+      const fileBuffer = Buffer.from(await file.arrayBuffer());
+
+      const uploadParams = {
+        Bucket: bucketName,
+        Key: s3Key,
+        Body: fileBuffer,
+        ContentType: file.type,
+      };
+
+      await s3Client.send(new PutObjectCommand(uploadParams));
+      return s3Key; // Return the key for further use in the database
+    };
+
     // Dynamic query construction for file fields
     if (size_1200) {
-      const image1200 = size_1200.name;
-      const image1200FileExtension = path.extname(image1200);
-      const new1200imagename = `${uuidv4()}${image1200FileExtension}`;
-      const imagePath = path.join(primaryUploadDir, new1200imagename);
-
-      // Save the first file
-      const firstFileBuffer = Buffer.from(await size_1200.arrayBuffer());
-
-      fs.writeFileSync(imagePath, firstFileBuffer);
+      const imageKey = await uploadToS3(size_1200, "uploads/blocks");
       query += " ad_code_1200 = ?,";
-      queryParams.push(`uploads/blocks/${new1200imagename}`);
+      queryParams.push(imageKey);
     }
     if (size_728) {
-      const image728 = size_728.name;
-      const image728FileExtension = path.extname(image728);
-      const new728imagename = `${uuidv4()}${image728FileExtension}`;
-      const imagePath = path.join(primaryUploadDir, new728imagename);
-
-      // Save the first file
-      const firstFileBuffer = Buffer.from(await size_728.arrayBuffer());
-
-      fs.writeFileSync(imagePath, firstFileBuffer);
+      const imageKey = await uploadToS3(size_728, "uploads/blocks");
       query += " ad_code_728 = ?,";
-      queryParams.push(`uploads/blocks/${new728imagename}`);
+      queryParams.push(imageKey);
     }
     if (size_468) {
-      const image468 = size_468.name;
-      const image468FileExtension = path.extname(image468);
-      const new468imagename = `${uuidv4()}${image468FileExtension}`;
-      const imagePath = path.join(primaryUploadDir, new468imagename);
-
-      // Save the first file
-      const firstFileBuffer = Buffer.from(await size_468.arrayBuffer());
-
-      fs.writeFileSync(imagePath, firstFileBuffer);
+      const imageKey = await uploadToS3(size_468, "uploads/blocks");
       query += " ad_code_468 = ?,";
-      queryParams.push(`uploads/blocks/${new468imagename}`);
+      queryParams.push(imageKey);
     }
     if (size_300) {
-      const image300 = size_300.name;
-      const image300FileExtension = path.extname(image300);
-      const new300imagename = `${uuidv4()}${image300FileExtension}`;
-      const imagePath = path.join(primaryUploadDir, new300imagename);
-
-      // Save the first file
-      const firstFileBuffer = Buffer.from(await size_300.arrayBuffer());
-
-      fs.writeFileSync(imagePath, firstFileBuffer);
+      const imageKey = await uploadToS3(size_300, "uploads/blocks");
       query += " ad_code_300 = ?,";
-      queryParams.push(`uploads/blocks/${new300imagename}`);
+      queryParams.push(imageKey);
     }
     if (size_234) {
-      const image234 = size_234.name;
-      const image234FileExtension = path.extname(image234);
-      const new234imagename = `${uuidv4()}${image234FileExtension}`;
-      const imagePath = path.join(primaryUploadDir, new234imagename);
-
-      // Save the first file
-      const firstFileBuffer = Buffer.from(await size_234.arrayBuffer());
-
-      fs.writeFileSync(imagePath, firstFileBuffer);
+      const imageKey = await uploadToS3(size_234, "uploads/blocks");
       query += " ad_code_234 = ?,";
-      queryParams.push(`uploads/blocks/${new234imagename}`);
+      queryParams.push(imageKey);
     }
 
     // Static fields

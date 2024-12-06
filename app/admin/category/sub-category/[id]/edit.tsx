@@ -21,7 +21,7 @@ const Edit_subCategory = () => {
   const formDataApi = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/category/sub-category/${id}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/sub-category/${id}`
       );
       setCategoryName(res.data[0].name);
       setDescription(res.data[0].description);
@@ -38,7 +38,7 @@ const Edit_subCategory = () => {
     setIsSubmitting(true);
     try {
       await axios.put(
-        `${process.env.BACKEND_URL}api/category/sub-category/${id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/sub-category/${id}`,
         {
           categoryName,
           description,
@@ -80,7 +80,7 @@ const Edit_subCategory = () => {
   const Main_CategoryApi = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/category/main-category`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/main-category`
       );
       setMainCategory_array(res.data);
     } catch (err) {

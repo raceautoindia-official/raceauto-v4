@@ -5,9 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const PlanForm = ({tableData}:{
-  tableData:any
-}) => {
+const PlanForm = ({ tableData }: { tableData: any }) => {
   const [planName, setPlanName] = useState("");
   const [planTypes, setPlanTypes] = useState({
     platinum: false,
@@ -32,7 +30,7 @@ const PlanForm = ({tableData}:{
     const formdata = { ...planTypes, plan: planName };
     try {
       await axios.post(
-        `${process.env.BACKEND_URL}api/admin/subscription`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/subscription`,
         formdata
       );
       toast.success("Created success!", {

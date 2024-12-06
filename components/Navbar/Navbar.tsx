@@ -21,22 +21,25 @@ export type mainMenu = {
 
 const Navbar = async () => {
   const resposne = await fetch(
-    `${process.env.BACKEND_URL}api/category/main-category`,{cache:'no-store'}
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/main-category`,
+    { cache: "no-store" }
   );
 
   const data: category[] = await resposne.json();
 
   const logoResponse = await fetch(
-    `${process.env.BACKEND_URL}api/general-settings/logo`
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/general-settings/logo`
   );
-  const marketResponse = await fetch(`${process.env.BACKEND_URL}api/market`);
+  const marketResponse = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/market`
+  );
 
   const marketData = await marketResponse.json();
 
   const logoData = await logoResponse.json();
 
   const morepageResponse = await fetch(
-    `${process.env.BACKEND_URL}api/pages/main-menu`
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/pages/main-menu`
   );
 
   const morePage = await morepageResponse.json();
@@ -50,8 +53,6 @@ const Navbar = async () => {
     .filter((item) => item.show_on_menu == 1)
     .sort((a, b) => a.category_order - b.category_order);
 
-
-
   return (
     <div className={styles.navPosition}>
       <nav
@@ -60,7 +61,7 @@ const Navbar = async () => {
         <div className={styles.desktop_nav}>
           <div className={styles.d_navlogo}>
             <Image
-              src={`${process.env.BACKEND_URL}${logoData[0].logo}`}
+              src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${logoData[0].logo}`}
               alt="logo header"
               width={40}
               height={40}
@@ -178,14 +179,13 @@ const Navbar = async () => {
           </div>
           <div className={styles.header_icons}>
             <div className="d-flex align-items-center">
-            <ThemeToggle/>
-            <Link href="/subscription">
-              <button className={styles.subscribeButton}>Subscribe</button>
-            </Link>
-            <SearchBarServer />
-            <LoginNavButton/>
+              <ThemeToggle />
+              <Link href="/subscription">
+                <button className={styles.subscribeButton}>Subscribe</button>
+              </Link>
+              <SearchBarServer />
+              <LoginNavButton />
             </div>
-           
           </div>
         </div>
       </nav>

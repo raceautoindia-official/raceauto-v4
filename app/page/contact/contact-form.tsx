@@ -11,7 +11,7 @@ const Contact_form = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      await axios.post(`${process.env.BACKEND_URL}api/contact`, {
+      await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/contact`, {
         name,
         email,
         message,

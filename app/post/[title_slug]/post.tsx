@@ -33,7 +33,7 @@ export type postType = {
 async function incrementPageView(pageUrl: string) {
   try {
     await fetch(
-      `${process.env.BACKEND_URL}/api/post/pageincrement/${pageUrl}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/post/pageincrement/${pageUrl}`,
       {
         method: "PUT",
         cache: "no-store",
@@ -48,7 +48,7 @@ const Post = async ({ title }: { title: string }) => {
   await incrementPageView(title);
 
   const res = await fetch(
-    `${process.env.BACKEND_URL}api/post/single-post/${title}`
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/post/single-post/${title}`
   );
   const data: postType[] = await res.json();
 

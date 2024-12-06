@@ -16,7 +16,7 @@ const Edit_NewsletterCategory = () => {
   const formDataApi = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/magazine/category/${id}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/magazine/category/${id}`
       );
       setTitle(res.data[0].title);
       setColor(res.data[0].color);
@@ -28,7 +28,7 @@ const Edit_NewsletterCategory = () => {
     setIsSubmitting(true);
     try {
       await axios.put(
-        `${process.env.BACKEND_URL}api/newsletter/edit-newsLetterCategory/${id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/newsletter/edit-newsLetterCategory/${id}`,
         {
           title,
           color,
@@ -73,12 +73,11 @@ const Edit_NewsletterCategory = () => {
 
   return (
     <div className="row justify-content-center">
-
       <div className="col-lg-6">
         <div className="shadow-sm p-3 mb-5  mt-5 bg-white rounded border-0">
-        <Link href="/admin/magazine/category">
-        <button className="btn btn-secondary mb-3">Back</button>
-      </Link>
+          <Link href="/admin/magazine/category">
+            <button className="btn btn-secondary mb-3">Back</button>
+          </Link>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="title" className="form-label">

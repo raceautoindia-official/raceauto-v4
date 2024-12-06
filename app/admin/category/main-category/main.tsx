@@ -15,7 +15,7 @@ const Main_Category = () => {
   const MainCategoryApi = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/category/main-category`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/main-category`
       );
       setData(res.data);
     } catch (err) {
@@ -28,7 +28,7 @@ const Main_Category = () => {
     const toastId = toast.loading("Processing...");
     try {
       await axios.delete(
-        `${process.env.BACKEND_URL}api/category/main-category/${deleteId}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/main-category/${deleteId}`
       );
       toast.update(toastId, {
         render: "Successfully removed!",
@@ -61,7 +61,7 @@ const Main_Category = () => {
         aria-labelledby="example-modal-sizes-title-sm"
       >
         <Modal.Header closeButton className="bg-danger text-white">
-          <Modal.Title id="example-modal-sizes-title-sm" >
+          <Modal.Title id="example-modal-sizes-title-sm">
             Delete Confirmation
           </Modal.Title>
         </Modal.Header>
@@ -105,9 +105,7 @@ const Main_Category = () => {
                     {item.color}
                   </td>
                   <td>
-                    <Link
-                      href={`/admin/category/main-category/${item.id}`}
-                    >
+                    <Link href={`/admin/category/main-category/${item.id}`}>
                       <button className="btn btn-primary me-3">
                         <MdModeEdit size={20} />
                       </button>

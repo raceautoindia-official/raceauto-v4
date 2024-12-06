@@ -11,9 +11,12 @@ type SliderType = {
 };
 
 const Slider = async () => {
-  const response = await fetch(`${process.env.BACKEND_URL}api/slider`, {
-    cache: "no-store",
-  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/slider`,
+    {
+      cache: "no-store",
+    }
+  );
   const slides: SliderType[] = await response.json();
 
   const sortedSlider = slides.sort((a, b) => a.slider_order - b.slider_order);

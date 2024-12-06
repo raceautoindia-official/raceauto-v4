@@ -110,7 +110,7 @@ const NewsLetterPost = () => {
   const CategoryApi = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/magazine/category`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/magazine/category`
       );
       setCategoryArray(res.data);
     } catch (err) {
@@ -128,7 +128,7 @@ const NewsLetterPost = () => {
     const formData = new FormData();
 
     formData.append("title", title);
-    formData.append("title_slug",slug);
+    formData.append("title_slug", slug);
     formData.append("keywords", keywords);
     formData.append("image_url", image_url);
     formData.append("pdf_url", pdf_url);
@@ -136,7 +136,7 @@ const NewsLetterPost = () => {
 
     try {
       await axios.post(
-        `${process.env.BACKEND_URL}api/admin/magazine`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/magazine`,
         formData
       );
       toast.success("E-magazine created!", {

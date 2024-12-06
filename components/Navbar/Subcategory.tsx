@@ -18,7 +18,7 @@ type Category = {
 const Subcategory = async (props: proptype) => {
   const { id, main } = props;
   const res = await fetch(
-    `${process.env.BACKEND_URL}api/category/sub-category/parent/${id}`
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/sub-category/parent/${id}`
   );
   const data = await res.json();
 

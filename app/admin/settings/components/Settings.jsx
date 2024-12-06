@@ -13,7 +13,7 @@ const SettingsForm = () => {
   const getApplicationData = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/admin/settings/general-settings`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/settings/general-settings`,
 
       );
       const { application_name, about_footer, copyright, optional_url_button_name } = res.data[0];
@@ -29,7 +29,7 @@ const SettingsForm = () => {
   const handleSubmit = async () => {
     try {
       await axios.put(
-        `${process.env.BACKEND_URL}api/admin/settings/general-settings`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/settings/general-settings`,
         {
           application_name: applicationName,
           optional_url_button_name: optionalUrl,

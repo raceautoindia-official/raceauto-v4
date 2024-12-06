@@ -41,19 +41,19 @@ const EventSettings = () => {
   const fetchEventSettings = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/admin/event/settings`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/event/settings`
       );
       setEvent1Link(res.data[0].event_1_link);
       setEvent2Link(res.data[0].event_2_link);
       setEvent1Visible(res.data[0].event_1_visible);
       setEvent2Visible(res.data[0].event_2_visible);
       setBannerContent(res.data[0].banner_content);
-      setBannerPreview(`${process.env.BACKEND_URL}${res.data[0].banner_image}`);
+      setBannerPreview(`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${res.data[0].banner_image}`);
       setEvent1Preview(
-        `${process.env.BACKEND_URL}${res.data[0].upcoming_event_1}`
+        `${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${res.data[0].upcoming_event_1}`
       );
       setEvent2Preview(
-        `${process.env.BACKEND_URL}${res.data[0].upcoming_event_2}`
+        `${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${res.data[0].upcoming_event_2}`
       );
     } catch (err) {
       console.log(err);
@@ -75,7 +75,7 @@ const EventSettings = () => {
 
     try {
       await axios.put(
-        `${process.env.BACKEND_URL}api/admin/event/settings`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/event/settings`,
         formData
       );
       toast.success("Updated successfully!", {

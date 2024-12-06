@@ -17,7 +17,9 @@ const Admin_page = () => {
 
   const pageApi = async () => {
     try {
-      const res = await axios.get(`${process.env.BACKEND_URL}api/pages`);
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/pages`
+      );
       setData(res.data);
     } catch (err) {
       console.log(err);

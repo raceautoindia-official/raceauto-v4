@@ -20,7 +20,7 @@ const AccountSettingsForm = ({ token }: { token: string }) => {
   const userInfo = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/profile/${decoded.email}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/profile/${decoded.email}`
       );
 
       setEmail(res.data[0].email || "");
@@ -30,7 +30,9 @@ const AccountSettingsForm = ({ token }: { token: string }) => {
       setFacebook(res.data[0].facebook_url || "");
       setLinkedin(res.data[0].linkedin_url || "");
       setTwitter(res.data[0].twitter_url || "");
-      setAvatarPreview(`${process.env.BACKEND_URL}${res.data[0].avatar}`)
+      setAvatarPreview(
+        `${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${res.data[0].avatar}`
+      );
     } catch (err) {
       console.log(err);
     }
@@ -65,7 +67,7 @@ const AccountSettingsForm = ({ token }: { token: string }) => {
     }
     try {
       await axios.put(
-        `${process.env.BACKEND_URL}api/profile/${decoded.email}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/profile/${decoded.email}`,
         formData
       );
     } catch (err) {

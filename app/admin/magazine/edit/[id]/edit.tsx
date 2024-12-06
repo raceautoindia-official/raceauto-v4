@@ -92,7 +92,7 @@ const NewsLetterEdit = () => {
   const CategoryApi = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/magazine/category`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/magazine/category`
       );
       setCategoryArray(res.data);
     } catch (err) {
@@ -103,10 +103,12 @@ const NewsLetterEdit = () => {
   const getData = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/admin/magazine/${params.id}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/magazine/${params.id}`
       );
       setTitle(res.data[0].title);
-      setPreview(`${process.env.BACKEND_URL}${res.data[0].image_url}`);
+      setPreview(
+        `${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${res.data[0].image_url}`
+      );
       setKeywords(res.data[0].keywords);
       setCategory(res.data[0].category);
     } catch (err) {
@@ -132,7 +134,7 @@ const NewsLetterEdit = () => {
 
     try {
       await axios.put(
-        `${process.env.BACKEND_URL}api/admin/magazine/${params.id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/magazine/${params.id}`,
         formData
       );
       toast.success("E-magazine updated!", {
@@ -171,11 +173,10 @@ const NewsLetterEdit = () => {
 
   return (
     <div className="col-12">
-      
       <div className="shadow-sm p-3 mb-5  mt-5 bg-white rounded border-0">
-      <Link href="/admin/magazine">
-        <button className="btn btn-secondary">Back</button>
-      </Link>
+        <Link href="/admin/magazine">
+          <button className="btn btn-secondary">Back</button>
+        </Link>
         <Form onSubmit={handleSubmit} className="mt-4">
           <Form.Group controlId="formTitle" className="mb-3">
             <Form.Label>Title</Form.Label>

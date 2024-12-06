@@ -1,11 +1,10 @@
-'use client'
+"use client";
 import { category } from "@/types/category";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
-
 
 const Create_sub = () => {
   const [formData, setFormData] = useState({
@@ -16,7 +15,7 @@ const Create_sub = () => {
   const [color, setColor] = useState("");
   const [main_category, setCategory_main] = useState("");
   const [mainCategory_array, setMainCategory_array] = useState([]);
-  const handleChange = (e:any) => {
+  const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -27,10 +26,9 @@ const Create_sub = () => {
   const Main_CategoryApi = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/category/main-category`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/main-category`
       );
       setMainCategory_array(res.data);
-
     } catch (err) {
       console.log(err);
     }
@@ -40,7 +38,7 @@ const Create_sub = () => {
     try {
       const apidata = { ...formData, color, parent_name: main_category };
       await axios.post(
-        `${process.env.BACKEND_URL}api/category/sub-category`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/sub-category`,
         apidata
       );
       toast.success("New Sub-category created!", {
@@ -70,24 +68,22 @@ const Create_sub = () => {
       );
     }
   };
-  const handleSubmit = (e:any) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     createApi();
-    
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     Main_CategoryApi();
-  },[])
+  }, []);
   return (
     <>
       <div className="row justify-content-center">
-      
         <div className="col-lg-6">
           <div className="shadow-sm p-3 mb-5 mt-5 bg-white rounded border-0">
-          <Link href="/admin/category/sub-category">
-            <button className="btn btn-secondary mb-3">Back</button>
-          </Link>
+            <Link href="/admin/category/sub-category">
+              <button className="btn btn-secondary mb-3">Back</button>
+            </Link>
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="formName">
                 <Form.Label>Name</Form.Label>
@@ -135,7 +131,6 @@ const Create_sub = () => {
                 />
               </div>
 
-              
               <div className="mb-3">
                 <label htmlFor="mainCategory" className="form-label">
                   Main Category
@@ -147,7 +142,7 @@ const Create_sub = () => {
                   onChange={(e) => setCategory_main(e.target.value)}
                 >
                   <option value="">Select Main Category</option>
-                  {mainCategory_array.map((category:category) => (
+                  {mainCategory_array.map((category: category) => (
                     <option key={category.id} value={category.id}>
                       {category.name}
                     </option>

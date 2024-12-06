@@ -1,11 +1,12 @@
 "use client";
-import { useEffect, useState } from "react";
+
 import axios from "axios";
 import { Button, Modal } from "react-bootstrap";
 import { MdCreateNewFolder, MdDelete, MdModeEdit } from "react-icons/md";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import { eventType } from "@/app/page/event/eventCard";
+import { useEffect, useState } from "react";
 
 const EventTable = () => {
   const [data, setData] = useState([]);
@@ -14,7 +15,9 @@ const EventTable = () => {
 
   const eventList = async () => {
     try {
-      const res = await axios.get(`${process.env.BACKEND_URL}api/event`);
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/event`
+      );
       setData(res.data);
     } catch (err) {
       console.log(err);
@@ -26,7 +29,7 @@ const EventTable = () => {
     const toastId = toast.loading("Processing...");
     try {
       await axios.delete(
-        `${process.env.BACKEND_URL}api/admin/event/${deleteId}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/event/${deleteId}`
       );
       toast.update(toastId, {
         render: "Successfully removed!",
@@ -45,9 +48,10 @@ const EventTable = () => {
       console.log(err);
     }
   };
-  useEffect(() => {
-    eventList();
-  }, []);
+
+  useEffect(()=>{
+    eventList()
+  },[])
   return (
     <>
       <Modal

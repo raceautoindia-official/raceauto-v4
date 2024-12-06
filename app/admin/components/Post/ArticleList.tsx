@@ -29,7 +29,9 @@ export type adminPostList = {
 };
 const ArticleList = async ({ page }: { page: string }) => {
   const res = await fetch(
-    `${process.env.BACKEND_URL}api/admin/admin-post?page=${page || 1}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/admin-post?page=${
+      page || 1
+    }`,
     { cache: "no-store" }
   );
   const post = await res.json();
@@ -67,7 +69,7 @@ const ArticleList = async ({ page }: { page: string }) => {
                       href={`/post/${item.title_slug}`}
                     >
                       <Image
-                        src={`${process.env.BACKEND_URL}${item.image_small}`}
+                        src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${item.image_small}`}
                         width={80}
                         height={45}
                         alt={item.title}

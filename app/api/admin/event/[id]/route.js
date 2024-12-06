@@ -88,7 +88,7 @@ export async function PUT(req) {
     // Execute the query
     const [results] = await db.execute(query, values);
 
-    return Nextresponse.json(results);
+    return NextResponse.json(results);
   } catch (err) {
     console.error("Error fetching data from reports:", err);
     return NextResponse.json({ error: "Internal Server Error" });
@@ -99,22 +99,9 @@ export async function DELETE(req) {
   try {
     const { pathname } = new URL(req.url);
     const id = pathname.split("/").pop();
-    const [rows] = await db.execute(
-      "SELECT image_url FROM event WHERE id = ?",
-      [id]
-    );
-
-    const imagePath = `public/${rows[0].image_url}`;
 
     await db.execute(`DELETE FROM event WHERE id = ${id}`);
 
-    fs.unlink(imagePath, (err) => {
-      if (err) {
-        console.error("Error deleting file:", err);
-      } else {
-        console.log("File deleted successfully.");
-      }
-    });
     return NextResponse.json({ message: "recorded and deleted successfully" });
   } catch (err) {
     console.error("Error submitting form:", err);

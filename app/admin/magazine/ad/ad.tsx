@@ -33,11 +33,15 @@ const Newsletter_ad_form = () => {
 
   const newsletter_ad_data = async () => {
     try {
-      const res = await axios.get(`${process.env.BACKEND_URL}api/magazine-ad`);
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/magazine-ad`
+      );
       setTitle(res.data[0].title);
       setEdition_name(res.data[0].edition_name);
       setdescription(res.data[0].description);
-      setPreview(`${process.env.BACKEND_URL}${res.data[0].thumbnail}`);
+      setPreview(
+        `${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${res.data[0].thumbnail}`
+      );
     } catch (err) {
       console.log(err);
     }
@@ -59,7 +63,10 @@ const Newsletter_ad_form = () => {
     formData.append("edition_name", edition_name);
 
     try {
-      await axios.put(`${process.env.BACKEND_URL}api/magazine-ad`, formData);
+      await axios.put(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/magazine-ad`,
+        formData
+      );
       toast.success("updated!", {
         position: "top-right",
         autoClose: 2000,

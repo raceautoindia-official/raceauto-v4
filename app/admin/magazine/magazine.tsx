@@ -18,7 +18,9 @@ const Magazine = () => {
 
   const magazineApi = async () => {
     try {
-      const res = await axios.get(`${process.env.BACKEND_URL}api/magazine`);
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/magazine`
+      );
       setData(res.data);
     } catch (err) {
       console.log(err);
@@ -30,7 +32,7 @@ const Magazine = () => {
     const toastId = toast.loading("Processing...");
     try {
       await axios.delete(
-        `${process.env.BACKEND_URL}api/admin/magazine/${deleteId}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/magazine/${deleteId}`
       );
       toast.update(toastId, {
         render: "Successfully removed!",
@@ -101,7 +103,7 @@ const Magazine = () => {
               <td>
                 <div className="d-flex">
                   <Image
-                    src={`${process.env.BACKEND_URL}${item.image_url}`}
+                    src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${item.image_url}`}
                     alt={item.title}
                     width={80}
                     height={80}
@@ -113,7 +115,12 @@ const Magazine = () => {
               <td>{formatDate(item.created_date)}</td>
               <td>
                 <button className="btn btn-primary me-3">
-                  <MdModeEdit size={20} onClick={()=>router.push(`/admin/magazine/edit/${item.id}`)}/>
+                  <MdModeEdit
+                    size={20}
+                    onClick={() =>
+                      router.push(`/admin/magazine/edit/${item.id}`)
+                    }
+                  />
                 </button>
                 <button
                   className="btn btn-danger"

@@ -20,7 +20,9 @@ const MarketList = () => {
 
   const MainCategoryApi = async () => {
     try {
-      const res = await axios.get(`${process.env.BACKEND_URL}api/admin/market`);
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/market`
+      );
       setData(res.data);
     } catch (err) {
       console.log(err);
@@ -30,7 +32,7 @@ const MarketList = () => {
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `${process.env.BACKEND_URL}api/market/delete/${deleteId}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/market/delete/${deleteId}`
       );
       toast.success("Category Deleted", {
         position: "top-right",

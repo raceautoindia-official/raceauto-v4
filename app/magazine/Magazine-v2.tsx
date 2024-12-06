@@ -12,7 +12,7 @@ import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import styles from './page.module.css'
+import styles from "./page.module.css";
 
 const Magazine_v2 = () => {
   const [data, setData] = useState<magazineCardType[]>([]);
@@ -24,7 +24,9 @@ const Magazine_v2 = () => {
 
   const magazineData = async () => {
     try {
-      const res = await axios.get(`${process.env.BACKEND_URL}api/magazine`);
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/magazine`
+      );
       setData(res.data);
     } catch (err) {
       console.log(err);
@@ -36,7 +38,7 @@ const Magazine_v2 = () => {
   const magazineCategory = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/magazine/category`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/magazine/category`
       );
       setCategory(res.data);
     } catch (err) {
@@ -47,7 +49,7 @@ const Magazine_v2 = () => {
   const magazineSorted = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/magazine/sorted/${selectedCategory}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/magazine/sorted/${selectedCategory}`
       );
       setSortedData(res.data);
       console.log(res);
@@ -223,7 +225,7 @@ const Magazine_v2 = () => {
             height: 250,
           }}
         >
-          <h2 className="m-0 mt-3 text-center" >Categories</h2>
+          <h2 className="m-0 mt-3 text-center">Categories</h2>
           <div className="col-md-3 col-lg-2 text-center">
             <button
               className={`btn btn-light ${styles.button_category}`}

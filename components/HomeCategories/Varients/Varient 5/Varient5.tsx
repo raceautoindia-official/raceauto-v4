@@ -11,7 +11,6 @@ type VarientProps = {
 };
 
 const Varient5 = ({ item, single }: VarientProps) => {
-
   const data1 = item
     .map((item) => <SubCardV5_1 key={item.id} item={item} />)
     .slice(0, 3);
@@ -29,7 +28,7 @@ const Varient5 = ({ item, single }: VarientProps) => {
                   <div className="col-md-6">
                     <div className="image-container">
                       <Image
-                        src={`${process.env.BACKEND_URL}${item.image_mid}`}
+                        src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${item.image_mid}`}
                         className="varient-image"
                         alt={
                           item.title.length > 40

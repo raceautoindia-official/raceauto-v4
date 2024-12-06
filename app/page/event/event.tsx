@@ -3,7 +3,7 @@ import EventCard, { eventType } from "./eventCard";
 import Sidebar from "@/components/Sidebar/Sidebar";
 
 const Event = async () => {
-  const res = await fetch(`${process.env.BACKEND_URL}api/event`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/event`, {
     cache: "no-cache",
   });
   const data: eventType[] = await res.json();
@@ -19,7 +19,7 @@ const Event = async () => {
               ))}
             </div>
           </div>
-          <Sidebar/>
+          <Sidebar />
         </div>
       </div>
     </>

@@ -14,13 +14,14 @@ const HeaderAd = () => {
     setIsVisible(false);
   };
 
-   // Hide the container if not visible
+  // Hide the container if not visible
   const headerData = async () => {
     try {
       setIsLoading(true);
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/admin/adspace/header`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/adspace/header`
       );
+      console.log(process.env.S3_BUCKET_URL + res.data[0].ad_code_728);
       setData(res.data[0]);
     } catch (err) {
       console.log(err);
@@ -28,8 +29,6 @@ const HeaderAd = () => {
       setIsLoading(false);
     }
   };
-
-
 
   useEffect(() => {
     headerData();
@@ -48,31 +47,30 @@ const HeaderAd = () => {
         </div>
       ) : (
         <div
-          className={isVisible ? 'my-4' : 'd-none my-4'}
-
+          className={isVisible ? "my-4" : "d-none my-4"}
           style={{ position: "relative", aspectRatio: "8.9/1", width: "100%" }}
         >
           <Image
-            src={`${process.env.BACKEND_URL}${data.ad_code_728}`}
+            src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${data.ad_code_728}`}
             alt="index top"
             fill
           />
           <button
-        onClick={handleClose}
-        style={{
-          position: "absolute",
-          top: "10px",
-          right: "10px",
-          background: "rgba(0, 0, 0, 0.6)",
-          color: "#fff",
-          border: "none",
-          borderRadius: "50%",
-          padding: "5px 10px",
-          cursor: "pointer",
-        }}
-      >
-        ✕
-      </button>
+            onClick={handleClose}
+            style={{
+              position: "absolute",
+              top: "10px",
+              right: "10px",
+              background: "rgba(0, 0, 0, 0.6)",
+              color: "#fff",
+              border: "none",
+              borderRadius: "50%",
+              padding: "5px 10px",
+              cursor: "pointer",
+            }}
+          >
+            ✕
+          </button>
         </div>
       )}
     </>

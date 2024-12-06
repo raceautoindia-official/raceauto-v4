@@ -34,7 +34,7 @@ import { TbCategoryMinus, TbCategoryPlus } from "react-icons/tb";
 import Image from "next/image";
 const AdminSidebar = async () => {
   const logoRes = await fetch(
-    `${process.env.BACKEND_URL}api/general-settings/logo`
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/general-settings/logo`
   );
 
   const logoData = await logoRes.json();
@@ -51,7 +51,7 @@ const AdminSidebar = async () => {
             className="d-flex align-items-center pb-3 mb-md-0 me-md-auto"
           >
             <Image
-              src={`${process.env.BACKEND_URL}${logoData[0].favicon}`}
+              src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${logoData[0].favicon}`}
               alt="admin-logo"
               width={30}
               height={30}

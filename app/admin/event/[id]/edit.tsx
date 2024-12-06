@@ -79,14 +79,16 @@ const EventEdit = () => {
   const eventData = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/admin/event/${id}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/event/${id}`
       );
       setTitle(res.data[0].title);
       setSummary(res.data[0].summary);
       setLocation(res.data[0].location);
       setReferenceLink(res.data[0].referenceLink);
       setDate(res.data[0].event_date);
-      setPreview(`${process.env.BACKEND_URL}${res.data[0].image_url}`);
+      setPreview(
+        `${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${res.data[0].image_url}`
+      );
     } catch (err) {
       console.log(err);
     }
@@ -110,7 +112,7 @@ const EventEdit = () => {
 
     try {
       await axios.put(
-        `${process.env.BACKEND_URL}api/admin/event/${id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/event/${id}`,
         formData
       );
       toast.success("Event updated!", {

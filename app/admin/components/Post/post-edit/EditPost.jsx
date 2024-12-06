@@ -226,7 +226,7 @@ const ArticleEdit = () => {
   const MarketApi = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/category/market`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/market`
       );
       setMarketArray(res.data);
     } catch (err) {
@@ -237,7 +237,7 @@ const ArticleEdit = () => {
   const formDetailApi = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/admin/post/edit/${params.id}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/post/edit/${params.id}`
       );
 
       const data = res.data[0];
@@ -252,7 +252,7 @@ const ArticleEdit = () => {
       setIsSlider(data.is_slider);
       setIsRecommended(data.is_recommended);
       setKeywords(data.keywords);
-      setPreviewDefault(`${process.env.BACKEND_URL}${data.imageDefault}`);
+      setPreviewDefault(`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${data.imageDefault}`);
       setAdditionalPreview(data.additionalImages);
       setCategoryMain(data.parent_id);
       setCategorySub(data.category_id);
@@ -272,7 +272,7 @@ const ArticleEdit = () => {
   const MainCategoryApi = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/category/main-category`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/main-category`
       );
       setMainCategoryArray(res.data);
     } catch (err) {
@@ -287,7 +287,7 @@ const ArticleEdit = () => {
   const subCategoryApi = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/category/sub-category/parent/${categoryMain}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/sub-category/parent/${categoryMain}`
       );
       setSubCategoryArray(res.data);
     } catch (err) {
@@ -317,7 +317,7 @@ const ArticleEdit = () => {
 
   const handleImageRemove = async (url) => {
     try {
-      await axios.put(`${process.env.BACKEND_URL}api/admin/post/remove-post-image`, {
+      await axios.put(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/post/remove-post-image`, {
         image_url: url,
         id: params.id,
       });
@@ -359,7 +359,7 @@ const ArticleEdit = () => {
 
     try {
       await axios.put(
-        `${process.env.BACKEND_URL}api/admin/post/edit/${params.id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/post/edit/${params.id}`,
         formData
       );
       toast.success("Article updated", {
@@ -399,8 +399,8 @@ const ArticleEdit = () => {
 
   return (
     <div className="col-12">
- <button
-        className="btn btn-secondary mt-3 ms-2" onClick={()=>{
+      <button
+        className="btn btn-secondary mt-3 ms-2" onClick={() => {
           router.back()
           router.refresh()
         }}
@@ -662,7 +662,7 @@ const ArticleEdit = () => {
                   addtionalPreview.map((file, index) => (
                     <div key={index}>
                       <img
-                        src={`${process.env.BACKEND_URL}${file.image_mid}`}
+                        src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${file.image_mid}`}
                         alt={`preview-${index}`}
                         className="image-preview"
                         height={50}

@@ -91,7 +91,10 @@ const EventPost = () => {
     formData.append("image_url", image_url);
 
     try {
-      await axios.post(`${process.env.BACKEND_URL}api/admin/event`, formData);
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/event`,
+        formData
+      );
       toast.success("Event posted!", {
         position: "top-right",
         autoClose: 4000,

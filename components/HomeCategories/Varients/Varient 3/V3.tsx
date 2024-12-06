@@ -11,7 +11,6 @@ type VarientProps = {
 };
 
 const Varient3 = ({ item, Three }: VarientProps) => {
-
   const data2 = item.map((item) => <SubCardV3 key={item.id} item={item} />);
   return (
     <>
@@ -23,7 +22,7 @@ const Varient3 = ({ item, Three }: VarientProps) => {
                 <Link className="link-style" href={`/post/${item.title_slug}`}>
                   <div className="image-container">
                     <Image
-                      src={`${process.env.BACKEND_URL}${item.image_mid}`}
+                      src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${item.image_mid}`}
                       className="varient-image"
                       alt={
                         item.title.length > 40

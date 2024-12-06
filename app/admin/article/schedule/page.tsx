@@ -74,7 +74,7 @@ const page = async () => {
                       href={`/post/${item.title_slug}`}
                     >
                       <Image
-                        src={`${process.env.BACKEND_URL}${item.image_small}`}
+                        src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${item.image_small}`}
                         width={80}
                         height={45}
                         alt={item.title}

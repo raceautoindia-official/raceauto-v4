@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-'use client'
+"use client";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Form, Image } from "react-bootstrap";
 import { toast } from "react-toastify";
-
 
 const AdForm = () => {
   const [selectedOption, setSelectedOption] = useState("");
@@ -28,11 +27,11 @@ const AdForm = () => {
     setIsChecked(!isChecked);
   };
 
-  const handleSelectChange = (event:any) => {
+  const handleSelectChange = (event: any) => {
     setSelectedOption(event.target.value);
   };
 
-  const handleFileUpload = (event:any, setFile:any, setPreview:any) => {
+  const handleFileUpload = (event: any, setFile: any, setPreview: any) => {
     const file = event.target.files[0];
     setFile(file);
     setPreview(URL.createObjectURL(file));
@@ -41,7 +40,7 @@ const AdForm = () => {
   const titleApi = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/admin/adspace/titles`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/adspace/titles`
       );
       setTitle(res.data);
     } catch (err) {
@@ -52,21 +51,33 @@ const AdForm = () => {
   const imageApi = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/admin/adspace/${selectedOption}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/adspace/${selectedOption}`
       );
 
       setIsChecked(res.data[0].is_responsive === 1);
 
-      setPreview1200(`${process.env.BACKEND_URL}${res.data[0].ad_code_1200}` || "");
-      setPreview728(`${process.env.BACKEND_URL}${res.data[0].ad_code_728}` || "");
-      setPreview300(`${process.env.BACKEND_URL}${res.data[0].ad_code_300}` || "");
-      setPreview234(`${process.env.BACKEND_URL}${res.data[0].ad_code_234}` || "");
+      setPreview1200(
+        `${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${res.data[0].ad_code_1200}` ||
+          ""
+      );
+      setPreview728(
+        `${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${res.data[0].ad_code_728}` ||
+          ""
+      );
+      setPreview300(
+        `${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${res.data[0].ad_code_300}` ||
+          ""
+      );
+      setPreview234(
+        `${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${res.data[0].ad_code_234}` ||
+          ""
+      );
     } catch (err) {
       console.log(err);
     }
   };
 
-  const handleTextareaChange = (event:any) => {
+  const handleTextareaChange = (event: any) => {
     setResponsiveCode(event.target.value);
   };
 
@@ -84,7 +95,7 @@ const AdForm = () => {
       formData.append("responsiveCode", responsiveCode);
 
       await axios.put(
-        `${process.env.BACKEND_URL}api/admin/adspace/${selectedOption}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/adspace/${selectedOption}`,
         formData
       );
 
@@ -125,14 +136,17 @@ const AdForm = () => {
               onChange={handleSelectChange}
             >
               <option value="">None</option>
-              {title.map((item:any) => (
+              {title.map((item: any) => (
                 <option key={item.ad_space} value={item.ad_space}>
                   {item.ad_space.split("_").join(" ")}
                 </option>
               ))}
             </Form.Control>
           </Form.Group>
-          <Form.Group controlId="responsiveCheckbox" className="form-check my-4">
+          <Form.Group
+            controlId="responsiveCheckbox"
+            className="form-check my-4"
+          >
             <Form.Check
               type="checkbox"
               label="Responsive"
@@ -145,7 +159,9 @@ const AdForm = () => {
             <Form.Control
               type="file"
               accept="image/*"
-              onChange={(e) => handleFileUpload(e, setAdSize1200, setPreview1200)}
+              onChange={(e) =>
+                handleFileUpload(e, setAdSize1200, setPreview1200)
+              }
             />
             {preview1200 && <Image src={preview1200} alt="Preview" fluid />}
           </Form.Group>

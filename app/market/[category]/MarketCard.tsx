@@ -9,7 +9,7 @@ import { formatDate } from "@/components/Time";
 
 const MarketCard = async ({ item }: { item: CateoryPostType }) => {
   const blurdata = await getBaseUrl(
-    `${process.env.BACKEND_URL}${item.image_big}`
+    `${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${item.image_big}`
   );
   return (
     <div className="mb-3 col-md-6">
@@ -17,7 +17,7 @@ const MarketCard = async ({ item }: { item: CateoryPostType }) => {
         <Link className="link-style" href={`/post/${item.title_slug}`}>
           <div className={styles.postList_image_container}>
             <Image
-              src={`${process.env.BACKEND_URL}${item.image_big}`}
+              src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${item.image_big}`}
               fill
               alt={item.title}
               priority

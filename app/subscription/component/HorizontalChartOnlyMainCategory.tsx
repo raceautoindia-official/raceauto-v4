@@ -31,14 +31,14 @@ const MainHorizontalChart = () => {
   const [loading, setLoading] = useState(false); // Loading state
 
   const staticData = [
-    162000, 82000, 97000, 78000, 66000, 51000, 66000, 50000, 25000, 40000, 30000, 60000,
-    43000, 23000, 51000, 34000,
+    162000, 82000, 97000, 78000, 66000, 51000, 66000, 50000, 25000, 40000,
+    30000, 60000, 43000, 23000, 51000, 34000,
   ];
 
   const mainCategoryApi = async () => {
     try {
       const res = await axios.get(
-        `${process.env.BACKEND_URL}api/category/main-category`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/main-category`
       );
       const filtered = res.data
         .filter((item: any) => item.show_on_menu == 1)
@@ -71,9 +71,9 @@ const MainHorizontalChart = () => {
       legend: {
         display: false, // Remove legend
       },
-    //   tooltip: {
-    //     enabled: false, // Disable tooltips
-    //   },
+      //   tooltip: {
+      //     enabled: false, // Disable tooltips
+      //   },
     },
     // interaction: {
     //   mode: "nearest", // Default interaction mode
