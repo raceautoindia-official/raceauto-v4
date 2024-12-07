@@ -19,7 +19,7 @@ type proptype = {
 const FeatureCard = async (props: proptype) => {
   const { item } = props;
 
-  const blurdata = await getBaseUrl(process.env.BACKEND_URL + item.image_big);
+  const blurdata = await getBaseUrl(process.env.NEXT_PUBLIC_S3_BUCKET_URL + item.image_big);
   return (
     <div className="col-lg-12 col-6 p-1">
       <Link className="link-style" href={`/post/${item.title_slug}`}>
@@ -28,7 +28,7 @@ const FeatureCard = async (props: proptype) => {
           style={{ position: "relative", width: "100%", aspectRatio: "3/2" }}
         >
           <Image
-            src={process.env.BACKEND_URL + `${item.image_big}`}
+            src={process.env.NEXT_PUBLIC_S3_BUCKET_URL + `${item.image_big}`}
             alt={item.title}
             fill
             priority

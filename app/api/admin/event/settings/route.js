@@ -3,8 +3,9 @@ export const dynamic = "force-dynamic";
 import db from "@/lib/db";
 import { NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
-import fs from 'fs'
 import path from 'path'
+import s3Client from "@/lib/s3Client";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
 
 const currentDate = new Date();
 const year = String(currentDate.getFullYear());
@@ -41,7 +42,7 @@ export async function PUT(req) {
     let query =
       "UPDATE event_settings SET event_1_link = ?, event_2_link = ?, event_1_visible = ?, event_2_visible = ?, banner_content = ?";
 
-    let values = [
+    const values = [
       event_1_link,
       event_2_link,
       event_1_visible == "true" || event_1_visible == 1 ? 1 : 0,
@@ -49,79 +50,58 @@ export async function PUT(req) {
       banner_content,
     ];
 
-    const primaryFolder = folderName;
-  
-    const primaryUploadDir = path.join(
-      process.cwd(),
-      "public/uploads/eventpage",
-      primaryFolder
-    );
+    const currentYear = new Date().getFullYear();
+    const folderName = `uploads/eventpage/${currentYear}`;
+    const bucketName = process.env.AWS_S3_BUCKET_NAME;
 
-    if (!fs.existsSync(primaryUploadDir)) {
-      fs.mkdirSync(primaryUploadDir, { recursive: true });
+    // Helper function to upload files to S3
+    const uploadToS3 = async (file, folder) => {
+      const imageFilename = file.name;
+      const imageFileExtension = path.extname(imageFilename);
+      const newImageName = `${uuidv4()}${imageFileExtension}`;
+      const s3Key = `${folder}/${newImageName}`;
+      const imageFileBuffer = Buffer.from(await file.arrayBuffer());
 
-      const htmlContent = `<!DOCTYPE html>
-          <html>
-          <head>
-            <title>403 Forbidden</title>
-          </head>
-          <body>
-            <p>Directory access is forbidden.</p>
-          </body>
-          </html>`;
+      await s3Client.send(
+        new PutObjectCommand({
+          Bucket: bucketName,
+          Key: s3Key,
+          Body: imageFileBuffer,
+          ContentType: file.type, // Set content type
+        })
+      );
 
-      fs.writeFileSync(`${primaryUploadDir}/index.html`, htmlContent);
-    }
+      return s3Key;
+    };
 
+    // Upload banner image
     if (banner_image) {
-      const imageFilename = banner_image.name;
-      const imageFileExtension = path.extname(imageFilename);
-      const newImageName = `${uuidv4()}${imageFileExtension}`;
-      const imagePath = path.join(primaryUploadDir, newImageName);
-      const imageFileBuffer = Buffer.from(await banner_image.arrayBuffer());
-      fs.writeFileSync(imagePath, imageFileBuffer);
-
+      const bannerImageKey = await uploadToS3(banner_image, folderName);
       query += ", banner_image = ?";
-
-      const banner_imageUrl = `uploads/eventpage/${folderName}/${newImageName}`;
-      values.push(banner_imageUrl);
+      values.push(bannerImageKey);
     }
 
+    // Upload event_1 image
     if (event_1) {
-      const imageFilename = event_1.name;
-      const imageFileExtension = path.extname(imageFilename);
-      const newImageName = `${uuidv4()}${imageFileExtension}`;
-      const imagePath = path.join(primaryUploadDir, newImageName);
-      const imageFileBuffer = Buffer.from(await event_1.arrayBuffer());
-      fs.writeFileSync(imagePath, imageFileBuffer);
-
+      const event1ImageKey = await uploadToS3(event_1, folderName);
       query += ", upcoming_event_1 = ?";
-
-      const upcoming_event_1 = `uploads/eventpage/${folderName}/${newImageName}`;
-
-      values.push(upcoming_event_1);
+      values.push(event1ImageKey);
     }
 
+    // Upload event_2 image
     if (event_2) {
-      const imageFilename = event_2.name;
-      const imageFileExtension = path.extname(imageFilename);
-      const newImageName = `${uuidv4()}${imageFileExtension}`;
-      const imagePath = path.join(primaryUploadDir, newImageName);
-      const imageFileBuffer = Buffer.from(await event_2.arrayBuffer());
-      fs.writeFileSync(imagePath, imageFileBuffer);
-
+      const event2ImageKey = await uploadToS3(event_2, folderName);
       query += ", upcoming_event_2 = ?";
-
-      const upcoming_event_2 = `uploads/eventpage/${folderName}/${newImageName}`;
-
-      values.push(upcoming_event_2);
+      values.push(event2ImageKey);
     }
 
+    // Add WHERE clause
     query += " WHERE id = 1";
 
+    // Execute query
     await db.execute(query, values);
 
-    return NextResponse.json({ message: "updated success" });
+    return NextResponse.json({ message: "Updated successfully" });
   } catch (err) {
     console.error("Error submitting form:", err);
     return NextResponse.json(

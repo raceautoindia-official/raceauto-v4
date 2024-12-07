@@ -22,7 +22,7 @@ const MarketComponent = async ({
 }) => {
   const res = await fetch(
     `${
-      process.env.BACKEND_URL
+      process.env.NEXT_PUBLIC_BACKEND_URL
     }api/post/market-category?market=${categoryName}&page=${page || 1}`,
     {
       next: {

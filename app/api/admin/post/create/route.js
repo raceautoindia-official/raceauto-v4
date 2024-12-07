@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
-import fs from "fs";
-import path from "path";
 import sharp from "sharp";
 import db from "@/lib/db";
 import schedule from "node-schedule";
+import s3Client from "@/lib/s3Client";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
 
 const currentDate = new Date();
 const month = String(currentDate.getMonth() + 1).padStart(2, "0");
@@ -43,33 +43,7 @@ export async function POST(req) {
 
     const tags_split = tags.split(",");
 
-    const uploadedFiles = [];
-    const primaryFolder = folderName;
 
-    // Create upload directories for both folders
-    const primaryUploadDir = path.join(
-      process.cwd(),
-      "public/uploads/images",
-      primaryFolder
-    );
-
-    if (!fs.existsSync(primaryUploadDir)) {
-      fs.mkdirSync(primaryUploadDir, { recursive: true });
-
-      const htmlContent = `<!DOCTYPE html>
-          <html>
-          <head>
-            <title>403 Forbidden</title>
-          </head>
-          <body>
-            <p>Directory access is forbidden.</p>
-          </body>
-          </html>`;
-
-      fs.writeFileSync(`${primaryUploadDir}/index.html`, htmlContent);
-    }
-
-    // Array to hold files
     const files = [];
 
     // Collect all files from formData
@@ -79,153 +53,148 @@ export async function POST(req) {
       }
     }
 
-   
-      const firstFile = files[0];
-      const firstFilename = firstFile.name;
-      const firstFileExtension = path.extname(firstFilename);
-      const newFirstFilename = `${uuidv4()}${firstFileExtension}`;
-      const firstFilePath = path.join(primaryUploadDir, newFirstFilename);
+    const firstFile = files[0];
+    const firstFilename = firstFile.name;
+    const imageFileExtension = firstFilename.split(".").pop();
+    const newImageName = `${uuidv4()}.${imageFileExtension}`;
+    const bucketName = process.env.AWS_S3_BUCKET_NAME;
+    const folderPath = `uploads/images/${folderName}`;
 
-      // Save the first file
-      const firstFileBuffer = Buffer.from(await firstFile.arrayBuffer());
-      fs.writeFileSync(firstFilePath, firstFileBuffer);
+    // Read the first file into a buffer
+    const firstFileBuffer = Buffer.from(await firstFile.arrayBuffer());
+    
+    // Define the S3 upload function
+    const uploadToS3 = async (buffer, key, contentType) => {
+      const uploadParams = {
+        Bucket: bucketName,
+        Key: key,
+        Body: buffer,
+        ContentType: contentType,
+      };
+      await s3Client.send(new PutObjectCommand(uploadParams));
+      return `${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${key}`;
+    };
+    
+    // Upload original image
+    const originalKey = `${folderPath}/${newImageName}`;
+    const image_default = await uploadToS3(firstFileBuffer, originalKey, firstFile.type);
+    
+    // Resize and upload large image
+    const largeKey = `${folderPath}/750_${newImageName}`;
+    const image_big = await sharp(firstFileBuffer)
+      .resize(750, 500)
+      .toBuffer()
+      .then((buffer) => uploadToS3(buffer, largeKey, "image/jpeg"));
+    
+    // Resize and upload small image
+    const smallKey = `${folderPath}/140_${newImageName}`;
+    const image_small = await sharp(firstFileBuffer)
+      .resize(140, 90)
+      .toBuffer()
+      .then((buffer) => uploadToS3(buffer, smallKey, "image/jpeg"));
+    
+    // Resize and upload medium image
+    const mediumKey = `${folderPath}/380_${newImageName}`;
+    const image_mid = await sharp(firstFileBuffer)
+      .resize(380, 226)
+      .toBuffer()
+      .then((buffer) => uploadToS3(buffer, mediumKey, "image/jpeg"));
+    
+    // Prepare database values
+    const img_default = `uploads/images/${folderName}/${newImageName}`;
+    const img_big = `uploads/images/${folderName}/750_${newImageName}`;
+    const img_small = `uploads/images/${folderName}/140_${newImageName}`;
+    const img_mid = `uploads/images/${folderName}/380_${newImageName}`;
 
-      uploadedFiles.push({
-        originalFilename: firstFilename,
-        newFilename: newFirstFilename,
-        filePath: `/uploads/${primaryFolder}/${newFirstFilename}`,
-      });
-      const image_default = `./public/uploads/images/${folderName}/${newFirstFilename}`;
+    const postQuery = [
+      title,
+      title_slug,
+      keywords,
+      summary,
+      content,
+      category_id,
+      img_big,
+      img_default,
+      img_mid,
+      img_small,
+      is_slider,
+      is_featured,
+      is_recommended,
+      user_id,
+      is_breaking,
+      image_description,
+      market,
+      draft,
+      scheduleTime,
+    ];
+    const [postResult] = await db.execute(
+      `
+        INSERT INTO posts (
+          title, title_slug, keywords, summary, content, category_id, image_big, image_default, 
+          image_mid, image_small, is_slider, is_featured, is_recommended, user_id,
+          is_breaking, image_description, market, status, is_scheduled) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `,
+      postQuery
+    );
 
-      const image_big = `./public/uploads/images/${folderName}/750${newFirstFilename}`;
-      const image_small = `./public/uploads/images/${folderName}/140${newFirstFilename}`;
-      const image_mid = `./public/uploads/images/${folderName}/380${newFirstFilename}`;
+    const postId = postResult.insertId;
 
-      const img_default = `uploads/images/${folderName}/${newFirstFilename}`;
-      const img_big = `uploads/images/${folderName}/750${newFirstFilename}`;
-      const img_small = `uploads/images/${folderName}/140${newFirstFilename}`;
-      const img_mid = `uploads/images/${folderName}/380${newFirstFilename}`;
-
-      await sharp(image_default).resize(750, 500).toFile(image_big);
-      await sharp(image_default).resize(140, 90).toFile(image_small);
-      await sharp(image_default).resize(380, 226).toFile(image_mid);
-
-      const postQuery = [
-        title,
-        title_slug,
-        keywords,
-        summary,
-        content,
-        category_id,
-        img_big,
-        img_default,
-        img_mid,
-        img_small,
-        is_slider,
-        is_featured,
-        is_recommended,
-        user_id,
-        is_breaking,
-        image_description,
-        market,
-        draft,
-        scheduleTime,
-      ];
-      const [postResult] = await db.execute(
-        `
-          INSERT INTO posts (
-            title, title_slug, keywords, summary, content, category_id, image_big, image_default, 
-            image_mid, image_small, is_slider, is_featured, is_recommended, user_id,
-            is_breaking, image_description, market, status, is_scheduled) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-          `,
-        postQuery
+    for (const item of tags_split) {
+      const tag_slug = item.split(" ").join("-");
+      await db.execute(
+        `INSERT INTO tags (post_id, tag, tag_slug) VALUES (?, ?, ?)`,
+        [postId, item, tag_slug]
       );
+    }
 
-      const postId = postResult.insertId;
+    if (scheduled) {
+      const publishTime = new Date(scheduled);
+      const currentTime = new Date();
 
-      for (const item of tags_split) {
-        const tag_slug = item.split(" ").join("-");
-        await db.execute(
-          `INSERT INTO tags (post_id, tag, tag_slug) VALUES (?, ?, ?)`,
-          [postId, item, tag_slug]
-        );
+      // Check if the scheduled time is in the past
+      if (publishTime < currentTime) {
+        await db.execute(`UPDATE posts SET created_at = ? WHERE id = ?`, [
+          publishTime,
+          postId,
+        ]);
+        console.log("Scheduled time is in the past. No action taken.");
+      } else {
+        schedule.scheduleJob(publishTime, async function () {
+          await db.execute(`UPDATE posts SET is_scheduled = 0 WHERE id = ?`, [
+            postId,
+          ]);
+          console.log(`Post with ID ${postId} is now published.`);
+        });
       }
+    }
 
-      if (scheduled) {
-  const publishTime = new Date(scheduled);
-  const currentTime = new Date();
-
-  // Check if the scheduled time is in the past
-  if (publishTime < currentTime) {
-    await db.execute(`UPDATE posts SET created_at = ? WHERE id = ?`, [
-      publishTime,
-      postId,
-    ]);
-    console.log("Scheduled time is in the past. No action taken.");
-  }else{
-    schedule.scheduleJob(publishTime, async function () {
-      await db.execute(`UPDATE posts SET is_scheduled = 0 WHERE id = ?`, [
-        postId,
-      ]);
-      console.log(`Post with ID ${postId} is now published.`);
-    });
-  }
- 
-}
-
-
-    // Handle remaining files (secondary files)
+    // Handle remaining files (additional images)
     if (files.length > 1) {
       const remainingFiles = files.slice(1);
 
-      // for (const file of remainingFiles) {
-      //   const originalFilename = file.name;
-      //   const fileExtension = path.extname(originalFilename);
-      //   const newFilename = `${uuidv4()}${fileExtension}`;
-      //   const filePath = path.join(primaryUploadDir, newFilename);
-
-      //   // Save each remaining file
-      //   const fileBuffer = Buffer.from(await file.arrayBuffer());
-      //   fs.writeFileSync(filePath, fileBuffer);
-
-      //   uploadedFiles.push({
-      //     originalFilename,
-      //     newFilename,
-      //     filePath: `/uploads/${primaryFolder}/${newFilename}`,
-      //   });
-      // }
       const filePromises = remainingFiles.map(async (file) => {
         const originalFilename = file.name;
-        const fileExtension = path.extname(originalFilename);
-        const newFilename = `${uuidv4()}${fileExtension}`;
-        const filePath = path.join(primaryUploadDir, newFilename);
+        const imageFileExtension = originalFilename.split(".").pop();
+        const newImageName = `${uuidv4()}.${imageFileExtension}`;
+        const additionalKey = `${folderPath}/${newImageName}`;
 
-        // Save each remaining file
+        // Read the remaining file into a buffer and upload it directly to S3
         const fileBuffer = Buffer.from(await file.arrayBuffer());
-        fs.writeFileSync(filePath, fileBuffer);
-        uploadedFiles.push({
-          originalFilename,
-          newFilename,
-          filePath: `/uploads/${primaryFolder}/${newFilename}`,
-        });
-        const additional_image_default = `./public/uploads/images/${folderName}/${newFilename}`;
-        const additional_image_big = `./public/uploads/images/${folderName}/750${newFilename}`;
-        const img_default = `uploads/images/${folderName}/${newFilename}`;
-        const img_big = `uploads/images/${folderName}/750${newFilename}`;
+        const additionalImageDefault = await uploadToS3(fileBuffer, additionalKey, file.type);
 
-        // Move additional image to the target directory
-
-        // Resize additional images
-        await sharp(additional_image_default)
+        // Resize additional images and upload them to S3
+        const additionalLargeKey = `${folderPath}/750_${newImageName}`;
+        const additionalImageBig = await sharp(fileBuffer)
           .resize(750, 500)
-          .toFile(additional_image_big);
+          .toBuffer()
+          .then((buffer) => uploadToS3(buffer, additionalLargeKey, "image/jpeg"));
+
+        const img_default = `uploads/images/${folderName}/${newImageName}`;
+        const img_big = `uploads/images/${folderName}/750_${newImageName}`;
 
         // Insert additional image data into the database
         await db.execute(
-          `
-          INSERT INTO post_images (post_id, image_big, image_default) 
-          VALUES (?, ?, ?)
-          `,
+          `INSERT INTO post_images (post_id, image_big, image_default) VALUES (?, ?, ?)`,
           [postId, img_big, img_default]
         );
       });

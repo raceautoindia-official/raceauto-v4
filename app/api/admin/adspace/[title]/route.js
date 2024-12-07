@@ -20,7 +20,6 @@ export async function GET(req) {
   }
 }
 
-
 export async function PUT(req) {
   try {
     const { pathname } = new URL(req.url);

@@ -1,8 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
+import { NextResponse } from "next/server";
 import path from "path";
 import { v4 as uuidv4 } from "uuid";
 import db from "@/lib/db";
+import s3Client from "@/lib/s3Client";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
 
 export async function GET(req) {
   try {
@@ -34,7 +35,6 @@ export async function PUT(req) {
     const currentDate = new Date();
     const year = String(currentDate.getFullYear());
     const folderName = `${year}`;
-
     const formData = await req.formData();
     const image_url = formData.get("image_url");
     const title = formData.get("title");
@@ -42,43 +42,32 @@ export async function PUT(req) {
     const location = formData.get("location");
     const referenceLink = formData.get("referenceLink");
     const event_date = formData.get("event_date");
+
     let query =
       "UPDATE event SET title = ?, summary = ?, location = ?, referenceLink = ?, event_date = ?";
-
     const values = [title, summary, location, referenceLink, event_date];
-
-    const primaryUploadDir = path.join(
-      process.cwd(),
-      "public/uploads/eventpage",
-      folderName
-    );
-
-    if (!fs.existsSync(primaryUploadDir)) {
-      fs.mkdirSync(primaryUploadDir, { recursive: true });
-
-      const htmlContent = `<!DOCTYPE html>
-                <html>
-                <head>
-                  <title>403 Forbidden</title>
-                </head>
-                <body>
-                  <p>Directory access is forbidden.</p>
-                </body>
-                </html>`;
-
-      fs.writeFileSync(`${destiny}/index.html`, htmlContent);
-    }
 
     if (image_url) {
       const imageFilename = image_url.name;
       const imageFileExtension = path.extname(imageFilename);
       const newImageName = `${uuidv4()}${imageFileExtension}`;
-      const imagePath = path.join(primaryUploadDir, newImageName);
+      const s3Key = `uploads/eventpage/${folderName}/${newImageName}`;
       const imageFileBuffer = Buffer.from(await image_url.arrayBuffer());
-      fs.writeFileSync(imagePath, imageFileBuffer);
+
+      // Upload file to S3
+      const bucketName = process.env.AWS_S3_BUCKET_NAME;
+      const uploadParams = {
+        Bucket: bucketName,
+        Key: s3Key,
+        Body: imageFileBuffer,
+        ContentType: image_url.type, // Set content type from the uploaded file
+      };
+
+      await s3Client.send(new PutObjectCommand(uploadParams));
+
+      // Update the query to include the S3 file URL
       query += ", image_url = ?";
-      const image = `uploads/eventpage/${folderName}/${newImageName}`;
-      values.push(image);
+      values.push(s3Key);
     }
 
     // Append the WHERE clause
@@ -90,8 +79,8 @@ export async function PUT(req) {
 
     return NextResponse.json(results);
   } catch (err) {
-    console.error("Error fetching data from reports:", err);
-    return NextResponse.json({ error: "Internal Server Error" });
+    console.error("Error updating event:", err);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
 

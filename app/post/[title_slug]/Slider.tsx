@@ -34,7 +34,7 @@ export default function PostSlider({ images, title }: SliderType) {
         {images.map((item, i) => (
           <SwiperSlide key={i}>
             <ImageWithPlaceholder
-              src={process.env.BACKEND_URL + item.image_default}
+              src={process.env.NEXT_PUBLIC_S3_BUCKET_URL + item.image_default}
               alt={title}
             />
           </SwiperSlide>

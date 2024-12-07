@@ -1,9 +1,10 @@
 export const dynamic = "force-dynamic";
 import db from "@/lib/db";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import path from "path";
-import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
+import s3Client from "@/lib/s3Client";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
 
 export async function GET() {
   try {
@@ -18,102 +19,73 @@ export async function GET() {
 }
 
 export async function PUT(req) {
-  const payload = await req.formData();
-  const logo = payload.get("logo");
-  const logo_footer = payload.get("logo_footer");
-  const logo_email = payload.get("logo_email");
-  const favicon = payload.get("favicon");
-
   try {
-    let query = "UPDATE general_settings SET ";
-    let values = [];
-    let updates = [];
+    const formData = await req.formData();
 
-    const primaryUploadDir = path.join(process.cwd(), "public/uploads/logo");
+    const logo = formData.get("logo");
+    const logo_footer = formData.get("logo_footer");
+    const logo_email = formData.get("logo_email");
+    const favicon = formData.get("favicon");
 
-    if (!fs.existsSync(primaryUploadDir)) {
-      fs.mkdirSync(primaryUploadDir, { recursive: true });
+    const bucketName = process.env.AWS_S3_BUCKET_NAME;
 
-      const htmlContent = `<!DOCTYPE html>
-            <html>
-            <head>
-              <title>403 Forbidden</title>
-            </head>
-            <body>
-              <p>Directory access is forbidden.</p>
-            </body>
-            </html>`;
+    let query = "UPDATE general_settings SET";
+    let queryParams = [];
 
-      fs.writeFileSync(`${primaryUploadDir}/index.html`, htmlContent);
-    }
+    // Helper function to handle S3 uploads
+    const uploadToS3 = async (file, folder) => {
+      const fileExtension = path.extname(file.name);
+      const newFileName = `${uuidv4()}${fileExtension}`;
+      const s3Key = `${folder}/${newFileName}`;
+      const fileBuffer = Buffer.from(await file.arrayBuffer());
 
+      const uploadParams = {
+        Bucket: bucketName,
+        Key: s3Key,
+        Body: fileBuffer,
+        ContentType: file.type,
+     
+      };
+
+      await s3Client.send(new PutObjectCommand(uploadParams));
+      return s3Key; // Return the public URL
+    };
+
+    // Dynamic query construction for file fields
     if (logo) {
-      updates.push("logo = ?");
-      const imageFilename = logo.name;
-      const imageFileExtension = path.extname(imageFilename);
-      const newimagename = `${uuidv4()}${imageFileExtension}`;
-      const imagePath = path.join(primaryUploadDir, newimagename);
-
-      // Save the first file
-      const firstFileBuffer = Buffer.from(await logo.arrayBuffer());
-
-      fs.writeFileSync(imagePath, firstFileBuffer);
-      const logourl = `uploads/logo/${newimagename}`;
-      values.push(logourl);
+      const logoUrl = await uploadToS3(logo, "uploads/logo");
+      query += " logo = ?,";
+      queryParams.push(logoUrl);
     }
-
     if (logo_footer) {
-      updates.push("logo_footer = ?");
-      const imageFilename = logo_footer.name;
-      const imageFileExtension = path.extname(imageFilename);
-      const newimagename = `${uuidv4()}${imageFileExtension}`;
-      const imagePath = path.join(primaryUploadDir, newimagename);
-
-      // Save the first file
-      const firstFileBuffer = Buffer.from(await logo_footer.arrayBuffer());
-
-      fs.writeFileSync(imagePath, firstFileBuffer);
-      const logo_footerurl = `uploads/logo/${newimagename}`;
-      values.push(logo_footerurl);
+      const logoFooterUrl = await uploadToS3(logo_footer, "uploads/logo");
+      query += " logo_footer = ?,";
+      queryParams.push(logoFooterUrl);
     }
-
     if (logo_email) {
-      updates.push("logo_email = ?");
-      const imageFilename = logo_email.name;
-      const imageFileExtension = path.extname(imageFilename);
-      const newimagename = `${uuidv4()}${imageFileExtension}`;
-      const imagePath = path.join(primaryUploadDir, newimagename);
-
-      // Save the first file
-      const firstFileBuffer = Buffer.from(await logo_email.arrayBuffer());
-
-      fs.writeFileSync(imagePath, firstFileBuffer);
-      const logo_emailurl = `uploads/logo/${newimagename}`;
-      values.push(logo_emailurl);
+      const logoEmailUrl = await uploadToS3(logo_email, "uploads/logo");
+      query += " logo_email = ?,";
+      queryParams.push(logoEmailUrl);
     }
-
     if (favicon) {
-      updates.push("favicon = ?");
-      const imageFilename = favicon.name;
-      const imageFileExtension = path.extname(imageFilename);
-      const newimagename = `${uuidv4()}${imageFileExtension}`;
-      const imagePath = path.join(primaryUploadDir, newimagename);
-
-      // Save the first file
-      const firstFileBuffer = Buffer.from(await favicon.arrayBuffer());
-
-      fs.writeFileSync(imagePath, firstFileBuffer);
-      const faviconurl = `uploads/logo/${newimagename}`;
-      values.push(faviconurl);
+      const faviconUrl = await uploadToS3(favicon, "uploads/logo");
+      query += " favicon = ?,";
+      queryParams.push(faviconUrl);
     }
 
-    query += updates.join(", ") + " WHERE id = 1";
+    // Finalizing query
+    query = query.slice(0, -1); // Remove the trailing comma
+    query += " WHERE id = 1";
 
-    await db.execute(query, values);
+    // Execute database query
+    await db.execute(query, queryParams);
 
-    return NextResponse.json({ message: "logo updated" });
-  } catch (err) {
-    console.log(err);
-    return NextResponse.json({ err: "internal error" }, { status: 500 });
+    return NextResponse.json({ message: "Logos updated successfully" });
+  } catch (error) {
+    console.error("Error updating general settings:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }

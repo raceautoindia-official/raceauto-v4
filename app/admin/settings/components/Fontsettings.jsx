@@ -58,14 +58,14 @@ const FontSetting = () => {
   const applyChanges = async () => {
     try {
       await axios.put(
-        `${process.env.BACKEND_URL
+        `${process.env.NEXT_PUBLIC_BACKEND_URL
         }api/admin/settings/fonts/default/${defaultFont}`
       );
 
       const fontdata = { primary_font: primaryFont, secondary_font: secondaryFont, tertiary_font: tertiaryFont }
 
       await axios.put(
-        `${process.env.BACKEND_URL
+        `${process.env.NEXT_PUBLIC_BACKEND_URL
         }api/admin/settings/fonts/three-fonts`, fontdata
       );
 

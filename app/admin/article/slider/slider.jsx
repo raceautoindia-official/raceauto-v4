@@ -95,7 +95,7 @@ const SliderArticles = () => {
     const handlePostType = async () => {
         try {
             const res = await axios.get(
-                `${process.env.BACKEND_URL
+                `${process.env.NEXT_PUBLIC_BACKEND_URL
                 }api/admin/post/is_slider`,
             );
             setData(res.data);
