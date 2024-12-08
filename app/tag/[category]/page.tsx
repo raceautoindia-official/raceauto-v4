@@ -2,6 +2,8 @@ import React from "react";
 import TagComponent from "./Tag";
 import Sidebar from "@/components/Sidebar/Sidebar";
 
+
+
 const MarketPage = (context: {
   params: { category: string };
   searchParams: { page: string };

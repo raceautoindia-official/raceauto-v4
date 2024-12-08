@@ -12,7 +12,7 @@ const MagazineCard = ({ item }: { item: magazineCardType }) => {
       <div className="col-12 mt-3 shadow-xl">
         <div className="row g-0">
           <div className="col-md-4">
-            <Link href={`/magazine/${item.title_slug}`}>
+            <Link href={`/magazine/${item.title_slug.toLowerCase()}`}>
               <div
                 className={styles.magazinecardcontainer}
                 style={{

@@ -29,7 +29,7 @@ const Subcategory = async (props: proptype) => {
     >
       <Link
         className={`${styles.dropdown_item} dropdown-item`}
-        href={`/category/${main}`}
+        href={`/category/${main.toLowerCase()}`}
       >
         All
       </Link>
@@ -37,7 +37,7 @@ const Subcategory = async (props: proptype) => {
         <Link
           key={item.id}
           className={`${styles.dropdown_item} dropdown-item`}
-          href={`/category/${main}/${item.name_slug}`}
+          href={`/category/${main}/${item.name_slug.toLowerCase()}`}
         >
           {item.name}
         </Link>

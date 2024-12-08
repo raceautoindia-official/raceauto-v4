@@ -8,21 +8,37 @@ import getBaseUrl from "@/lib/getbaseurl";
 import { formatDate } from "@/components/Time";
 
 const MarketCard = async ({ item }: { item: CateoryPostType }) => {
-  const blurdata = await getBaseUrl(
-    `${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${item.image_big}`
-  );
+  let blurdata;
+
+  try {
+    // Attempt to fetch blur data
+    blurdata = item.image_big
+      ? await getBaseUrl(
+          `${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${item.image_big}`
+        )
+      : undefined;
+  } catch (error) {
+    console.error("Error fetching blur data:", error);
+    blurdata = undefined; // Fallback to undefined if there’s an error
+  }
+
+  // Use dummy image if blurdata is unavailable or item.image_big is missing
+  const imageSrc = item.image_big
+    ? `${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${item.image_big}`
+    : "/images/placeholderdummy.png";
+
   return (
     <div className="mb-3 col-md-6">
       <div className="card border-0 bg-transparent ">
         <Link className="link-style" href={`/post/${item.title_slug}`}>
           <div className={styles.postList_image_container}>
-            <Image
-              src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${item.image_big}`}
+          <Image
+              src={imageSrc}
               fill
-              alt={item.title}
+              alt={item.title || "Placeholder"}
               priority
-              placeholder={item.image_big ? "blur" : undefined}
-              blurDataURL={item.image_big ? blurdata : undefined}
+              placeholder={blurdata ? "blur" : undefined}
+              blurDataURL={blurdata || "/images/placeholderdummy.png"}
               sizes="(max-width: 480px) 50vw, (max-width: 768px) 40vw, (max-width: 1200px) 30vw, 20vw"
             />
           </div>

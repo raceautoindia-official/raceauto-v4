@@ -4,6 +4,8 @@ import Link from "next/link";
 import SocialButton from "./SocialButton";
 import { formatDate } from "@/components/Time";
 import PostContent from "./postContent";
+import { cookies } from "next/headers";
+import EditButton from "./EditButton";
 
 export type postsliderType = {
   image_default: string;
@@ -30,6 +32,8 @@ export type postType = {
   keywords: [];
 };
 
+
+
 async function incrementPageView(pageUrl: string) {
   try {
     await fetch(
@@ -47,6 +51,9 @@ async function incrementPageView(pageUrl: string) {
 const Post = async ({ title }: { title: string }) => {
   await incrementPageView(title);
 
+  const cookieStore = await cookies();
+const token:any = cookieStore.get("authToken");
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}api/post/single-post/${title}`
   );
@@ -54,10 +61,13 @@ const Post = async ({ title }: { title: string }) => {
 
   const post = data[0];
 
+
   return (
     <>
       <div className="col-lg-8 mt-3">
         <div>
+          {(token || token !== undefined) && <EditButton token={token.value} id={post.id}/>}
+          
           <h3>
             <b>{post.title}</b>
           </h3>

@@ -113,7 +113,7 @@ const Navbar = async () => {
                       <Link
                         key={item.id}
                         className={`${styles.dropdown_item} dropdown-item`}
-                        href={`/market/${item.title_slug}`}
+                        href={`/market/${item.title_slug.toLowerCase()}`}
                       >
                         {item.title}
                       </Link>

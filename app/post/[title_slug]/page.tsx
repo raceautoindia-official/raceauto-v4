@@ -9,13 +9,12 @@ export async function generateMetadata({
 }) {
   const { title_slug } = params;
 
-  // Simulating data fetch (Replace with your actual API call)
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}api/post/single-post/${title_slug}`
   );
   const data: postType[] = await res.json();
 
-  const { title, summary, image_mid } = data[0];
+  const { title, summary, image_mid, keywords } = data[0];
 
   return {
     title: title,
@@ -23,6 +22,7 @@ export async function generateMetadata({
     openGraph: {
       title: title,
       description: summary,
+      keywords:keywords,
       images: [
         {
           url: `${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${image_mid}`,
@@ -42,6 +42,10 @@ export async function generateMetadata({
     },
     alternates: {
       canonical: `${process.env.NEXT_PUBLIC_BACKEND_URL}post/${title_slug}`,
+    },
+    other: {
+      "MetaKeywords": keywords,
+      "MetaDescription": summary,
     },
   };
 }

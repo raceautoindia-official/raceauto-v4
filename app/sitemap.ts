@@ -1,6 +1,8 @@
 import db from "@/lib/db";
 import { MetadataRoute } from "next";
 
+
+export const revalidate = 3600;
 // Helper function to check if a date is valid
 const isValidDate = (date: string): boolean => !isNaN(Date.parse(date));
 
@@ -56,23 +58,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1.0,
     },
     ...pages.map((page: any) => ({
-      url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/page/${page.slug}`,
+      url: `${process.env.NEXT_PUBLIC_BACKEND_URL}page/${escapeXML(page.slug.toLowerCase())}`,
       changeFrequency: "weekly",
       priority: 0.6,
     })),
     ...market.map((page: any) => ({
-      url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/market/${page.title_slug}`,
+      url: `${process.env.NEXT_PUBLIC_BACKEND_URL}market/${escapeXML(page.title_slug.toLowerCase())}`,
       changeFrequency: "weekly",
       priority: 0.5,
     })),
     ...mainCategory.map((category: any) => ({
-      url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/category/${category.name_slug}`,
+      url: `${process.env.NEXT_PUBLIC_BACKEND_URL}category/${escapeXML(category.name_slug.toLowerCase())}`,
       changeFrequency: "monthly",
       priority: 0.7,
     })),
     ...articles.map((article: any) => ({
-      url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/post/${escapeXML(
-        article.title_slug
+      url: `${process.env.NEXT_PUBLIC_BACKEND_URL}post/${escapeXML(
+        article.title_slug.toLowerCase()
       )}`,
       lastModified: getISOString(article.updated_at),
       changeFrequency: "daily",
@@ -95,12 +97,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         title: article.title,
       },
     })),
-    // ...tags.map((tag: any) => ({
-    //   url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/tag/${tag.tag_slug}`,
-    //   changeFrequency: 'monthly',
-    //   priority: 0.5,
-    // })),
+    ...tags.map((tag: any) => ({
+      url: `${process.env.NEXT_PUBLIC_BACKEND_URL}tag/${escapeXML(tag.tag_slug.toLowerCase())}`,
+      changeFrequency: "monthly",
+      priority: 0.5,
+    })),
   ];
 
   return sitemap;
 }
+
+// Config to enable hourly revalidation for the news sitemap
