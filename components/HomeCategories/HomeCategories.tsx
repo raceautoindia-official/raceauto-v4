@@ -16,17 +16,24 @@ type varient = {
 
 const HomeCategories = async ({ item }: catgeorypropType) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/home-category?main=${item.name_slug}`
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/home-category?main=${item.name_slug}`,
+    { cache: "no-store" }
   );
 
-  const data: varient[] = await res.json();
+  const rawData = await res.json();
+
+  // Ensure the response is an array
+  const data: varient[] = Array.isArray(rawData) ? [...rawData] : [];
+
+  if (!Array.isArray(data)) {
+    console.error("API response is not an array:", rawData);
+    return null;
+  }
 
   const v3Single = data.slice(0, 1);
 
   const threeData = data.slice(0, 3);
-
   const v2data = data.slice(0, 6);
-
   const v3data = data.slice(3, 10);
 
   return (
