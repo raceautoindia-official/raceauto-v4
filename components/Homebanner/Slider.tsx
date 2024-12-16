@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./HomeBanner.module.css";
 import MySwiperComponent from "./Swiperslide";
 
 type SliderType = {

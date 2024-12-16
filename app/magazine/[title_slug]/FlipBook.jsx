@@ -14,6 +14,8 @@ import { useRouter, useParams } from "next/navigation";
 import "./page.css";
 import "react-pdf/dist/Page/TextLayer.css";
 import "react-pdf/dist/Page/AnnotationLayer.css";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
@@ -127,6 +129,7 @@ function Test() {
 
   return (
     <>
+    {pdfloading && <div className="d-flex justify-content-center mt-2"><Skeleton height={510} width={360}/></div>}
       <Document
         file={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${pdf_url}`}
         style={{ width: "100%", aspectRatio: "1.4/1" }}
@@ -149,6 +152,7 @@ function Test() {
           clickEventForward={false}
           showPageCorners={false}
           style={{ overflow: "hidden" }}
+          className="mt-2"
         >
           {pagesMap.map((item, i) => (
             <Page key={i} pageNumber={i + 1} scale={2.0}></Page>
@@ -156,10 +160,10 @@ function Test() {
         </HTMLFlipBook>
       </Document>
 
-      <div className="row mt-3  justify-content-center align-items-center">
+      <div className="row mt-2  justify-content-center align-items-center">
         <div
           className="d-flex justify-content-center pt-1"
-          style={{ zIndex: 99999, backgroundColor: "white", color: "black" }}
+          style={{ zIndex: 99, backgroundColor: "white", color: "black" }}
         >
           <GrFormPrevious
             onClick={() => {

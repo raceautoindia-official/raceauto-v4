@@ -5,6 +5,7 @@ import TextArea from "./TextArea";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import MainHorizontalChart from "./HorizontalChartOnlyMainCategory";
+import DonutChart_V2 from "./SubscribersDonutChart_v2";
 
 const MyHorizontalBarChart = dynamic(() => import("./HorizontalChart"), {
   ssr: false,
@@ -25,7 +26,7 @@ const SubscriptionPage = () => {
             <MainHorizontalChart/>
           </div>
           <div className="col-lg-4">
-            <DonutChart />
+            <DonutChart_V2 />
           </div>
           <div className="col-12">
             <h2 className="text-center my-3 text-primary">

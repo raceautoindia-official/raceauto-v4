@@ -97,7 +97,7 @@ const Sidebar = async () => {
               fontStyle: "normal",
             }}
           >
-            LATEST NEWS
+            RECOMMENDED NEWS
           </h6>
           {recommendedNewsData
             .map((item) => <RecommendedPost key={item.id} item={item} />)

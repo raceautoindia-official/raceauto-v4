@@ -30,7 +30,7 @@ const HomeBanner = async () => {
 
   return (
     <>
-      <div className={`${styles.pc_homebanner} row mb-4`}>
+      <div className={`${styles.pc_homebanner} row mb-4 mt-4`}>
         <div className="col-lg-3">
           <div className="row">{FeatureCardData1}</div>
         </div>

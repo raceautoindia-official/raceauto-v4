@@ -1,42 +1,46 @@
-'use client'
-import React from 'react'
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Link from 'next/link';
+"use client";
+import React from "react";
+import Link from "next/link";
+import { Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
-const SlickSlider = ({data}:{
-    data:{
-        id:number;
-        title:string;
-        title_slug:string;
-    }[]
+// Import Swiper styles
+import "swiper/css";
+
+const SlickSlider = ({
+  data,
+}: {
+  data: {
+    id: number;
+    title: string;
+    title_slug: string;
+  }[];
 }) => {
-    const settings = {
-        dots: false,
-        infinite: true,
-        vertical: true,
-        verticalSwiping: true,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        speed: 1000,
-        autoplaySpeed: 3000,
-        cssEase: "linear",
-        pauseOnHover: true,
-        arrows: false,
-      };
-      const breakingNewsData = data.map((item) => (
-        <div key={item.id}>
-          <Link className="link-style" href={`/post/${item.title_slug}`}>
-            <p className="p-0 m-0">{item.title.slice(0,40)}...</p>
-          </Link>
-        </div>
-      ));
+  const breakingNewsData = data.map((item) => (
+    <SwiperSlide key={item.id}>
+      <Link className="link-style" href={`/post/${item.title_slug}`}>
+        <p className="p-0 m-0 ">{item.title.slice(0, 40)}...</p>
+      </Link>
+    </SwiperSlide>
+  ));
 
   return (
-    <Slider {...settings}>{breakingNewsData}</Slider>
-  )
-}
+    // <Slider {...settings}>{breakingNewsData}</Slider>
+    <Swiper
+      direction={"vertical"}
+      slidesPerView={1}
+      spaceBetween={15}
+      autoplay={{
+        delay: 2500,
+        disableOnInteraction: false,
+      }}
+      modules={[Autoplay]}
+      style={{ maxHeight: 25 }}
+      className="mySwiper"
+    >
+      {breakingNewsData}
+    </Swiper>
+  );
+};
 
-export default SlickSlider
+export default SlickSlider;

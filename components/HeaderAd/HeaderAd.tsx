@@ -14,14 +14,12 @@ const HeaderAd = () => {
     setIsVisible(false);
   };
 
-  // Hide the container if not visible
   const headerData = async () => {
     try {
       setIsLoading(true);
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/adspace/header`
       );
-      console.log(process.env.S3_BUCKET_URL + res.data[0].ad_code_728);
       setData(res.data[0]);
     } catch (err) {
       console.log(err);
@@ -33,6 +31,19 @@ const HeaderAd = () => {
   useEffect(() => {
     headerData();
   }, []);
+
+  // Auto-hide the ad after 10 seconds
+  useEffect(() => {
+    if (isVisible) {
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+      }, 10000); // 10 seconds
+
+      // Clear timeout if the component unmounts or isVisible changes
+      return () => clearTimeout(timer);
+    }
+  }, [isVisible]);
+
   return (
     <>
       {isLoading ? (

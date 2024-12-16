@@ -9,8 +9,7 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import { FaUser } from "react-icons/fa";
 import { toast } from "react-toastify";
 
-const ProfileButton = ({ token }: { token: string }) => {
-  const decoded: any = jwtDecode(token);
+const AdminNavButton = () => {
   const router = useRouter();
   const signoutapi = async () => {
     try {
@@ -41,17 +40,10 @@ const ProfileButton = ({ token }: { token: string }) => {
       <Dropdown.Item>
         <Link href="/profile">Profile</Link>
       </Dropdown.Item>
-      {(decoded.role == "admin" ||
-        decoded.role == "ad team" ||
-        decoded.role == "moderator") && (
-        <Dropdown.Item onClick={() => router.push("/admin")}>
-          Admin
-        </Dropdown.Item>
-      )}
 
       <Dropdown.Item onClick={signoutapi}>Sign Out</Dropdown.Item>
     </DropdownButton>
   );
 };
 
-export default ProfileButton;
+export default AdminNavButton;

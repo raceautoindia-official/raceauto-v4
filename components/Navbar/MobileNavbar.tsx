@@ -25,14 +25,15 @@ const MobileNavbar = ({
     <>
       <div className={styles.mobile_navbar}>
         <div className={styles.mobile_nav_menu}>
-          <Image
-            src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${logoData.logo}`}
-            alt="logo header"
-            width={40}
-            height={40}
-            className="ms-4 my-2"
-          />
-
+          <Link href="/">
+            <Image
+              src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${logoData.logo}`}
+              alt="logo header"
+              width={40}
+              height={40}
+              className="ms-4 my-2"
+            />
+          </Link>
           <ThemeToggle />
           <Link href="/subscription">
             <button className={styles.subscribeButton}>Subscribe</button>
@@ -48,15 +49,6 @@ const MobileNavbar = ({
             className="me-3"
           />
         </div>
-        {/* <button
-          className="btn btn-primary"
-          type="button"
-          data-bs-toggle="offcanvas"
-          data-bs-target="#offcanvasExample"
-          aria-controls="offcanvasExample"
-        >
-          Button with data-bs-target
-        </button> */}
 
         <div
           className={`${styles.mobile_offcanvas} offcanvas offcanvas-start mt-4`}
@@ -76,12 +68,12 @@ const MobileNavbar = ({
           <div className="offcanvas-body small">
             <ul className="navbar-nav mr-auto">
               <li className={`${styles.nav_item} nav-item`}>
-                <Link
+                {/* <Link
                   className={`${styles.nav_home_btn} ${styles.nav_link} nav-link mx-2`}
                   href="/"
                 >
                   <span>HOME</span>
-                </Link>
+                </Link> */}
               </li>
               {Main_Category.map((item: category) => {
                 return (
@@ -123,19 +115,13 @@ const MobileNavbar = ({
                       key={item.id}
                       className={`${styles.dropdown_item} dropdown-item`}
                       href={`/page/${item.slug}`}
-                      data-bs-dismiss="offcanvas"
-                      aria-label="Close"
                     >
                       {item.title}
                     </Link>
                   ))}
                 </div>
               </li>
-              <li
-                className={`${styles.nav_item} nav-item`}
-                data-bs-dismiss="offcanvas"
-                aria-label="Close"
-              >
+              <li className={`${styles.nav_item} nav-item`}>
                 <Link
                   className={`${styles.nav_home_btn} ${styles.nav_link} nav-link mx-2`}
                   href="/magazine"

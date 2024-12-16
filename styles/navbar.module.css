@@ -14,7 +14,6 @@
 
 }
 
-
 .d_navlogo {
   float: inline-start;
 }
@@ -31,7 +30,7 @@
 .search_bar {
   position: absolute;
   top: 100%; /* Start position */
-  left: 65%;
+  right:5px;
   width: 100%;
   margin-top: 10px;
   padding: 5px;
@@ -55,56 +54,8 @@
   width: 100%;
 }
 
-@media (min-width: 1000px) and (max-width: 1200px) {
-  .search_bar {
-    position: absolute;
-    top: 100%; /* Start position */
-    left: 55%;
-    width: 100%;
-    margin-top: 10px;
-    padding: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    transform: translateY(-20px); /* Start off slightly above */
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    pointer-events: none;
-    background-color: #02112f;
-  }
-}
 
-@media (max-width: 600px) {
-  .search_bar {
-    position: absolute;
-    top: 100%; /* Start position */
-    left: 0;
-    width: 100%;
-    margin-top: 10px;
-    padding: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    transform: translateY(-20px); /* Start off slightly above */
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    pointer-events: none;
-    background-color: #02112f;
-  }
-}
 
-@media (min-width: 600px) and (max-width: 1000px) {
-  .search_bar {
-    position: absolute;
-    top: 100%; /* Start position */
-    left: 25%;
-    width: 100%;
-    margin-top: 10px;
-    padding: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    transform: translateY(-20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    pointer-events: none;
-    background-color: #02112f;
-  }
-}
 .visible {
   opacity: 1;
   transform: translateY(0); /* Slide into place */
@@ -169,6 +120,9 @@
   height: 40px;
 }
 
+
+
+
 /* @media (min-width: 992px) and (max-width: 1300px) {
   .navbar {
     overflow-x: hidden; 
@@ -177,12 +131,12 @@
 
 .mobile_nav_menu{
   background-color: #767d8a;
-  
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
 }
+
 
 @media (max-width: 1000px) {
   .mobile_offcanvas ul li a {

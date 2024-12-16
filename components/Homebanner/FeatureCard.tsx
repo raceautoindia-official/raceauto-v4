@@ -19,7 +19,9 @@ type proptype = {
 const FeatureCard = async (props: proptype) => {
   const { item } = props;
 
-  const blurdata = await getBaseUrl(process.env.NEXT_PUBLIC_S3_BUCKET_URL + item.image_big);
+  const blurdata = await getBaseUrl(
+    process.env.NEXT_PUBLIC_S3_BUCKET_URL + item.image_big
+  );
   return (
     <div className="col-lg-12 col-6 p-1">
       <Link className="link-style" href={`/post/${item.title_slug}`}>
@@ -30,15 +32,34 @@ const FeatureCard = async (props: proptype) => {
           <Image
             src={process.env.NEXT_PUBLIC_S3_BUCKET_URL + `${item.image_big}`}
             alt={item.title}
+            className={styles.featured__image}
             fill
             priority
             placeholder="blur"
             blurDataURL={blurdata}
             sizes="(max-width: 480px) 100vw, (max-width: 768px) 75vw, (max-width: 1200px) 40vw, 25vw"
           />
-          <div className={styles.home__overlay_text_v3}>
-            <h5>{item.title}</h5>
-            <p>Date Posted: {new Date(item.created_at).toLocaleDateString()}</p>
+          <div
+            style={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              width: "100%",
+              height: "25px",
+              backgroundColor: "#ffc80a", // 50% opacity black background
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              zIndex: 3, // Place above the image
+              textAlign: "center",
+              padding: "1rem",
+            }}
+          >
+            <h6 style={{ fontWeight: "bold", margin: 0, fontSize: 12 }}>
+              {item.title.length <= 35
+                ? item.title
+                : `${item.title.slice(0, 35)}...`}
+            </h6>
           </div>
         </div>
       </Link>

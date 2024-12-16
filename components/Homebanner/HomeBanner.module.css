@@ -1,6 +1,9 @@
 .banner__hover_v3 {
   position: relative;
+  overflow: hidden;
 }
+
+
 
 .home__overlay_text_v3 {
   top: 120px;
@@ -61,9 +64,13 @@
   font-size: xx-small;
 }
 
-.banner__hover_v3:hover .home__overlay_text_v3 {
-  opacity: 1; /* Show on hover */
+.banner__hover_v3:hover .featured__image {
+  transition: transform 0.5s;
+  transform: scale(1.1);
+  overflow: hidden;
 }
+
+
 .banner__hover_v3:hover .sideBanner_image_v3 {
   filter: brightness(60%); /* Show on hover */
 }
@@ -80,4 +87,20 @@
   .pc_homebanner {
     display: none !important;
   }
+}
+
+.swiper-pagination-bullet {
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  font-size: 12px;
+  color: #000;
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.swiper-pagination-bullet-active {
+  color: #fff;
+  background: #007aff;
 }

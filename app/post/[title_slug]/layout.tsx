@@ -12,9 +12,9 @@ export default function PostLayout({
     <>
       <BreakingNews />
       <Navbar />
-     {children}
+      {children}
       <Footer />
-      <GreenBar/>
+      <GreenBar />
     </>
   );
 }

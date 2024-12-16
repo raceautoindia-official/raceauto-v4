@@ -64,7 +64,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
     ...market.map((page: any) => ({
       url: `${process.env.NEXT_PUBLIC_BACKEND_URL}market/${escapeXML(page.title_slug.toLowerCase())}`,
-      changeFrequency: "weekly",
+      changeFrequency: "monthly",
       priority: 0.5,
     })),
     ...mainCategory.map((category: any) => ({
@@ -74,7 +74,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
     ...articles.map((article: any) => ({
       url: `${process.env.NEXT_PUBLIC_BACKEND_URL}post/${escapeXML(
-        article.title_slug.toLowerCase()
+        article.title_slug
       )}`,
       lastModified: getISOString(article.updated_at),
       changeFrequency: "daily",
@@ -98,7 +98,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
     })),
     ...tags.map((tag: any) => ({
-      url: `${process.env.NEXT_PUBLIC_BACKEND_URL}tag/${escapeXML(tag.tag_slug.toLowerCase())}`,
+      url: `${process.env.NEXT_PUBLIC_BACKEND_URL}tag/${escapeXML(tag.tag_slug)}`,
       changeFrequency: "monthly",
       priority: 0.5,
     })),

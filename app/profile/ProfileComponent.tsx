@@ -4,7 +4,6 @@ import { Row, Col, Card, Button, Form } from "react-bootstrap";
 import {
   FaFacebook,
   FaInstagram,
-  FaTwitter,
   FaLinkedin,
   FaPen,
 } from "react-icons/fa";

@@ -4,13 +4,11 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
-import {
-  Pagination,
-  Autoplay,
-} from "swiper/modules";
+import { Pagination, Autoplay } from "swiper/modules";
 import Image from "next/image";
 import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
+import "./HomeSwiper.css";
 
 type SliderType = {
   id: number;
@@ -25,6 +23,13 @@ export default function MySwiperComponent({
 }: {
   slides: SliderType[];
 }) {
+  const pagination = {
+    clickable: true,
+    renderBullet: function (index: any, className: any) {
+      return '<span class="' + className + '"></span>';
+    },
+  };
+
   return (
     <Swiper
       grabCursor={true}
@@ -41,10 +46,7 @@ export default function MySwiperComponent({
       }}
       modules={[Pagination, Autoplay]}
       style={{ marginTop: 3 }}
-      pagination={{
-        dynamicBullets: true,
-        clickable:true
-      }}
+      pagination={pagination}
     >
       {slides.map((item) => (
         <SwiperSlide key={item.id}>
@@ -53,6 +55,27 @@ export default function MySwiperComponent({
               src={process.env.NEXT_PUBLIC_S3_BUCKET_URL + item.image_big}
               alt={item.title}
             />
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "50px",
+                backgroundColor: "rgba(0, 0, 0, 0.5)", // 50% opacity black background
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#fff", // White text color
+                zIndex: 3, // Place above the image
+                textAlign: "center",
+                padding: "1rem",
+              }}
+            >
+              <h6 style={{ fontWeight: "bold", margin: 0 }}>
+                {item.title}
+              </h6>
+            </div>
           </Link>
         </SwiperSlide>
       ))}

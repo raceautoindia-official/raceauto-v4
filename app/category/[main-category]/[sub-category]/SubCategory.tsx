@@ -38,12 +38,12 @@ const SubCategory = async ({
   const totalCount: number = data.totalpost;
 
   const adTopres = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/adspace/category_top`
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/adspace/posts_top`
   );
   const adTopData = await adTopres.json();
 
   const adBottomres = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/adspace/category_bottom`
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/adspace/posts_bottom`
   );
   const adBottomData = await adBottomres.json();
 
@@ -62,16 +62,18 @@ const SubCategory = async ({
         {post.map((item) => (
           <PostListCard key={item.id} item={item} />
         ))}
-        <PaginateComponent totalCount={totalCount} />
-      </div>
-      <div
-        style={{ position: "relative", aspectRatio: "8.9/1", width: "100%" }}
-      >
-        <Image
-          src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${adBottomData[0].ad_code_728}`}
-          alt="index top"
-          fill
-        />
+        <div
+          style={{ position: "relative", aspectRatio: "8.9/1", width: "100%" }}
+        >
+          <Image
+            src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${adBottomData[0].ad_code_728}`}
+            alt="index top"
+            fill
+          />
+        </div>
+        <div className="d-flex justify-content-center my-4">
+          <PaginateComponent totalCount={totalCount} />
+        </div>
       </div>
     </>
   );

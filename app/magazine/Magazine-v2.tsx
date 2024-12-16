@@ -52,7 +52,6 @@ const Magazine_v2 = () => {
         `${process.env.NEXT_PUBLIC_BACKEND_URL}api/magazine/sorted/${selectedCategory}`
       );
       setSortedData(res.data);
-      console.log(res);
     } catch (err) {
       console.log(err);
     }
@@ -85,7 +84,7 @@ const Magazine_v2 = () => {
           disableOnInteraction: true,
         }}
         modules={[Autoplay, Pagination]}
-        className="mySwiper"
+        className="mb-4"
       >
         <SwiperSlide>
           <div
@@ -148,8 +147,8 @@ const Magazine_v2 = () => {
           </div>
         </SwiperSlide>
       </Swiper>
-      <div className="container">
-        <div className="row">
+      <div className="container mb-5">
+        <div className="row mb-4">
           <h2 className="mt-4">Latest Edition</h2>
           {data
             .map((item) => <MagazineCard_v2 key={item.id} item={item} />)
@@ -174,8 +173,8 @@ const Magazine_v2 = () => {
                 <Skeleton
                   height={200}
                   count={1}
-                  baseColor="#e0e7ff" // Light blue background
-                  highlightColor="#c7d2fe" // Slightly darker blue highlight
+                  baseColor="#e0e7ff"
+                  highlightColor="#c7d2fe"
                   className="my-4"
                 />
                 <Skeleton
@@ -225,10 +224,12 @@ const Magazine_v2 = () => {
             height: 250,
           }}
         >
-          <h2 className="m-0 mt-3 text-center">Categories</h2>
+          <h1 className="m-0 mt-3 text-center">CATEGORIES</h1>
           <div className="col-md-3 col-lg-2 text-center">
             <button
-              className={`btn btn-light ${styles.button_category}`}
+              className={`btn ${styles.button_category} ${
+                  selectedCategory === 0 ? "btn-warning" : "btn-light"
+                }`}
               onClick={() => setSelectedCatgeory(0)}
             >
               All Magazines
@@ -238,7 +239,9 @@ const Magazine_v2 = () => {
           {category.map((item: any) => (
             <div className="col-md-3 col-lg-2 text-center" key={item.id}>
               <button
-                className={`btn btn-light ${styles.button_category}`}
+                className={`btn ${styles.button_category} ${
+                  selectedCategory === item.id ? "btn-warning" : "btn-light"
+                }`}
                 onClick={() => setSelectedCatgeory(item.id)}
               >
                 {item.title}
@@ -246,7 +249,7 @@ const Magazine_v2 = () => {
             </div>
           ))}
         </div>
-        <div className="row my-3">
+        <div className="row my-5">
           {isloading && (
             <>
               <div className="col-3">

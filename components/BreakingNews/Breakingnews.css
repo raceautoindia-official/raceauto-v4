@@ -2,20 +2,22 @@
     font-family: "Roboto", sans-serif;
     font-weight: 900;
     font-style: normal;
-    background-color: #fdc502;
+    background-color: #59BEA0;
+    color: white;
     z-index: 9999;
     position: absolute;
   }
   
   
   .breaking-news__container{
-    background-color: #fdc502;
-    color: black;
+    background-color: #59BEA0;
+    color: white;
     position: sticky;
     top: 0;
     z-index: 9999;
   }
   
+
   .breaking-news__content{
     margin-left: 120px;
     font-family: "Roboto", sans-serif;

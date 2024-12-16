@@ -1,9 +1,9 @@
 export const dynamic = "force-dynamic";
 import db from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 import { v4 as uuidv4 } from "uuid";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
+import s3Client from "@/lib/s3Client";
 
 const currentDate = new Date();
 const month = String(currentDate.getMonth() + 1).padStart(2, "0");
@@ -39,47 +39,38 @@ export async function PUT(req) {
       return NextResponse.json("updated");
     }
 
-    const primaryFolder = folderName;
+    // Generate a unique filename for the thumbnail
+    const imageFilename = thumbnail.name;
+    const imageFileExtension = imageFilename.split(".").pop();
+    const newImageName = `${uuidv4()}.${imageFileExtension}`;
 
-    const primaryUploadDir = path.join(
-      process.cwd(),
-      "public/uploads/newsletter",
-      primaryFolder
+    // Define the S3 path for the thumbnail
+    const folderName = "newsletter"; // Replace with your desired folder name
+    const thumbnailS3Path = `uploads/${folderName}/${newImageName}`;
+
+    // Convert thumbnail file to a buffer
+    const thumbnailBuffer = Buffer.from(await thumbnail.arrayBuffer());
+
+    // Upload the thumbnail to S3
+    await s3Client.send(
+      new PutObjectCommand({
+        Bucket: process.env.AWS_S3_BUCKET_NAME, // Replace with your S3 bucket name
+        Key: thumbnailS3Path,
+        Body: thumbnailBuffer,
+        ContentType: thumbnail.type, // Ensure the correct MIME type is set
+      })
     );
 
-    if (!fs.existsSync(primaryUploadDir)) {
-      fs.mkdirSync(primaryUploadDir, { recursive: true });
-
-      const htmlContent = `<!DOCTYPE html>
-            <html>
-            <head>
-              <title>403 Forbidden</title>
-            </head>
-            <body>
-              <p>Directory access is forbidden.</p>
-            </body>
-            </html>`;
-      fs.writeFileSync(`${primaryUploadDir}/index.html`, htmlContent);
-    }
-
-    const imageFilename = thumbnail.name;
-    const imageFileExtension = path.extname(imageFilename);
-    const newImageName = `${uuidv4()}${imageFileExtension}`;
-    const imagePath = path.join(primaryUploadDir, newImageName);
-
-    // Save the image file
-    const imageFileBuffer = Buffer.from(await thumbnail.arrayBuffer());
-    fs.writeFileSync(imagePath, imageFileBuffer);
-
-    const thumbnailValue = `uploads/newsletter/${folderName}/${newImageName}`;
-    const query = [title, description, thumbnailValue, edition_name];
+    // Save the S3 path to the database
+    const query = [title, description, thumbnailS3Path, edition_name];
     await db.execute(
       `UPDATE newsletter_ad SET title = ?, description = ?, thumbnail = ?, edition_name = ? WHERE id = 1`,
       query
     );
+
     return NextResponse.json("updated success");
   } catch (err) {
-    console.log(err);
+    console.error("Error during PUT request:", err);
     return NextResponse.json({ err: "internal server error" }, { status: 500 });
   }
 }

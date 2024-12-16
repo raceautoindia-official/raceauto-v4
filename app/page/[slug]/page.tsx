@@ -4,6 +4,8 @@ import React from "react";
 import PageContent from "./PageContent";
 import Navbar from "@/components/Navbar/Navbar";
 import BreakingNews from "@/components/BreakingNews/BreakingNews";
+import Footer from "@/components/Footer/Footer";
+import GreenBar from "@/components/GreenBar/MagazineBar";
 
 
 const page = ({
@@ -21,6 +23,8 @@ const page = ({
       <div className="mt-3">
         <PageContent slug={params.slug} />
       </div>
+      <Footer/>
+      <GreenBar/>
     </>
   );
 };

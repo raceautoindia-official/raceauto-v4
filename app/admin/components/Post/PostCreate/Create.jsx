@@ -60,22 +60,9 @@ export default function AdminPost({ token }) {
     }
   };
 
-  const formatSlug = (input) =>
-    input
-      .toLowerCase()
-      .replace(/[^a-z0-9\s]/g, "") // Remove symbols
-      .slice(0, 60); // Limit to 60 characters
 
-  const handleTitleChange = (e) => {
-    const input = e.target.value;
-    setTitle(input);
-    setSlug(formatSlug(input)); // Automatically update the slug
-  };
 
-  const handleSlugChange = (e) => {
-    const input = e.target.value;
-    setSlug(formatSlug(input)); // Ensure slug restrictions are applied
-  };
+
 
   const handleRemoveTag = (index) => {
     setTags(tags.filter((_, i) => i !== index));
@@ -396,7 +383,7 @@ export default function AdminPost({ token }) {
                   placeholder="Enter title"
                   name="title"
                   value={title}
-                  onChange={handleTitleChange}
+                  onChange={(e)=>setTitle(e.target.value)}
                   className="form-input"
                   required
                 />
@@ -409,15 +396,18 @@ export default function AdminPost({ token }) {
                 <Form.Label>Slug</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Generated slug"
+                  placeholder="slug"
                   name="slug"
                   value={slug}
-                  onChange={handleSlugChange} // Allow user to edit slug manually
+                  onChange={(e) => {
+                    const sanitizedValue = e.target.value.replace(/[^a-zA-Z0-9- ]/g, ""); // Remove special characters
+                    setSlug(sanitizedValue);
+                  }}
                   className="form-input"
                   required
                 />
                 <Form.Text className="text-muted">
-                  Maximum 60 characters, no special symbols.
+                  Best practice slug to be in length of 60, no special symbols.
                 </Form.Text>
               </Form.Group>
 
@@ -629,7 +619,6 @@ export default function AdminPost({ token }) {
                   placeholder="Enter Image Desscription"
                   value={imageDescription}
                   onChange={(e) => setImageDescription(e.target.value)}
-                  required
                 />
               </Form.Group>
               <Form.Check

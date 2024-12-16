@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 
 type magazineAd = {
   title: string;
@@ -10,11 +9,7 @@ type magazineAd = {
 const MagazineAd = async () => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}api/magazine-ad`,
-    {
-      next: {
-        revalidate: 600,
-      },
-    }
+    { cache: "no-store" }
   );
   const data: magazineAd[] = await res.json();
 

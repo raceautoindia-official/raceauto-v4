@@ -123,8 +123,6 @@ export async function DELETE(req) {
     );
     const pdfPath = `public/${rows[0].pdf_url}`;
     const imagePath = `public/${rows[0].image_url}`;
-    console.log(pdfPath)
-    console.log(imagePath)
     await db.execute(`DELETE FROM newsletter WHERE id = ${id}`);
     fs.unlink(pdfPath, (err) => {
       if (err) {

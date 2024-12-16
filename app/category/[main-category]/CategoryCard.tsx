@@ -34,6 +34,7 @@ const PostListCard = async ({ item }: { item: CateoryPostType }) => {
           <div className={styles.postList_image_container}>
             <Image
               src={imageSrc}
+              style={{objectFit:"cover"}}
               fill
               alt={item.title || "Placeholder"}
               priority

@@ -84,7 +84,7 @@ const SubscriptionCard = ({ data }: { data: SubscriptionType[] }) => {
                   <span className="font-weight-medium text-warning">
                     ₹
                     {formatNumber(
-                      MonthlyPrice[0].bronze * 12 - AnnualPrice[0].bronze,
+                      MonthlyPrice[0].bronze * 12 - AnnualPrice[0].bronze
                     )}
                   </span>{" "}
                   a Year
@@ -101,7 +101,7 @@ const SubscriptionCard = ({ data }: { data: SubscriptionType[] }) => {
               <div className="bottom-btn">
                 <a
                   className="btn btn-primary-gradiant btn-md text-white btn-block"
-                  href="#f1"
+                  href="mailto:kh@raceinnovations.in?subject=Inquiry%20About%20Subscription%20details&body=Hi%20there,"
                 >
                   <span>Buy It</span>
                 </a>
@@ -132,7 +132,7 @@ const SubscriptionCard = ({ data }: { data: SubscriptionType[] }) => {
                   <span className="font-weight-medium text-warning">
                     ₹
                     {formatNumber(
-                      MonthlyPrice[0].silver * 12 - AnnualPrice[0].silver,
+                      MonthlyPrice[0].silver * 12 - AnnualPrice[0].silver
                     )}
                   </span>{" "}
                   a Year
@@ -147,13 +147,12 @@ const SubscriptionCard = ({ data }: { data: SubscriptionType[] }) => {
                 <li className="d-block py-1">&nbsp;</li>
               </ul>
               <div className="bottom-btn">
-                <button
+                <a
                   className="btn btn-danger-gradiant btn-md text-white btn-block"
-                  data-toggle="modal"
-                  data-target="#exampleModal"
+                  href="mailto:kh@raceinnovations.in?subject=Inquiry%20About%20Subscription%20details&body=Hi%20there,"
                 >
                   <span>Buy It</span>
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -181,7 +180,7 @@ const SubscriptionCard = ({ data }: { data: SubscriptionType[] }) => {
                   <span className="font-weight-medium text-warning">
                     ₹
                     {formatNumber(
-                      MonthlyPrice[0].gold * 12 - AnnualPrice[0].gold,
+                      MonthlyPrice[0].gold * 12 - AnnualPrice[0].gold
                     )}
                   </span>{" "}
                   a Year
@@ -198,7 +197,7 @@ const SubscriptionCard = ({ data }: { data: SubscriptionType[] }) => {
               <div className="bottom-btn">
                 <a
                   className="btn btn-warning-gradiant btn-md text-white btn-block"
-                  href="#f1"
+                  href="mailto:kh@raceinnovations.in?subject=Inquiry%20About%20Subscription%20details&body=Hi%20there,"
                 >
                   <span>Buy It</span>
                 </a>
@@ -235,7 +234,7 @@ const SubscriptionCard = ({ data }: { data: SubscriptionType[] }) => {
                   <span className="font-weight-medium text-warning">
                     ₹
                     {formatNumber(
-                      MonthlyPrice[0].platinum * 12 - AnnualPrice[0].platinum,
+                      MonthlyPrice[0].platinum * 12 - AnnualPrice[0].platinum
                     )}
                   </span>{" "}
                   a Year
@@ -252,7 +251,7 @@ const SubscriptionCard = ({ data }: { data: SubscriptionType[] }) => {
               <div className="bottom-btn">
                 <a
                   className="btn btn-success-gradiant btn-md text-white btn-block"
-                  href="#f1"
+                  href="mailto:kh@raceinnovations.in?subject=Inquiry%20About%20Subscription%20details&body=Hi%20there,"
                 >
                   <span>Buy It</span>
                 </a>

@@ -5,7 +5,7 @@ import SocialButton from "./SocialButton";
 import { formatDate } from "@/components/Time";
 import PostContent from "./postContent";
 import { cookies } from "next/headers";
-import EditButton from "./EditButton";
+import EditButton from "./AdminButtons";
 
 export type postsliderType = {
   image_default: string;

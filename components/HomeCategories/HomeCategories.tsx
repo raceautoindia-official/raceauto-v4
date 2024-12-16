@@ -39,7 +39,7 @@ const HomeCategories = async ({ item }: catgeorypropType) => {
   return (
     <>
       <div className="d-flex justify-content-between mt-5 align-items-center">
-        <h6 className="">
+        <h3 className="">
           <span
             className="home-component-heading"
             style={{
@@ -52,7 +52,7 @@ const HomeCategories = async ({ item }: catgeorypropType) => {
           >
             {item.name.toUpperCase()}
           </span>
-        </h6>
+        </h3>
       </div>
       <div className="row">
         <div className="col-12">

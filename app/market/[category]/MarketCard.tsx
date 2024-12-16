@@ -35,6 +35,7 @@ const MarketCard = async ({ item }: { item: CateoryPostType }) => {
           <Image
               src={imageSrc}
               fill
+              style={{objectFit:"cover"}}
               alt={item.title || "Placeholder"}
               priority
               placeholder={blurdata ? "blur" : undefined}

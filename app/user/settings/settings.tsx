@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { jwtDecode } from "jwt-decode";
 import Image from "next/image";
+import Link from "next/link";
+import { toast } from "react-toastify";
 
 const AccountSettingsForm = ({ token }: { token: string }) => {
   const [username, setUsername] = useState("");
@@ -70,8 +72,31 @@ const AccountSettingsForm = ({ token }: { token: string }) => {
         `${process.env.NEXT_PUBLIC_BACKEND_URL}api/profile/${decoded.email}`,
         formData
       );
+      toast.success("Details updated!", {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     } catch (err) {
       console.log(err);
+      toast.warn(
+        "An error occurred while submitting the form. Please try again later.",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
     }
   };
 
@@ -81,6 +106,9 @@ const AccountSettingsForm = ({ token }: { token: string }) => {
 
   return (
     <Container className="mt-4">
+      <Link href="/">
+        <button className="btn btn-secondary mb-3">Back</button>
+      </Link>
       <h2>User Account Settings</h2>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="username" className="mb-3">
@@ -92,7 +120,6 @@ const AccountSettingsForm = ({ token }: { token: string }) => {
             onChange={(e) => setUsername(e.target.value)}
           />
         </Form.Group>
-
         <Form.Group controlId="email" className="mb-3">
           <Form.Label>Email</Form.Label>
           <Form.Control
@@ -164,7 +191,7 @@ const AccountSettingsForm = ({ token }: { token: string }) => {
         </Form.Group>
 
         {avatarPreview && (
-          <div className="mb-3">
+          <div className="mb">
             <Form.Label>Avatar Preview:</Form.Label>
             <div className="d-flex justify-content-center">
               <Image

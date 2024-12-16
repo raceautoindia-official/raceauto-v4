@@ -1,9 +1,9 @@
 "use client";
 import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
-import { FaUserCircle } from "react-icons/fa";
 
 import SearchBar from "@/app/search/[title]/SearchBar";
 import Link from "next/link";
+import AdminNavButton from "./AdminNavbButton";
 
 const AdminNavbar = () => {
   return (
@@ -21,16 +21,7 @@ const AdminNavbar = () => {
               </Button>
             </Link>
             </div>
-            <NavDropdown
-              title={<FaUserCircle size={20} />}
-              id="basic-nav-dropdown"
-              drop="down-centered"
-              style={{ backgroundColor: "white" }}
-            >
-              <Link href="/profile">
-                <NavDropdown.Item>Profile</NavDropdown.Item>
-              </Link>
-            </NavDropdown>
+            <AdminNavButton/>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

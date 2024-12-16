@@ -1,17 +1,25 @@
 import React from "react";
 import MainCategory from "./Market";
 import Sidebar from "@/components/Sidebar/Sidebar";
+import db from "@/lib/db";
 
-const MarketPage = (context: {
-  params: { "category": string };
+const MarketPage = async (context: {
+  params: { category: string };
   searchParams: { page: string };
 }) => {
   const categoryName = context.params["category"];
   const page = context.searchParams.page;
+
+  const [titledata]: any = await db.execute(
+    `SELECT title FROM post_market WHERE title_slug = ?`,
+    [categoryName]
+  );
+
   return (
     <>
       <div className="container mt-3">
         <div className="row my-3">
+          <h3 className="">{titledata[0].title.toUpperCase()}</h3>
           <div className="col-12 d-flex justify-content-center">
             <div className="row justify-content-center">
               <div className="col-lg-8 mt-4">

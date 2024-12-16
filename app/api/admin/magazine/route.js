@@ -129,7 +129,7 @@ export async function POST(req) {
     const pdf_url = formData.get("pdf_url");
     const keywords = formData.get("keywords");
     const slug = formData.get("title_slug");
-    const title_slug = slug.split(" ").join("-");
+    const title_slug = slug.trim().replace(/\s+/g, " ").toLowerCase().split(" ").join("-");
 
     const created_date = new Date();
     const modifiedBy = "admin";

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import ProfileCard from "./ProfileSidebar";
 
 export default function PostLayout({
@@ -17,6 +18,9 @@ export default function PostLayout({
         }}
       >
         <div className="row mx-5">
+          <Link href="/">
+            <button className="btn btn-primary mb-3">Back</button>
+          </Link>
           <div className="col-lg-3">
             <ProfileCard />
           </div>

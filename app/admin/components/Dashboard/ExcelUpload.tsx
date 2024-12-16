@@ -13,7 +13,6 @@ const ExcelUpload = () => {
     const selectedFile = acceptedFiles[0];
     setFile(selectedFile); // Store the file in state for API actions
     setMessage(""); // Clear any previous messages
-    console.log("Selected file:", selectedFile);
   }, []);
 
   const handleUpload = async () => {

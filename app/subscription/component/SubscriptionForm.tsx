@@ -11,7 +11,7 @@ const SubscriptionForm = () => {
     phone_number: "",
   });
 
-  const [file, setFile]=useState([])
+  const [file, setFile] = useState([]);
 
   const [showModal, setShowModal] = useState(false);
 
@@ -174,8 +174,17 @@ const SubscriptionForm = () => {
               the website and magazine on priority.
             </span>
           </p>
+          <p className="mt-2 m-0 text-center">
+            RACE FLASH REPORT: Forecast and analytics package is additional,
+            reach us for more details.
+          </p>
           <p className="mt-2 m-0 text-center" style={{ fontSize: "1rem" }}>
-            For any queries, contact us at: 9384857579, 9003031527
+            For <span className="text-success"><b>10-50% discounts</b></span>, call 9384857578 / 9962110101 or email
+            raceautoindia@gmail.com.
+          </p>
+          <p className="mt-2 m-0 text-center" style={{ fontSize: "1rem" }}>
+            Bronze package can be availed free in the first month on the
+            confirmation of any of the premium packages
           </p>
         </Modal.Body>
       </Modal>

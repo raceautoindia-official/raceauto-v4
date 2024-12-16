@@ -39,7 +39,7 @@ export async function POST(req) {
         : 1;
     const draft = draftValue == "true" ? 0 : 1;
 
-    const title_slug = slug.split(" ").join("-");
+    const title_slug = slug.trim().replace(/\s+/g, " ").toLowerCase().split(" ").join("-");
 
     const tags_split = tags.split(",");
 
@@ -140,7 +140,7 @@ export async function POST(req) {
     const postId = postResult.insertId;
 
     for (const item of tags_split) {
-      const tag_slug = item.split(" ").join("-");
+      const tag_slug = item.trim().replace(/\s+/g, " ").toLowerCase().split(" ").join("-");
       await db.execute(
         `INSERT INTO tags (post_id, tag, tag_slug) VALUES (?, ?, ?)`,
         [postId, item, tag_slug]

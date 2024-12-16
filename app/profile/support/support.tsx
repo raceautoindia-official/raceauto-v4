@@ -57,7 +57,7 @@ function HelpSupport() {
     <>
       {/* Header Section */}
       <div className="text-center mb-5">
-        <h1 className="fw-bold">How can we help you?</h1>
+        <h1 className="fw-bold text-light">How can we help you?</h1>
       </div>
 
       {/* Content Section */}

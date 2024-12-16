@@ -86,23 +86,6 @@ const NewsLetterPost = () => {
     }
   };
 
-  const formatSlug = (input: any) =>
-    input
-      .toLowerCase()
-      .replace(/[^a-z0-9\s]/g, "") // Remove symbols
-      .slice(0, 60); // Limit to 60 characters
-
-  const handleTitleChange = (e: any) => {
-    const input = e.target.value;
-    setTitle(input);
-    setSlug(formatSlug(input)); // Automatically update the slug
-  };
-
-  const handleSlugChange = (e: any) => {
-    const input = e.target.value;
-    setSlug(formatSlug(input)); // Ensure slug restrictions are applied
-  };
-
   const handleKeywordsChange = (e: any) => {
     setKeywords(e.target.value);
   };
@@ -193,15 +176,21 @@ const NewsLetterPost = () => {
             <Form.Label>Slug</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Generated slug"
+              placeholder="slug"
               name="slug"
               value={slug}
-              onChange={handleSlugChange} // Allow user to edit slug manually
+              onChange={(e) => {
+                const sanitizedValue = e.target.value.replace(
+                  /[^a-zA-Z0-9- ]/g,
+                  ""
+                ); // Remove special characters
+                setSlug(sanitizedValue);
+              }}
               className="form-input"
               required
             />
             <Form.Text className="text-muted">
-              Maximum 60 characters, no special symbols.
+              no special symbols allowed.
             </Form.Text>
           </Form.Group>
           <Form.Group controlId="formImage_url" className="mb-3">

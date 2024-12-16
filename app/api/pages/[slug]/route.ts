@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
     const { pathname } = new URL(req.url);
     const slug = pathname.split("/").pop();
     const [results] = await db.execute(
-      `SELECT page_content FROM pages WHERE slug = ?`,
+      `SELECT title, page_content FROM pages WHERE slug = ?`,
       [slug]
     );
     return NextResponse.json(results);
