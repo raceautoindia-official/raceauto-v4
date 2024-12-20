@@ -1,7 +1,6 @@
 import React from "react";
 import ProfileDashboard from "./ProfileComponent";
 import { cookies } from "next/headers";
-import Link from "next/link";
 
 const page = async () => {
   const cookieStore = await cookies();

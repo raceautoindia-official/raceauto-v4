@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const { title, color, show_on_menu } = await req.json();
-  const title_slug = title.split(" ").join("-");
+  const title_slug = title.trim().replace(/[^\w\s]/g, "").replace(/\s+/g, " ").toLowerCase().split(" ").join("-");
   try {
     await db.execute(
       `INSERT INTO post_market (title, title_slug, color, show_on_menu) VALUES (?, ?, ?, ?)`,

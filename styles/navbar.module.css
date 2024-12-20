@@ -244,11 +244,11 @@
   0%,
   100% {
     transform: scale(1);
-    box-shadow: 0 0 10px rgba(255, 99, 71, 0.7); /* Initial glow */
+    box-shadow: 0 0 5px rgba(255, 99, 71, 0.7); /* Initial glow */
   }
   50% {
     transform: scale(1.1); /* Slightly bigger */
-    box-shadow: 0 0 20px rgba(255, 99, 71, 1); /* Brighter glow */
+    box-shadow: 0 0 10 rgba(255, 99, 71, 1); /* Brighter glow */
   }
 }
 

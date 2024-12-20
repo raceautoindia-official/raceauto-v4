@@ -52,11 +52,13 @@ const MainCategory = async ({
       <div
         style={{ position: "relative", aspectRatio: "8.9/1", width: "100%" }}
       >
-        <Image
-          src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${adTopData[0].ad_code_728}`}
-          alt="index top"
-          fill
-        />
+        <a href="https://raceinnovations.in/contact/" target="_blank">
+          <Image
+            src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${adTopData[0].ad_code_728}`}
+            alt="index top"
+            fill
+          />
+        </a>
       </div>
       <div className="row my-3">
         {post.map((item) => (
@@ -65,11 +67,13 @@ const MainCategory = async ({
         <div
           style={{ position: "relative", aspectRatio: "8.9/1", width: "100%" }}
         >
-          <Image
-            src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${adBottomData[0].ad_code_728}`}
-            alt="index top"
-            fill
-          />
+          <a href="https://raceinnovations.in/contact/" target="_blank">
+            <Image
+              src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${adBottomData[0].ad_code_728}`}
+              alt="index top"
+              fill
+            />
+          </a>
         </div>
         <div className="d-flex justify-content-center my-4">
           <Pagination totalCount={totalCount} />

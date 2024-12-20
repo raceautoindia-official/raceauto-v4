@@ -7,6 +7,32 @@ import BreakingNews from "@/components/BreakingNews/BreakingNews";
 import Footer from "@/components/Footer/Footer";
 import GreenBar from "@/components/GreenBar/MagazineBar";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const categoryName = params.slug;
+  const title = `${categoryName} Page`;
+  const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}page/${categoryName}`;
+
+  return {
+    title,
+
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title,
+      url,
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+    },
+  };
+}
 
 const page = ({
   params,
@@ -15,16 +41,15 @@ const page = ({
     slug: string;
   };
 }) => {
-  
   return (
     <>
-    <BreakingNews />
-    <Navbar/>
+      <BreakingNews />
+      <Navbar />
       <div className="mt-3">
         <PageContent slug={params.slug} />
       </div>
-      <Footer/>
-      <GreenBar/>
+      <Footer />
+      <GreenBar />
     </>
   );
 };

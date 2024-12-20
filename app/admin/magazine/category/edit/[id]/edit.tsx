@@ -28,7 +28,7 @@ const Edit_NewsletterCategory = () => {
     setIsSubmitting(true);
     try {
       await axios.put(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/newsletter/edit-newsLetterCategory/${id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}api/magazine/category/${id}`,
         {
           title,
           color,

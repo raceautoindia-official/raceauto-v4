@@ -1,24 +1,21 @@
-'use client'
 /* eslint-disable @next/next/no-img-element */
+'use client'
+
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Dropdown, FormControl, Table } from "react-bootstrap";
-import { FaCheck } from "react-icons/fa";
+import { Dropdown, Modal, Table } from "react-bootstrap";
 import Link from "next/link";
+import Dropdownbuttons from "../../components/Post/Dropdownbuttons";
+import { FaCheck } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import { toast } from "react-toastify";
 
 
-const SliderArticles = () => {
+const BeakingArticles = () => {
 
     const [data, setData] = useState([]);
-    const [orderValues, setOrderValues] = useState({});
 
-    const [selectedOption, setSelectedOption] = useState(1);
-
-    const handleOptionChange = (e) => {
-        setSelectedOption(e.target.value);
-    };
+    const [smShow, setSmShow] = useState(false);
 
     const months = [
         "January",
@@ -44,70 +41,15 @@ const SliderArticles = () => {
         return `${month} ${day}, ${year}`;
     };
 
-    const handleOrderChange = async (id, newValue) => {
-        setOrderValues((prevValues) => ({
-            ...prevValues,
-            [id]: newValue,
-        }));
-
-        try {
-            await axios.put(
-                `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/post/update-order/${id}`,
-                {
-                    order_values: newValue,
-                    postType: 'is_slider',
-                },
-            );
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
-    const sliderApi = async () => {
-        try {
-            const res = await axios.get(
-                `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/post/slider`,
-            );
-            setSelectedOption(res.data[0].slider_type);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
-    const SliderChangeApi = async () => {
-        try {
-            await axios.put(
-                `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/post/slider`,
-                {
-                    slider_type: selectedOption,
-                }
-            );
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
-    const SliderChange = () => {
-        SliderChangeApi();
-    };
-
-
 
 
     const handlePostType = async () => {
         try {
             const res = await axios.get(
                 `${process.env.NEXT_PUBLIC_BACKEND_URL
-                }api/admin/post/is_slider`,
+                }api/admin/post/is_available/is_breaking`,
             );
             setData(res.data);
-            const initialOrderValues = {};
-            res.data.forEach((item) => {
-                initialOrderValues[item.id] =
-
-                    item.slider_order;
-            });
-            setOrderValues(initialOrderValues);
         } catch (err) {
             console.log(err)
         }
@@ -167,11 +109,8 @@ const SliderArticles = () => {
         }
     };
 
-
-
     useEffect(() => {
         handlePostType()
-        sliderApi()
     }, [])
     return (
         <>
@@ -184,7 +123,6 @@ const SliderArticles = () => {
                             <th>Category</th>
                             <th>Author</th>
                             <th>Pageviews</th>
-                            <th>Order</th>
                             <th>Posted Date</th>
                             <th>Actions</th>
                         </tr>
@@ -198,6 +136,7 @@ const SliderArticles = () => {
                                     <div className="d-flex align-items-center">
                                         <Link className="link-style" href={`/post/${item.title_slug}`}>
                                             <img
+                                                loading="lazy"
                                                 src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${item.image_small
                                                     }`}
                                                 className="image-fluid"
@@ -206,6 +145,7 @@ const SliderArticles = () => {
                                             ></img>
                                         </Link>
                                         <p className="ms-3 text-small p-0 m-0">{item.title}</p>
+
                                     </div>
                                     <div>
                                         {item.is_slider == 1 && <span className='mx-1' style={{
@@ -255,7 +195,6 @@ const SliderArticles = () => {
                                             }}
                                         >
                                             {item.main_category}
-
                                         </p>
                                         <p
                                             className="text-small px-2 "
@@ -273,15 +212,7 @@ const SliderArticles = () => {
                                 </td>
                                 <td>{item.username}</td>
                                 <td>{item.pageviews}</td>
-                                <td>
-                                    <FormControl
-                                        type="number"
-                                        value={orderValues[item.id] || ""}
-                                        onChange={(e) =>
-                                            handleOrderChange(item.id, e.target.value)
-                                        }
-                                    />
-                                </td>
+
                                 <td>{formatDate(item.created_at)}</td>
                                 <td>
                                     <Dropdown>
@@ -374,4 +305,4 @@ const SliderArticles = () => {
     )
 }
 
-export default SliderArticles
+export default BeakingArticles

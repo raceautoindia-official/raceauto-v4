@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
 import fs from "fs";
 import path from "path";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
+import s3Client from "@/lib/s3Client";
 
 const currentDate = new Date();
 const month = String(currentDate.getMonth() + 1).padStart(2, "0");
@@ -44,72 +46,70 @@ export async function PUT(req) {
     const image_url = formData.get("image_url");
     const pdf_url = formData.get("pdf_url");
     const keywords = formData.get("keywords");
+    const folderName = "newsletter";
 
-    const primaryFolder = folderName;
-
-    // Create upload directories for both folders
-    const primaryUploadDir = path.join(
-      process.cwd(),
-      "public/uploads/newsletter",
-      primaryFolder
-    );
-
-    if (!fs.existsSync(primaryUploadDir)) {
-      fs.mkdirSync(primaryUploadDir, { recursive: true });
-
-      const htmlContent = `<!DOCTYPE html>
-          <html>
-          <head>
-            <title>403 Forbidden</title>
-          </head>
-          <body>
-            <p>Directory access is forbidden.</p>
-          </body>
-          </html>`;
-
-      fs.writeFileSync(`${primaryUploadDir}/index.html`, htmlContent);
-    }
-
+    // Prepare query and params for database update
     let query =
       "UPDATE newsletter SET title = ?, modified_date = ?, category = ?, keywords = ?";
     let queryParams = [title, modified_date, category, keywords];
 
+    // If image is uploaded, process and upload to S3
     if (image_url) {
       const imageFilename = image_url.name;
-      const imageFileExtension = path.extname(imageFilename);
-      const newimagename = `${uuidv4()}${imageFileExtension}`;
-      const imagePath = path.join(primaryUploadDir, newimagename);
+      const imageFileExtension = imageFilename.split(".").pop();
+      const newImageName = `${uuidv4()}.${imageFileExtension}`;
+      const imageS3Path = `uploads/${folderName}/${newImageName}`;
 
-      // Save the first file
-      const firstFileBuffer = Buffer.from(await image_url.arrayBuffer());
+      // Convert image file to buffer and upload to S3
+      const imageBuffer = Buffer.from(await image_url.arrayBuffer());
+      await s3Client.send(
+        new PutObjectCommand({
+          Bucket: process.env.AWS_S3_BUCKET_NAME,
+          Key: imageS3Path,
+          Body: imageBuffer,
+          ContentType: image_url.type,
+        })
+      );
 
-      fs.writeFileSync(imagePath, firstFileBuffer);
+      // Append image URL to query
       query += ", image_url = ?";
-      queryParams.push(`uploads/newsletter/${folderName}/${newimagename}`);
+      queryParams.push(imageS3Path);
     }
 
+    // If PDF is uploaded, process and upload to S3
     if (pdf_url) {
       const pdfFilename = pdf_url.name;
-      const pdfFileExtension = path.extname(pdfFilename);
-      const newpdfname = `${uuidv4()}${pdfFileExtension}`;
-      const pdfPath = path.join(primaryUploadDir, newpdfname);
+      const pdfFileExtension = pdfFilename.split(".").pop();
+      const newPdfName = `${uuidv4()}.${pdfFileExtension}`;
+      const pdfS3Path = `uploads/${folderName}/${newPdfName}`;
 
-      // Save the first file
-      const firstFileBuffer = Buffer.from(await pdf_url.arrayBuffer());
-      fs.writeFileSync(pdfPath, firstFileBuffer);
+      // Convert PDF file to buffer and upload to S3
+      const pdfBuffer = Buffer.from(await pdf_url.arrayBuffer());
+      await s3Client.send(
+        new PutObjectCommand({
+          Bucket: process.env.AWS_S3_BUCKET_NAME,
+          Key: pdfS3Path,
+          Body: pdfBuffer,
+          ContentType: pdf_url.type,
+        })
+      );
+
+      // Append PDF URL to query
       query += ", pdf_url = ?";
-      queryParams.push(`uploads/newsletter/${folderName}/${newpdfname}`);
+      queryParams.push(pdfS3Path);
     }
 
+    // Add WHERE clause for the update
     query += " WHERE id = ?";
     queryParams.push(id);
 
+    // Execute the database query
     await db.execute(query, queryParams);
 
-    return NextResponse.json("edited");
+    return NextResponse.json("Edited successfully");
   } catch (err) {
-    console.log(err);
-    return NextResponse.json({ err: "internal server error" }, { status: 500 });
+    console.error("Error updating newsletter:", err);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
 
@@ -121,23 +121,9 @@ export async function DELETE(req) {
       "SELECT pdf_url, image_url FROM newsletter WHERE id = ?",
       [id]
     );
-    const pdfPath = `public/${rows[0].pdf_url}`;
-    const imagePath = `public/${rows[0].image_url}`;
+
     await db.execute(`DELETE FROM newsletter WHERE id = ${id}`);
-    fs.unlink(pdfPath, (err) => {
-      if (err) {
-        console.error("Error deleting file:", err);
-      } else {
-        console.log("File deleted successfully.");
-      }
-    });
-    fs.unlink(imagePath, (err) => {
-      if (err) {
-        console.error("Error deleting file:", err);
-      } else {
-        console.log("File deleted successfully.");
-      }
-    });
+
     return NextResponse.json({ message: "recorded and deleted successfully" });
   } catch (err) {
     console.error("Error submitting form:", err);

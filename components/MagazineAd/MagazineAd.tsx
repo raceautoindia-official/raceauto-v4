@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 type magazineAd = {
   title: string;
@@ -19,23 +20,20 @@ const MagazineAd = async () => {
         <div className="col-12 col-lg-8">
           <h6 style={{ fontSize: "3rem", fontWeight: 900 }}>{data[0].title}</h6>
           <p style={{ fontSize: "1rem" }}>{data[0].edition_name}</p>
-          <p style={{ fontSize: "1rem" }}>
-            {data[0].description}
-            {/* Where the thrill of the track meets your screen, Pulse-pounding automotive stories delivered, igniting gasoline dreams. Feel the rush, the speed, the power, with every page you turn, Experience adrenaline-fueled excitement that will make your heart yearn. */}
-          </p>
+          <p style={{ fontSize: "1rem" }}>{data[0].description}</p>
         </div>
         <div className="col-lg-4">
           <div
-            style={{ width: "100%", position: "relative", aspectRatio: "1/1" }}
+            style={{ width: "100%", position: "relative", aspectRatio: "2.05/1" }}
           >
-            <Image
+            <Link href='/magazine'><Image
               src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${data[0].thumbnail}`}
               alt="Responsive image"
               quality={75}
               fill
               priority
               sizes="(max-width: 480px) 100vw, (max-width: 768px) 75vw, (max-width: 1200px) 40vw, 25vw"
-            />
+            /></Link>
           </div>
         </div>
       </div>

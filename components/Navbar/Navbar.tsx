@@ -9,6 +9,7 @@ import { category } from "@/types/category";
 import { marketType } from "@/app/admin/market/market";
 import ThemeToggle from "../NextThemes";
 import LoginNavButton from "../Navbuttons/LoginNavButton";
+import MobileNavbarSample from "./MobileNavSample";
 
 export type mainMenu = {
   id: number;
@@ -189,11 +190,14 @@ const Navbar = async () => {
           </div>
         </div>
       </nav>
-      <MobileNavbar
+      {/* <MobileNavbar
         logoData={logoData[0]}
         morePagefiltered={morePagefiltered}
         Main_Category={Main_Category}
-      />
+      /> */}
+      <MobileNavbarSample  logoData={logoData[0]}
+        morePagefiltered={morePagefiltered}
+        Main_Category={Main_Category}/>
     </div>
   );
 };

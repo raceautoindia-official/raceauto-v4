@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+
 import HomeBanner from "@/components/Homebanner/HomeBanner";
 import MagazineAd from "@/components/MagazineAd/MagazineAd";
 import MainComponent from "@/components/HomeCategories/MainComponent";

@@ -607,7 +607,6 @@ export default function AdminPost({ token }) {
                     marginTop: 16,
                   }}
                 >
-                  {/* {thumbs} */}
                   {files}
                   <ul>{fileRejectionItems}</ul>
                 </aside>
@@ -616,7 +615,7 @@ export default function AdminPost({ token }) {
                 <Form.Label>Image Description</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter Image Desscription"
+                  placeholder="Enter Image Description"
                   value={imageDescription}
                   onChange={(e) => setImageDescription(e.target.value)}
                 />

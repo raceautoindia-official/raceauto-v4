@@ -31,7 +31,7 @@ export async function GET() {
 export async function POST(req:NextRequest){
     try {
         const { name, description, keywords, color, parent_name } = await req.json();
-        const name_slug = name.split(" ").join("-");
+        const name_slug = name.trim().replace(/[^\w\s]/g, "").replace(/\s+/g, " ").toLowerCase().split(" ").join("-");
         const [parent] = await db.execute<RowDataPacket[]>(`SELECT * FROM categories WHERE id = ?`, [
           parent_name,
         ]);

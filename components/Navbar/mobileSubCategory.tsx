@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import styles from "@/styles/navbar.module.css";
 import Link from "next/link";
 
@@ -15,14 +17,22 @@ type Category = {
   category_order: number;
 };
 
-const Subcategory = async (props: proptype) => {
+const MobileSubcategory = (props: proptype) => {
   const { id, main } = props;
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/sub-category/parent/${id}`
-  );
-  const data = await res.json();
+  const [data, setData] = useState([]);
 
-  const filteredData = data.filter((item:Category)=>item.show_on_menu == 1)
+  const fetchSub = async () => {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}api/category/sub-category/parent/${id}`
+    );
+
+    const resdata = await res.json();
+    setData(resdata.filter((item: Category) => item.show_on_menu == 1));
+  };
+
+  useEffect(() => {
+    fetchSub();
+  }, []);
 
   return (
     <div
@@ -35,7 +45,7 @@ const Subcategory = async (props: proptype) => {
       >
         All
       </Link>
-      {filteredData.map((item: Category) => (
+      {data.map((item: Category) => (
         <Link
           key={item.id}
           className={`${styles.dropdown_item} dropdown-item`}
@@ -48,4 +58,4 @@ const Subcategory = async (props: proptype) => {
   );
 };
 
-export default Subcategory;
+export default MobileSubcategory;

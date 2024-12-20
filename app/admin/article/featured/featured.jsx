@@ -3,22 +3,16 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Dropdown, FormControl, Table } from "react-bootstrap";
-import { FaCheck } from "react-icons/fa";
 import Link from "next/link";
+import { FaCheck } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 import { toast } from "react-toastify";
 
 
-const SliderArticles = () => {
+const FeaturedArticles = () => {
 
     const [data, setData] = useState([]);
     const [orderValues, setOrderValues] = useState({});
-
-    const [selectedOption, setSelectedOption] = useState(1);
-
-    const handleOptionChange = (e) => {
-        setSelectedOption(e.target.value);
-    };
 
     const months = [
         "January",
@@ -55,7 +49,7 @@ const SliderArticles = () => {
                 `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/post/update-order/${id}`,
                 {
                     order_values: newValue,
-                    postType: 'is_slider',
+                    postType: 'is_featured',
                 },
             );
         } catch (err) {
@@ -63,49 +57,19 @@ const SliderArticles = () => {
         }
     };
 
-    const sliderApi = async () => {
-        try {
-            const res = await axios.get(
-                `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/post/slider`,
-            );
-            setSelectedOption(res.data[0].slider_type);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
-    const SliderChangeApi = async () => {
-        try {
-            await axios.put(
-                `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/post/slider`,
-                {
-                    slider_type: selectedOption,
-                }
-            );
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
-    const SliderChange = () => {
-        SliderChangeApi();
-    };
-
-
-
 
     const handlePostType = async () => {
         try {
             const res = await axios.get(
                 `${process.env.NEXT_PUBLIC_BACKEND_URL
-                }api/admin/post/is_slider`,
+                }api/admin/post/is_featured`,
             );
             setData(res.data);
             const initialOrderValues = {};
             res.data.forEach((item) => {
                 initialOrderValues[item.id] =
 
-                    item.slider_order;
+                    item.featured_order;
             });
             setOrderValues(initialOrderValues);
         } catch (err) {
@@ -171,7 +135,6 @@ const SliderArticles = () => {
 
     useEffect(() => {
         handlePostType()
-        sliderApi()
     }, [])
     return (
         <>
@@ -206,6 +169,7 @@ const SliderArticles = () => {
                                             ></img>
                                         </Link>
                                         <p className="ms-3 text-small p-0 m-0">{item.title}</p>
+
                                     </div>
                                     <div>
                                         {item.is_slider == 1 && <span className='mx-1' style={{
@@ -374,4 +338,4 @@ const SliderArticles = () => {
     )
 }
 
-export default SliderArticles
+export default FeaturedArticles

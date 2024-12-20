@@ -3,8 +3,6 @@ import React from "react";
 import Link from "next/link";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
 import "swiper/css";
 
 const SlickSlider = ({
@@ -16,30 +14,41 @@ const SlickSlider = ({
     title_slug: string;
   }[];
 }) => {
-  const breakingNewsData = data.map((item) => (
-    <SwiperSlide key={item.id}>
-      <Link className="link-style" href={`/post/${item.title_slug}`}>
-        <p className="p-0 m-0 ">{item.title.slice(0, 40)}...</p>
-      </Link>
-    </SwiperSlide>
-  ));
-
   return (
-    // <Slider {...settings}>{breakingNewsData}</Slider>
-    <Swiper
-      direction={"vertical"}
-      slidesPerView={1}
-      spaceBetween={15}
-      autoplay={{
-        delay: 2500,
-        disableOnInteraction: false,
-      }}
-      modules={[Autoplay]}
-      style={{ maxHeight: 25 }}
-      className="mySwiper"
-    >
-      {breakingNewsData}
-    </Swiper>
+    <div className="overflow-hidden">
+      <Swiper
+        slidesPerView="auto"
+        spaceBetween={50}
+        loop={true}
+        speed={6000}
+        autoplay={{
+          delay: 1000,
+          disableOnInteraction: false,
+        }}
+        modules={[Autoplay]}
+        style={{
+          width: "100%",
+          whiteSpace: "nowrap",
+        }}
+        className="mySwiper"
+      >
+        {data.map((item) => (
+          <SwiperSlide
+            key={item.id}
+            style={{
+              display: "inline-block", // Ensure slides are inline
+              width: "auto", // Adjust slide width dynamically
+            }}
+          >
+            <Link className="link-style" href={`/post/${item.title_slug}`}>
+              <p className="p-0 m-0" style={{ whiteSpace: "nowrap" }}>
+                {item.title}
+              </p>
+            </Link>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
   );
 };
 

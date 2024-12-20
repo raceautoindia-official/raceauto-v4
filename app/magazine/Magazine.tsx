@@ -14,9 +14,7 @@ const Magazine = async () => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}api/magazine`,
     {
-      next: {
-        revalidate: 600,
-      },
+      cache: "no-store",
     }
   );
   const data: magazineCardType[] = await res.json();

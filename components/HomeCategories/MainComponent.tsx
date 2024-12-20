@@ -27,11 +27,13 @@ const MainComponent = async () => {
       <div
         style={{ position: "relative", aspectRatio: "8.9/1", width: "100%" }}
       >
-        <Image
-          src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${adTopData[0].ad_code_728}`}
-          alt="index top"
-          fill
-        />
+        <a href="https://raceinnovations.in/contact/" target="_blank">
+          <Image
+            src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${adTopData[0].ad_code_728}`}
+            alt="index top"
+            fill
+          />
+        </a>
       </div>
       {showOnHome.map((item) => (
         <HomeCategories key={item.id} item={item} />
@@ -39,11 +41,13 @@ const MainComponent = async () => {
       <div
         style={{ position: "relative", aspectRatio: "8.9/1", width: "100%" }}
       >
-        <Image
-          src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${adBottomData[0].ad_code_728}`}
-          alt="index Bottom"
-          fill
-        />
+        <a href="https://raceinnovations.in/contact/" target="_blank">
+          <Image
+            src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${adBottomData[0].ad_code_728}`}
+            alt="index Bottom"
+            fill
+          />
+        </a>
       </div>
     </>
   );

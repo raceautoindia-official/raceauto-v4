@@ -149,7 +149,7 @@ const Magazine_v2 = () => {
       </Swiper>
       <div className="container mb-5">
         <div className="row mb-4">
-          <h2 className="mt-4">Latest Edition</h2>
+          <h2 className="mt-4 my-4">Latest Edition</h2>
           {data
             .map((item) => <MagazineCard_v2 key={item.id} item={item} />)
             .slice(0, 4)}

@@ -26,7 +26,7 @@ const Newsletter_ad_form = () => {
       setThumbnail(selectedFile);
       setPreview(URL.createObjectURL(e.target.files[0]));
     } else {
-      alert("Please select a file smaller than 50MB.");
+      alert("Please select a file smaller than 5MB.");
       e.target.value = null;
     }
   };
@@ -140,7 +140,7 @@ const Newsletter_ad_form = () => {
               alt="preveiw image"
               className="my-3"
               height={200}
-              width={200}
+              width={420}
             />
           )}
           <Form.Group controlId="formFile" className="mb-3">

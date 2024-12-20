@@ -38,8 +38,8 @@ const ProfileButton = ({ token }: { token: string }) => {
       className="me-1"
       title={<FaUser />}
     >
-      <Dropdown.Item>
-        <Link href="/profile">Profile</Link>
+      <Dropdown.Item onClick={() => router.push("/profile")}>
+        Profile
       </Dropdown.Item>
       {(decoded.role == "admin" ||
         decoded.role == "ad team" ||

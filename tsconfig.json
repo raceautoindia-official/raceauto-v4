@@ -56,6 +56,6 @@
     "app/admin/article/slider/page.tsx",
     "app/admin/article/slider/slider.jsx",
     "app/loader.js"
-, "next-sitemap.config.js"  ],
+, "next-sitemap.config.js", "app/admin/article/breaking/Breaking.jsx"  ],
   "exclude": ["node_modules"]
 }

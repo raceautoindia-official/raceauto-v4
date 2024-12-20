@@ -88,7 +88,6 @@ export async function PUT(req) {
     const additional_image = formData.get("additional_image");
     const draft = draftValue == "true" ? 0 : 1;
     const tags_split = tags.split(",");
-    const title_slug = title.split(" ").join("-");
     const updateDate = new Date().toISOString().slice(0, 19).replace("T", " ");
     const scheduled = formData.get("schedule_time");
     const scheduleTime =
@@ -99,7 +98,6 @@ export async function PUT(req) {
         : 1;
     let queryParams = [
       title,
-      title_slug,
       content,
       summary,
       image_description,
@@ -118,7 +116,6 @@ export async function PUT(req) {
     let queryStr = `
       UPDATE posts SET
         title = ?,
-        title_slug = ?,
         content = ?,
         summary = ?,
         image_description = ?,
@@ -135,12 +132,11 @@ export async function PUT(req) {
       WHERE id = ?
     `;
 
-
     const files = [];
 
     for (const [key, value] of formData.entries()) {
       if (key === "additional_image" && value instanceof Blob) {
-        files.push(value); 
+        files.push(value);
       }
     }
     const bucketName = process.env.AWS_S3_BUCKET_NAME;
@@ -155,55 +151,52 @@ export async function PUT(req) {
       return `${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${key}`;
     };
 
-
     if (image_default) {
       const firstFilename = image_default.name;
-    const imageFileExtension = firstFilename.split(".").pop();
-    const newImageName = `${uuidv4()}.${imageFileExtension}`;
-    
-    const folderPath = `uploads/images/${folderName}`;
+      const imageFileExtension = firstFilename.split(".").pop();
+      const newImageName = `${uuidv4()}.${imageFileExtension}`;
 
-    // Read the first file into a buffer
-    const firstFileBuffer = Buffer.from(await image_default.arrayBuffer());
-    
-    // Define the S3 upload function
-    
-    
-    // Upload original image
-    const originalKey = `${folderPath}/${newImageName}`;
-    await uploadToS3(firstFileBuffer, originalKey, image_default.type);
-    
-    // Resize and upload large image
-    const largeKey = `${folderPath}/750_${newImageName}`;
-    const image_big = await sharp(firstFileBuffer)
-      .resize(750, 500)
-      .toBuffer()
-      .then((buffer) => uploadToS3(buffer, largeKey, "image/jpeg"));
-    
-    // Resize and upload small image
-    const smallKey = `${folderPath}/140_${newImageName}`;
-    const image_small = await sharp(firstFileBuffer)
-      .resize(140, 90)
-      .toBuffer()
-      .then((buffer) => uploadToS3(buffer, smallKey, "image/jpeg"));
-    
-    // Resize and upload medium image
-    const mediumKey = `${folderPath}/380_${newImageName}`;
-    const image_mid = await sharp(firstFileBuffer)
-      .resize(380, 226)
-      .toBuffer()
-      .then((buffer) => uploadToS3(buffer, mediumKey, "image/jpeg"));
-    
-    // Prepare database values
-    const img_default = `uploads/images/${folderName}/${newImageName}`;
-    const img_big = `uploads/images/${folderName}/750_${newImageName}`;
-    const img_small = `uploads/images/${folderName}/140_${newImageName}`;
-    const img_mid = `uploads/images/${folderName}/380_${newImageName}`;
+      const folderPath = `uploads/images/${folderName}`;
+
+      // Read the first file into a buffer
+      const firstFileBuffer = Buffer.from(await image_default.arrayBuffer());
+
+      // Define the S3 upload function
+
+      // Upload original image
+      const originalKey = `${folderPath}/${newImageName}`;
+      await uploadToS3(firstFileBuffer, originalKey, image_default.type);
+
+      // Resize and upload large image
+      const largeKey = `${folderPath}/750_${newImageName}`;
+      const image_big = await sharp(firstFileBuffer)
+        .resize(750, 500)
+        .toBuffer()
+        .then((buffer) => uploadToS3(buffer, largeKey, "image/jpeg"));
+
+      // Resize and upload small image
+      const smallKey = `${folderPath}/140_${newImageName}`;
+      const image_small = await sharp(firstFileBuffer)
+        .resize(140, 90)
+        .toBuffer()
+        .then((buffer) => uploadToS3(buffer, smallKey, "image/jpeg"));
+
+      // Resize and upload medium image
+      const mediumKey = `${folderPath}/380_${newImageName}`;
+      const image_mid = await sharp(firstFileBuffer)
+        .resize(380, 226)
+        .toBuffer()
+        .then((buffer) => uploadToS3(buffer, mediumKey, "image/jpeg"));
+
+      // Prepare database values
+      const img_default = `uploads/images/${folderName}/${newImageName}`;
+      const img_big = `uploads/images/${folderName}/750_${newImageName}`;
+      const img_small = `uploads/images/${folderName}/140_${newImageName}`;
+      const img_mid = `uploads/images/${folderName}/380_${newImageName}`;
 
       queryStr = `
       UPDATE posts SET
         title = ?,
-        title_slug = ?,
         content = ?,
         summary = ?,
         image_description = ?,
@@ -226,7 +219,6 @@ export async function PUT(req) {
 
       queryParams = [
         title,
-        title_slug,
         content,
         summary,
         image_description,
@@ -246,7 +238,6 @@ export async function PUT(req) {
         scheduleTime,
         id,
       ];
-
     } else {
       queryParams.push(id);
     }
@@ -261,14 +252,20 @@ export async function PUT(req) {
 
         // Read the remaining file into a buffer and upload it directly to S3
         const fileBuffer = Buffer.from(await file.arrayBuffer());
-        const additionalImageDefault = await uploadToS3(fileBuffer, additionalKey, file.type);
+        const additionalImageDefault = await uploadToS3(
+          fileBuffer,
+          additionalKey,
+          file.type
+        );
 
         // Resize additional images and upload them to S3
         const additionalLargeKey = `${folderPath}/750_${newImageName}`;
         const additionalImageBig = await sharp(fileBuffer)
           .resize(750, 500)
           .toBuffer()
-          .then((buffer) => uploadToS3(buffer, additionalLargeKey, "image/jpeg"));
+          .then((buffer) =>
+            uploadToS3(buffer, additionalLargeKey, "image/jpeg")
+          );
 
         const img_default = `uploads/images/${folderName}/${newImageName}`;
         const img_big = `uploads/images/${folderName}/750_${newImageName}`;
@@ -312,7 +309,13 @@ export async function PUT(req) {
     await db.execute(queryStr, queryParams);
     await db.execute("DELETE FROM tags WHERE post_id = ?", [id]);
     for (const item of tags_split) {
-      const tag_slug = item.split(" ").join("-");
+      const tag_slug = item
+        .trim()
+        .replace(/[^\w\s]/g, "")
+        .replace(/\s+/g, " ")
+        .toLowerCase()
+        .split(" ")
+        .join("-");
       await db.execute(
         `INSERT INTO tags (post_id, tag, tag_slug) VALUES (?, ?, ?)`,
         [id, item, tag_slug]

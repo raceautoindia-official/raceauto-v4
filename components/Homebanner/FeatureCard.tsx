@@ -46,8 +46,9 @@ const FeatureCard = async (props: proptype) => {
               left: 0,
               width: "100%",
               height: "25px",
-              backgroundColor: "#ffc80a", // 50% opacity black background
+              backgroundColor: "rgba(0, 0, 0, 0.5)", // 50% opacity black background
               display: "flex",
+              color:'white',
               alignItems: "center",
               justifyContent: "center",
               zIndex: 3, // Place above the image

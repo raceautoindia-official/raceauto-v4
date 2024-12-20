@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { PiNewspaperClippingDuotone } from "react-icons/pi";
 import {
   FaAd,
   FaAdversal,
@@ -21,9 +22,11 @@ import {
 import {
   MdAdminPanelSettings,
   MdEventAvailable,
+  MdFeaturedPlayList,
   MdOutlineDisplaySettings,
   MdOutlineEventAvailable,
   MdPriceChange,
+  MdRecommend,
 } from "react-icons/md";
 import { BiCategory } from "react-icons/bi";
 import { AiOutlineGlobal } from "react-icons/ai";
@@ -196,14 +199,36 @@ const AdminSidebar = async () => {
                   </span>
                 </Link>
               </li>
-              {/* <li>
-                <Link href="#" className="nav-link px-0">
+              <li>
+                <Link href="/admin/article/featured" className="nav-link px-0">
                   <MdFeaturedPlayList className="text-primary" />{" "}
                   <span className="d-none d-sm-inline text-primary">
                     Featured
                   </span>
                 </Link>
-              </li> */}
+              </li>
+              <li>
+                <Link
+                  href="/admin/article/recommended"
+                  className="nav-link px-0"
+                >
+                  <MdRecommend className="text-primary" />{" "}
+                  <span className="d-none d-sm-inline text-primary">
+                    Recommended
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/admin/article/breaking"
+                  className="nav-link px-0"
+                >
+                  <PiNewspaperClippingDuotone className="text-primary" />{" "}
+                  <span className="d-none d-sm-inline text-primary">
+                    Breaking
+                  </span>
+                </Link>
+              </li>
               <li>
                 <Link href="/admin/article/draft" className="nav-link px-0">
                   <RiDraftFill className="text-primary" />{" "}

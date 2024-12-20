@@ -67,14 +67,7 @@ const MobileNavbar = ({
           </div>
           <div className="offcanvas-body small">
             <ul className="navbar-nav mr-auto">
-              <li className={`${styles.nav_item} nav-item`}>
-                {/* <Link
-                  className={`${styles.nav_home_btn} ${styles.nav_link} nav-link mx-2`}
-                  href="/"
-                >
-                  <span>HOME</span>
-                </Link> */}
-              </li>
+
               {Main_Category.map((item: category) => {
                 return (
                   <li

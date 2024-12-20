@@ -25,7 +25,7 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const { name, description, keywords, color, block_type } = await req.json();
-    const name_slug = name.split(" ").join("-");
+    const name_slug = name.trim().replace(/[^\w\s]/g, "").replace(/\s+/g, " ").toLowerCase().split(" ").join("-");
     const query = [name, name_slug, description, keywords, color, block_type];
     await db.execute(
       `INSERT INTO categories (name, name_slug, description, keywords, color, block_type) VALUES (?, ?, ?, ?, ?, ?)`,

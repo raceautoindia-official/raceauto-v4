@@ -37,7 +37,7 @@ const HeaderAd = () => {
     if (isVisible) {
       const timer = setTimeout(() => {
         setIsVisible(false);
-      }, 10000); // 10 seconds
+      }, 20000); // 10 seconds
 
       // Clear timeout if the component unmounts or isVisible changes
       return () => clearTimeout(timer);
@@ -59,7 +59,7 @@ const HeaderAd = () => {
       ) : (
         <div
           className={isVisible ? "my-4" : "d-none my-4"}
-          style={{ position: "relative", aspectRatio: "8.9/1", width: "100%" }}
+          style={{ position: "relative", aspectRatio: "8/1", width: "100%", objectFit:'contain' }}
         >
           <Image
             src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${data.ad_code_728}`}
