@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { v4 as uuidv4 } from "uuid";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { NextRequest, NextResponse } from "next/server";
