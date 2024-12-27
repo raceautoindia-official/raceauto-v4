@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import styles from "./page.module.css";
 import { CateoryPostType } from "./Market";
 import getBaseUrl from "@/lib/getbaseurl";
 import { formatDate } from "@/components/Time";
+import styles from "./page.module.css";
 
 const MarketCard = async ({ item }: { item: CateoryPostType }) => {
   let blurdata;
@@ -28,30 +28,48 @@ const MarketCard = async ({ item }: { item: CateoryPostType }) => {
     : "/images/placeholderdummy.png";
 
   return (
-    <div className="mb-3 col-md-6">
-      <div className="card border-0 bg-transparent ">
-        <Link className="link-style" href={`/post/${item.title_slug}`}>
-          <div className={styles.postList_image_container}>
-          <Image
-              src={imageSrc}
-              fill
-              style={{objectFit:"cover"}}
-              alt={item.title || "Placeholder"}
-              priority
-              placeholder={blurdata ? "blur" : undefined}
-              blurDataURL={blurdata || "/images/placeholderdummy.png"}
-              sizes="(max-width: 480px) 50vw, (max-width: 768px) 40vw, (max-width: 1200px) 30vw, 20vw"
-            />
+    <div className="col-md-6 mb-3">
+      <div className="card mb-3 border-0 shadow-sm">
+        <div className="row g-0">
+          {/* Left: Image */}
+          <div className="col-md-6">
+            <Link className="link-style" href={`/post/${item.title_slug}`}>
+              <div
+
+                className={styles.postList_image_container}
+              >
+                <Image
+                  src={imageSrc}
+                  alt={item.title || "Placeholder"}
+                  className="img-fluid rounded-start"
+                  placeholder={blurdata ? "blur" : undefined}
+                  blurDataURL={blurdata || "/images/placeholderdummy.png"}
+                  sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 33vw"
+                  fill
+                  style={{objectFit:'cover'}}
+                />
+              </div>
+            </Link>
           </div>
-          <div className="card-body">
-            <h6 className="mt-3 card_heading">
-              {item.title.length > 40
-                ? `${item.title.slice(0, 40)}...`
-                : item.title}
-            </h6>
-            <p className="card-text small">{formatDate(item.created_at)}</p>
+
+          {/* Right: Content */}
+          <div className="col-md-6">
+            <div className="card-body d-flex flex-column justify-content-between h-100">
+              {/* Title */}
+              <Link className="link-style" href={`/post/${item.title_slug}`}>
+                <h6 className="card-title">
+                  {item.title.length > 30
+                    ? `${item.title.slice(0, 40)}...`
+                    : item.title}
+                </h6>
+              </Link>
+              {/* Date */}
+              <p className="card-text text-muted small mb-0">
+                {formatDate(item.created_at)}
+              </p>
+            </div>
           </div>
-        </Link>
+        </div>
       </div>
     </div>
   );

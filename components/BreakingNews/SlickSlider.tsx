@@ -42,7 +42,7 @@ const SlickSlider = ({
           >
             <Link className="link-style" href={`/post/${item.title_slug}`}>
               <p className="p-0 m-0" style={{ whiteSpace: "nowrap" }}>
-                {item.title}
+                {item.title}<span className="ms-5">|</span> 
               </p>
             </Link>
           </SwiperSlide>

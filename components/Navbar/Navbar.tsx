@@ -10,6 +10,7 @@ import { marketType } from "@/app/admin/market/market";
 import ThemeToggle from "../NextThemes";
 import LoginNavButton from "../Navbuttons/LoginNavButton";
 import MobileNavbarSample from "./MobileNavSample";
+import ForexRates from "../Stocks/Forex";
 
 export type mainMenu = {
   id: number;
@@ -57,7 +58,7 @@ const Navbar = async () => {
   return (
     <div className={styles.navPosition}>
       <nav
-        className={`${styles.navbar} ${styles.navbar_expand_lg} ${styles.nav_details} shadow navbar navbar-expand-lg navbar-light`}
+        className={`${styles.navbar} ${styles.navbar_expand_lg} ${styles.nav_details} navbar navbar-expand-lg navbar-light`}
       >
         <div className={styles.desktop_nav}>
           <div className={styles.d_navlogo}>
@@ -104,7 +105,7 @@ const Navbar = async () => {
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    MARKET
+                    Market
                   </button>
                   <div
                     className={`${styles.dropdown_menu_custom} dropdown-menu`}
@@ -134,7 +135,7 @@ const Navbar = async () => {
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
                       >
-                        {item.name.toUpperCase()}
+                        {item.name}
                       </button>
                       <Subcategory id={item.id} main={item.name_slug} />
                     </li>
@@ -198,6 +199,7 @@ const Navbar = async () => {
       <MobileNavbarSample  logoData={logoData[0]}
         morePagefiltered={morePagefiltered}
         Main_Category={Main_Category}/>
+        <ForexRates/>
     </div>
   );
 };

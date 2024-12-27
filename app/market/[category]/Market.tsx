@@ -2,6 +2,7 @@ import React from "react";
 import PostListCard from "./MarketCard";
 import Pagination from "./paginate";
 import Image from "next/image";
+import BigCard from "./BigCard";
 
 export type CateoryPostType = {
   id: number;
@@ -31,6 +32,10 @@ const MarketComponent = async ({
 
   const post: CateoryPostType[] = data.results;
 
+  const bigPost = post.shift();
+
+
+
   const totalCount: number = data.totalpost;
 
   const adTopres = await fetch(
@@ -42,6 +47,8 @@ const MarketComponent = async ({
     `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/adspace/category_bottom`
   );
   const adBottomData = await adBottomres.json();
+
+  
 
   return (
     <>
@@ -57,6 +64,9 @@ const MarketComponent = async ({
         </a>
       </div>
       <div className="row my-3">
+        <BigCard item={bigPost}/>
+      </div>
+      <div className="row my-3 justify-content-center">
         {post.map((item) => (
           <PostListCard key={item.id} item={item} />
         ))}

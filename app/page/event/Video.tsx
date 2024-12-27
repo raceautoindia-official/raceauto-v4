@@ -6,10 +6,10 @@ const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 const Video = () => {
   return (
     <ReactPlayer
-      url="https://youtu.be/bcsHCDUXlLk?si=HKhhVvE6rZYRAhv6"
+      url="https://youtu.be/K11J7kKKeZw"
       controls
-      height="500px"
-      width="100%"
+      height="275px"
+      width="400px"
       playing
       muted
       loop

@@ -33,7 +33,7 @@ import { AiOutlineGlobal } from "react-icons/ai";
 import { FaUsersGear } from "react-icons/fa6";
 import { GrArticle } from "react-icons/gr";
 import { TfiLayoutSlider } from "react-icons/tfi";
-import { TbCategoryMinus, TbCategoryPlus } from "react-icons/tb";
+import { TbCategoryMinus, TbCategoryPlus, TbReportAnalytics } from "react-icons/tb";
 import Image from "next/image";
 const AdminSidebar = async () => {
   const logoRes = await fetch(
@@ -129,6 +129,15 @@ const AdminSidebar = async () => {
             >
               <MdPriceChange />{" "}
               <span className="ms-1 d-none d-sm-inline">Subscription</span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/admin/reports"
+              className="nav-link px-0 align-middle"
+            >
+              <TbReportAnalytics />{" "}
+              <span className="ms-1 d-none d-sm-inline">Reports</span>
             </Link>
           </li>
           <li style={{ width: "100%" }}>

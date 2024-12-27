@@ -1,7 +1,9 @@
 "use client";
+import axios from "axios";
 import Image from "next/image";
 import React, { useState } from "react";
 import { Button, Col, Form, Row, Modal } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 const SubscriptionForm = () => {
   const [formData, setFormData] = useState({
@@ -11,7 +13,7 @@ const SubscriptionForm = () => {
     phone_number: "",
   });
 
-  const [file, setFile] = useState([]);
+  const [file, setFile] = useState<any>([]);
 
   const [showModal, setShowModal] = useState(false);
 
@@ -32,6 +34,43 @@ const SubscriptionForm = () => {
   const handleShow = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Prepare form data for submission
+    const formDataObj = new FormData();
+    formDataObj.append("title", formData.title);
+    formDataObj.append("username", formData.username);
+    formDataObj.append("email", formData.email);
+    formDataObj.append("phone_number", formData.phone_number);
+    if (file) {
+      formDataObj.append("file", file);
+    }
+
+    try {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/subscription/payment`, formDataObj, );
+
+      if (response.status === 200) {
+        toast.success("Subscription successful!", {
+          position: "top-center",
+        });
+        // Optionally reset the form after successful submission
+        setFormData({
+          title: "",
+          username: "",
+          email: "",
+          phone_number: "",
+        });
+        setFile(null);
+        handleClose();
+      }
+    } catch (error) {
+      toast.error("Failed to subscribe. Please try again.", {
+        position: "top-center",
+      });
+    }
+  };
+
   return (
     <>
       {/* Subscribe Button */}
@@ -45,7 +84,7 @@ const SubscriptionForm = () => {
           <Modal.Title>Subscription Form</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <div className="row">
               <div className="col-md-6">
                 <Row className="mb-3">

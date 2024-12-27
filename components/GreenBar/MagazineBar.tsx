@@ -28,7 +28,7 @@ const GreenBar = () => {
                 <div className="d-flex justify-content-between align-items-center">
 
                         <h5 className="mt-2 e-magazine-heading">
-                        RACE AUTO INDIA
+                        Start your 30 day free trial
                         </h5>
 
                     <div>

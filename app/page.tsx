@@ -1,5 +1,3 @@
-
-import HomeBanner from "@/components/Homebanner/HomeBanner";
 import MagazineAd from "@/components/MagazineAd/MagazineAd";
 import MainComponent from "@/components/HomeCategories/MainComponent";
 import Sidebar from "@/components/Sidebar/Sidebar";
@@ -8,9 +6,24 @@ import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import HeaderAd from "@/components/HeaderAd/HeaderAd";
 import GreenBar from "@/components/GreenBar/MagazineBar";
+import HomeBanner_3 from "@/components/Homebanner/Homebanner-3/HomeBanner-3";
+import HomeBanner_4 from "@/components/Homebanner/Homebanner-4/HomeBanner-4";
+import MagazineAd_2 from "@/components/MagazineHomePage/MagazineAd-2";
+import HomeMarket from "@/components/Home-Market/HomeMarket";
+import HomeReports from "@/components/homeReports/homeReports";
+import HomeBanner from "@/components/Homebanner/HomeBanner";
+import HomeBanner_2 from "@/components/Homebanner/Homebanner-2/HomeBanner-2";
+import LinkedinPage from "@/components/LinkedinForm/LinkedinPage";
+import Services from "@/components/Servicesbar/ServiceBar";
 
+const Home = async () => {
+  const sliderRes = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}api/admin/post/slider`,
+    { cache: "no-store" }
+  );
+  const slide = await sliderRes.json();
 
-export default function Home() {
+  const sliderType = slide[0].slider_type;
   return (
     <>
       <div>
@@ -19,19 +32,35 @@ export default function Home() {
         <div className="main_content__position">
           <div className="container">
             <HeaderAd />
-            <HomeBanner />
-            <MagazineAd />
+            {sliderType == 1 ? (
+              <HomeBanner />
+            ) : sliderType == 2 ? (
+              <HomeBanner_2 />
+            ) : sliderType == 3 ? (
+              <HomeBanner_3 />
+            ) : sliderType == 4 ? (
+              <HomeBanner_4 />
+            ) : (
+              <HomeBanner />
+            )}
+            <MagazineAd_2 />
+            <HomeMarket />
+            <HomeReports />
             <div className="row mt-4">
               <div className="col-lg-8">
                 <MainComponent />
               </div>
               <Sidebar />
             </div>
+            <LinkedinPage />
           </div>
         </div>
+        <Services/>
         <Footer />
         <GreenBar />
       </div>
     </>
   );
-}
+};
+
+export default Home;

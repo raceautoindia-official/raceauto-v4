@@ -62,7 +62,7 @@ const Sidebar = async () => {
           fill
         />
       </div>
-      <ReactPlayer_Server />
+      {/* <ReactPlayer_Server /> */}
       <div className="row mt-3">
         <div className="col-12">
           <div>

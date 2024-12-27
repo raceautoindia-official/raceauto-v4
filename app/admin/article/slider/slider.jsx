@@ -2,8 +2,8 @@
 /* eslint-disable @next/next/no-img-element */
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Dropdown, FormControl, Table } from "react-bootstrap";
-import { FaCheck } from "react-icons/fa";
+import { Button, Dropdown, Form, FormControl, Table } from "react-bootstrap";
+import { FaCheck, FaSave } from "react-icons/fa";
 import Link from "next/link";
 import { MdClose } from "react-icons/md";
 import { toast } from "react-toastify";
@@ -175,7 +175,55 @@ const SliderArticles = () => {
     }, [])
     return (
         <>
+ <div className="d-flex">
+              <h6>Slider Type</h6>
+              <Form.Check
+                type="radio"
+                label="Option 1"
+                name="options"
+                id="option1"
+                value={1}
+                className="mx-2"
+                checked={selectedOption == 1}
+                onChange={handleOptionChange}
+              />
+              <Form.Check
+                type="radio"
+                label="Option 2"
+                name="options"
+                id="option2"
+                value={2}
+                className="mx-2"
+                checked={selectedOption == 2}
+                onChange={handleOptionChange}
+              />
+              <Form.Check
+                type="radio"
+                label="Option 3"
+                name="options"
+                id="option3"
+                value={3}
+                className="mx-2"
+                checked={selectedOption == 3}
+                onChange={handleOptionChange}
+              />
+              <Form.Check
+                type="radio"
+                label="Option 4"
+                name="options"
+                id="option4"
+                value={4}
+                className="mx-2"
+                checked={selectedOption == 4}
+                onChange={handleOptionChange}
+              />
+              <Button variant="primary" onClick={SliderChange}>
+                <FaSave />
+              </Button>
+            </div>
+
             <div className="container-fluid mt-4">
+                <p>Note: The slider supports a maximum of six images.</p>
                 <Table className="text-center">
                     <thead>
                         <tr>

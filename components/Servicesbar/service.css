@@ -1,0 +1,19 @@
+.card__container {
+    border-radius: 8px;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .card__container:hover {
+    transform: translateY(-5px);
+  }
+  
+  .card__title {
+    font-weight: bold;
+    color: #5a5a5a;
+  }
+  
+  .card__text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  

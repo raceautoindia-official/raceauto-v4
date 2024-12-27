@@ -2,6 +2,7 @@ import React from "react";
 import HomeCategories from "./HomeCategories";
 import { category } from "@/types/category";
 import Image from "next/image";
+import ReactPlayer_Server from "../Sidebar/ReactPlayer";
 
 const MainComponent = async () => {
   const res = await fetch(
@@ -24,7 +25,7 @@ const MainComponent = async () => {
 
   return (
     <>
-      <div
+      <div className="mt-4"
         style={{ position: "relative", aspectRatio: "8.9/1", width: "100%" }}
       >
         <a href="https://raceinnovations.in/contact/" target="_blank">
@@ -38,6 +39,10 @@ const MainComponent = async () => {
       {showOnHome.map((item) => (
         <HomeCategories key={item.id} item={item} />
       ))}
+      <div className="my-3">
+        <ReactPlayer_Server />
+      </div>
+
       <div
         style={{ position: "relative", aspectRatio: "8.9/1", width: "100%" }}
       >

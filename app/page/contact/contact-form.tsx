@@ -61,7 +61,7 @@ const Contact_form = () => {
         <h1>RACE EDITORIALE LLP</h1>
         <h4>we’re here for you</h4>
       </div>
-      <div className="col-5">
+      <div className="col-lg-5">
         <div className="contact-form-container">
           <div className="contact-form-card">
             <h4 className="contact-title">Contact Us</h4>

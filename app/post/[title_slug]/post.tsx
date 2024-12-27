@@ -91,9 +91,9 @@ const Post = async ({ title }: { title: string }) => {
             <EditButton token={token.value} id={post.id} />
           )}
 
-          <h3>
+          <h1>
             <b>{post.title}</b>
-          </h3>
+          </h1>
           <p className="post-summary">{post.summary}</p>
           <small className="">Date: {formatDate(post.created_at)} </small>
           <SocialButton title_slug={title} />

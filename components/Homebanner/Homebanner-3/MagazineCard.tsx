@@ -1,10 +1,11 @@
+
 "use client";
 import Image from "next/image";
 import React from "react";
 import { Card } from "react-bootstrap";
-import { magazineCardType } from "./Magazine";
 import Link from "next/link";
 import styles from "./page.module.css";
+import { magazineCardType } from "@/app/magazine/Magazine";
 
 const MagazineCard_v2 = ({ item }: { item: magazineCardType }) => {
   return (
@@ -31,6 +32,7 @@ const MagazineCard_v2 = ({ item }: { item: magazineCardType }) => {
         </Link>
         <Card.Body>
           <Card.Title>{item.title}</Card.Title>
+          <Card.Text></Card.Text>
         </Card.Body>
       </Card>
     </div>
