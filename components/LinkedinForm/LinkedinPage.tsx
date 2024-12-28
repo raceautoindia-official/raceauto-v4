@@ -1,3 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable jsx-a11y/alt-text */
 "use client";
 
 import React from "react";
@@ -7,7 +10,7 @@ import "./linkedin.css";
 const LinkedinPage = () => {
   return (
     <>
-      <h4 style={{ fontSize: "1.4rem" }} className="text-center my-3">
+      <h4 style={{ fontSize: "1.4rem" }} className="text-center my-3 mt-5">
         <b>
           Register your email, and we'll keep you informed about our latest
           content and events. Unsubscribe anytime.

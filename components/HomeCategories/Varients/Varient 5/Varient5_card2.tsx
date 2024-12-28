@@ -17,9 +17,7 @@ const SubCardV5_2 = ({ item }: varientproptype) => {
                   src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${item.image_mid}`}
                   className="varient-image"
                   alt={
-                    item.title.length > 40
-                      ? `${item.title.slice(0, 40)}...`
-                      : item.title
+                   item.title
                   }
                   fill
                   priority
@@ -29,11 +27,9 @@ const SubCardV5_2 = ({ item }: varientproptype) => {
             </div>
             <div className="col-6">
               <div className="content">
-                <h6 className="card-heading">
-                  {item.title.length > 40
-                    ? `${item.title.slice(0, 30)}...`
-                    : item.title}
-                </h6>
+                <p className="card-heading">
+                  {item.title}
+                </p>
 
                 <p className="card-text small">{formatDate(item.created_at)}</p>
               </div>

@@ -25,9 +25,7 @@ const Varient3 = ({ item, Three }: VarientProps) => {
                       src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${item.image_mid}`}
                       className="varient-image"
                       alt={
-                        item.title.length > 40
-                          ? `${item.title.slice(0, 40)}...`
-                          : item.title
+                       item.title
                       }
                       fill
                       priority

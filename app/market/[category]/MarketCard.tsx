@@ -29,7 +29,7 @@ const MarketCard = async ({ item }: { item: CateoryPostType }) => {
 
   return (
     <div className="col-md-6 mb-3">
-      <div className="card mb-3 border-0 shadow-sm">
+      <div className="card shadow mb-3 shadow-sm">
         <div className="row g-0">
           {/* Left: Image */}
           <div className="col-md-6">

@@ -43,7 +43,7 @@ const HomeCategories = async ({ item }: catgeorypropType) => {
           <span
             className="home-component-heading"
             style={{
-              borderLeft: `4px solid black`,
+              borderLeft: `5px solid ${item.color}`,
               fontWeight: "900",
               fontStyle: "normal",
               padding: 5,

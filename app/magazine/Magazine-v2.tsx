@@ -221,11 +221,11 @@ const Magazine_v2 = () => {
           style={{
             backgroundImage: "url('/images/category banner.jpg')",
             backgroundSize: "cover",
-            height: 250,
+            height: 200,
           }}
         >
           <h1 className="m-0 mt-3 text-center">CATEGORIES</h1>
-          <div className="col-md-3 col-lg-2 text-center">
+          <div className="col-6 col-md-3 col-lg-2 text-center">
             <button
               className={`btn ${styles.button_category} ${
                   selectedCategory === 0 ? "btn-warning" : "btn-light"
@@ -237,7 +237,7 @@ const Magazine_v2 = () => {
           </div>
 
           {category.map((item: any) => (
-            <div className="col-md-3 col-lg-2 text-center" key={item.id}>
+            <div className="col-6 col-md-3 col-lg-2 text-center" key={item.id}>
               <button
                 className={`btn ${styles.button_category} ${
                   selectedCategory === item.id ? "btn-warning" : "btn-light"

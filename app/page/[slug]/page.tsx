@@ -45,8 +45,10 @@ const page = ({
     <>
       <BreakingNews />
       <Navbar />
+      <div className="main_content__position">
       <div className="mt-3">
         <PageContent slug={params.slug} />
+      </div>
       </div>
       <Footer />
       <GreenBar />

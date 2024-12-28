@@ -59,6 +59,7 @@ const PostPage = ({
 }) => {
   return (
     <>
+    
       <div className="container">
         <div className={`row`}>
           <Post title={params.title_slug} />

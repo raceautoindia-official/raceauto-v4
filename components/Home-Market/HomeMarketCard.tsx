@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { FaAngleRight } from "react-icons/fa";
 
 const HomeMarketCard = async ({ category }: { category: string }) => {
   const res = await fetch(
@@ -10,8 +11,8 @@ const HomeMarketCard = async ({ category }: { category: string }) => {
   const listData = data.slice(1);
 
   return (
-    <div className="col-md-6 col-lg-3">
-      <h6>{category.split("-").join(" ").toUpperCase()}</h6>
+    <div className="col-md-6 col-lg-3 mt-3">
+      <h6 style={{fontWeight:400}} className="mb-3">{category.split("-").join(" ").toUpperCase()} <span className="ms-1 pb-2"><FaAngleRight /></span></h6>
       <div
         style={{ position: "relative", width: "100%", aspectRatio: "16/9" }}
         className="mb-3"

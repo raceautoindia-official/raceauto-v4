@@ -12,9 +12,9 @@ export default function CategoryLayout({
     <>
       <BreakingNews />
       <Navbar />
-     {children}
+      <div className="main_content__position">{children}</div>
       <Footer />
-      <GreenBar/>
+      <GreenBar />
     </>
   );
 }

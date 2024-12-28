@@ -92,7 +92,7 @@ const Navbar = async () => {
                     className={`${styles.nav_home_btn} ${styles.nav_link} nav-link mx-2`}
                     href="/"
                   >
-                    <span>HOME</span>
+                    <span>Home</span>
                   </Link>
                 </li>
                 <li
@@ -151,7 +151,7 @@ const Navbar = async () => {
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    MORE
+                    More
                   </button>
                   <div
                     className={`${styles.dropdown_menu_custom} dropdown-menu`}
@@ -173,7 +173,7 @@ const Navbar = async () => {
                     className={`${styles.nav_home_btn} ${styles.nav_link} nav-link mx-2`}
                     href="/magazine"
                   >
-                    <span>E-MAGAZINE</span>
+                    <span>E-Magazine</span>
                   </Link>
                 </li>
               </ul>

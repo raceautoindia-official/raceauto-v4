@@ -8,10 +8,10 @@ const HomeReports = async () => {
   const data = await res.json();
 
   return (
-    <div className="row my-4">
+    <div className="row my-5">
         
       <div className="col-md-4">
-      <h3 className="mb-3">REPORT</h3>
+      <h2 className="mb-3" style={{ fontWeight: 700 }}>Report</h2>
         <h5 className="mb-3">{data[0].title}</h5>
         <p>{data[0].summary}</p>
       </div>

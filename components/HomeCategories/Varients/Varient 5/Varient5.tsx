@@ -30,11 +30,7 @@ const Varient5 = ({ item, single }: VarientProps) => {
                       <Image
                         src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${item.image_mid}`}
                         className="varient-image"
-                        alt={
-                          item.title.length > 40
-                            ? `${item.title.slice(0, 40)}...`
-                            : item.title
-                        }
+                        alt={item.title}
                         fill
                         priority
                         sizes="(max-width: 480px) 100vw, (max-width: 768px) 75vw, (max-width: 1200px) 40vw, 25vw"
@@ -43,7 +39,7 @@ const Varient5 = ({ item, single }: VarientProps) => {
                   </div>
                   <div className="col-md-6">
                     <div className="content mt-4">
-                      <h6 className="card-heading">{item.title}</h6>
+                      <p className="card-heading">{item.title}</p>
 
                       <p className="card-text small">
                         {formatDate(item.created_at)}

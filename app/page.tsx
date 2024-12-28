@@ -1,4 +1,3 @@
-import MagazineAd from "@/components/MagazineAd/MagazineAd";
 import MainComponent from "@/components/HomeCategories/MainComponent";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import BreakingNews from "@/components/BreakingNews/BreakingNews";
@@ -54,8 +53,9 @@ const Home = async () => {
             </div>
             <LinkedinPage />
           </div>
+          <hr/>
+          <Services />
         </div>
-        <Services/>
         <Footer />
         <GreenBar />
       </div>

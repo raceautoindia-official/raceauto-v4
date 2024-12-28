@@ -1,0 +1,12 @@
+.header-ad {
+    transition: opacity 1s ease, height 1s ease;
+    opacity: 1;
+    height: auto;
+  }
+  
+  .header-ad-hide {
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+  }
+  

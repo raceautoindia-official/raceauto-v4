@@ -38,8 +38,10 @@ const MagazineAd_2 = () => {
 
   return (
     <>
-      <h3 className="my-3">Race Auto India Magazine</h3>
-      <p>
+      <h2 className="my-4 mt-5" style={{ fontWeight: 700 }}>
+        Race Auto India Magazine
+      </h2>
+      <p className="mb-5">
         Explore the forefront of the automotive industry with our latest
         edition. Featuring in-depth vehicle reviews, the latest trends, and
         expert insights, we bring you everything you need to stay connected and
@@ -48,14 +50,12 @@ const MagazineAd_2 = () => {
       <Swiper
         slidesPerView={4}
         spaceBetween={30}
-
         loop={true}
         autoplay={{
           delay: 2500,
           disableOnInteraction: false,
         }}
-        navigation={true}
-        modules={[Navigation, Autoplay]}
+        modules={[Autoplay]}
         className="mySwiper"
         breakpoints={{
           // When the viewport is >= 0px (mobile devices)

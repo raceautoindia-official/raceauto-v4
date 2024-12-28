@@ -4,6 +4,7 @@ import LatestNews from "./LatestNews";
 import ReactPlayer_Server from "./ReactPlayer";
 import "./sidebar.css";
 import Image from "next/image";
+import LatestNewsSwiper from "./LatestNewsList";
 
 export type LatestNewsType = {
   id: number;
@@ -81,9 +82,7 @@ const Sidebar = async () => {
               className="side-scrollbar side-scrollbar-primary"
               style={{ maxHeight: 300 }}
             >
-              {latestNewsData.map((item) => (
-                <LatestNews item={item} key={item.id} />
-              ))}
+             <LatestNewsSwiper latestNewsData={latestNewsData} />
             </div>
           </div>
         </div>

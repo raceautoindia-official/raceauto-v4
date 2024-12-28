@@ -12,7 +12,9 @@ const page = () => {
     <>
       <BreakingNews />
       <Navbar />
-      <SubscriptionPage />
+      <div className="main_content__position">
+        <SubscriptionPage />
+      </div>
       <Footer />
       <GreenBar />
     </>

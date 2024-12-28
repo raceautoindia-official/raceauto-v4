@@ -13,22 +13,14 @@ const Varient1 = ({ item }: varientproptype) => {
             <Image
               src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${item.image_mid}`}
               className="varient-image"
-              alt={
-                item.title.length > 40
-                  ? `${item.title.slice(0, 40)}...`
-                  : item.title
-              }
+              alt={item.title}
               fill
               priority
               sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, (max-width: 1200px) 25vw, 15vw"
             />
           </div>
           <div className="card-body">
-            <h6 className="mt-3 card-heading">
-              {item.title.length > 40
-                ? `${item.title.slice(0, 40)}...`
-                : item.title}
-            </h6>
+            <p className="mt-3 card-heading">{item.title}</p>
             <p className="card-text small">{formatDate(item.created_at)}</p>
           </div>
         </Link>

@@ -23,9 +23,12 @@ const Event_2 = async () => {
             </p>
             <p>
               Subscribe to RACE Auto India today and stay ahead of the curve
-              with our exclusive, in-depth coverage.
+              with our exclusive updates, in-depth reviews, and expert analyses
+              on the latest in the automotive world.
             </p>
-            <Link href='/subscription'><button className="btn btn-danger">Subscribe Now</button></Link>
+            <Link href="/subscription">
+              <button className="btn btn-danger">Subscribe Now</button>
+            </Link>
           </div>
           <div className="col-md-auto">
             <ReactPlayer_Server />

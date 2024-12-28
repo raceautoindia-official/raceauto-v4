@@ -6,8 +6,8 @@ const HomeMarket = async () => {
   const [marketList]: any = await db.execute("SELECT * FROM post_market");
 
   return (
-    <div className="row mt-5">
-      <h3>MARKET</h3>
+    <div className="row mt-5 mb-5">
+      <h2 className="mb-4" style={{ fontWeight: 700 }}>Market</h2>
       {marketList
         .map((item: any) => (
           <HomeMarketCard key={item.id} category={item.title_slug} />
