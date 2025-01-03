@@ -337,6 +337,7 @@ export default function AdminPost({ token }) {
         isLoading: false,
         closeOnClick: true,
       });
+      
     } catch (err) {
       // Change the toast to error message
       toast.update(toastId, {
@@ -426,10 +427,12 @@ export default function AdminPost({ token }) {
                 <Form.Control.Feedback type="invalid">
                   Summary is required.
                 </Form.Control.Feedback>
+                <Form.Text className="text-muted">
+                10–30 characters for better clicks.
+                </Form.Text>
               </Form.Group>
               <div className="my-3">
                 <Form.Label className="form-label">Tag</Form.Label>
-
                 <div className="mb-3">
                   {tags.map((tag, index) => (
                     <span key={index} className="badge bg-primary me-2">
@@ -451,6 +454,9 @@ export default function AdminPost({ token }) {
                   onKeyDown={handleKeyDown}
                   placeholder="Add a tag and press Enter"
                 />
+                <Form.Text className="text-muted">
+                Use up to 5 tags for best results
+                </Form.Text>
               </div>
               <Form.Group className="mb-4" controlId="content">
                 <Form.Label className="form-label">Content</Form.Label>
@@ -588,10 +594,15 @@ export default function AdminPost({ token }) {
                   onChange={handleKeywordsChange}
                   required
                 />
+                <Form.Text className="text-muted">
+                Use 5–10 keywords.
+                </Form.Text>
               </Form.Group>
               <Form.Group controlId="image_default" className="">
                 <Form.Label>Select Image</Form.Label>
-
+                <p className="text-muted">
+                Image upload is required; you can select multiple images
+                </p>
                 <div {...getRootProps({ style })}>
                   <p style={{ color: "orange" }}>
                     Note: The image size should not exceed 5 MB.
@@ -610,6 +621,7 @@ export default function AdminPost({ token }) {
                   {files}
                   <ul>{fileRejectionItems}</ul>
                 </aside>
+                
               </Form.Group>
               <Form.Group controlId="formimagedescription" className="mb-3">
                 <Form.Label>Image Description</Form.Label>

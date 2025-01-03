@@ -31,12 +31,11 @@ const FeatureCard_2 = async (props: Proptype) => {
           className={`${styles.banner__hover_v3}`}
           style={{
             position: "relative",
-
             width: "100%",
             aspectRatio: "3/2",
             overflow: "hidden",
-            borderRadius: "0", // Rounded corners
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", // Subtle shadow
+            borderRadius: "0",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
             border: "1px solid #e0e0e0",
           }}
         >
@@ -56,10 +55,11 @@ const FeatureCard_2 = async (props: Proptype) => {
           className="card-body"
           style={{
             backgroundImage:
-              "linear-gradient(to bottom, #ffffff, #e6e6e6, #d9d9d9)",
+              "linear-gradient(to bottom,rgba(120, 117, 117, 0.97),rgba(90, 81, 81, 0.97))",
+              
           }}
         >
-          <h6 className="card-title mt-2">{item.title}</h6>
+          <h6 className="card-title mt-2 text-white" >{item.title}</h6>
         </div>
       </div>
     </Link>

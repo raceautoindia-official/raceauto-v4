@@ -11,7 +11,6 @@ const PageContent = async ({ slug }: { slug: string }) => {
   );
   const data = await res.json();
 
-
   if (slug == "contact") {
     return <Contact_v2 />;
   }
@@ -24,9 +23,14 @@ const PageContent = async ({ slug }: { slug: string }) => {
     return <AboutUs />;
   }
 
-  return <div className="container">
-    <h3 className="my-3">{data[0].title.toUpperCase()}</h3>
-    {parse(String(data[0].page_content))}</div>;
+  return(
+  <>
+    <div className="container mb-4">
+      <h3 className="my-3">{data[0].title.toUpperCase()}</h3>
+      {parse(String(data[0].page_content))}
+    </div>
+    <div className="mb-3"></div>
+  </>)
 };
 
 export default PageContent;

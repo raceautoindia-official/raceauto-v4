@@ -254,7 +254,7 @@
 
 .subscribeButton:hover {
   /* background-color: white; */
-  color: red;
+  color: black;
 }
 
 @media (max-width: 1000px) {

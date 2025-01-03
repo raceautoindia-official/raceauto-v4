@@ -21,7 +21,7 @@ const Varient5 = ({ item, single }: VarientProps) => {
     <>
       {single.map((item) => (
         <div className="col-12" key={item.id}>
-          <div className="card mb-1 border-0 mb-3 card-no-bg">
+          <div className="card mb-1 mb-3 card-no-bg">
             <Link className="link-style" href={`/post/${item.title_slug}`}>
               <div className="card-body">
                 <div className="row">

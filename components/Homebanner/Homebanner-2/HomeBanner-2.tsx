@@ -28,7 +28,7 @@ const HomeBanner_2 = async () => {
     .slice(0, 1);
   const FeatureCardData2 = orderedFeatures
     .map((item) => (
-      <div className="mt-2 col-md-6 col-lg-3" key={item.id}>
+      <div className="col-md-6 col-lg-3" key={item.id}>
         <FeatureCard_2 item={item} key={item.id} />
       </div>
     ))
@@ -36,15 +36,13 @@ const HomeBanner_2 = async () => {
 
   return (
     <>
-      <div className={`row mb-4`}>
-        <div className="col-lg-9 p-0">
+      <div className={`row mb-4 mt-3`}>
+        <div className="col-lg-9">
           <Slider_2 />
         </div>
-        <div className="mt-3 col-lg-3">{FeatureCardData1}</div>
-        <div className="row mt-3">
-          {FeatureCardData2}
-        </div>
+        <div className="col-lg-3">{FeatureCardData1}</div>
       </div>
+      <div className="row mt-3">{FeatureCardData2}</div>
     </>
   );
 };

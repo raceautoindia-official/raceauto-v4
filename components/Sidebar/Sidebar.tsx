@@ -76,7 +76,7 @@ const Sidebar = async () => {
                 fontStyle: "normal",
               }}
             >
-              LATEST NEWS
+              Latest News
             </h6>
             <div
               className="side-scrollbar side-scrollbar-primary"
@@ -89,14 +89,14 @@ const Sidebar = async () => {
         <div className="col-12">
           <h6
             style={{
-              backgroundColor: "#00e0ae",
+              backgroundColor: "#0192ef",
               padding: 5,
               color: "white",
               fontWeight: 600,
               fontStyle: "normal",
             }}
           >
-            RECOMMENDED NEWS
+            Recommended News
           </h6>
           {recommendedNewsData
             .map((item) => <RecommendedPost key={item.id} item={item} />)

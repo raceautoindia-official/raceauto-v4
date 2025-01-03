@@ -8,6 +8,7 @@ export type magazineCardType = {
   title_slug: string;
   keywords: string;
   created_date: any;
+  magazine_views:any;
 };
 
 const Magazine = async () => {

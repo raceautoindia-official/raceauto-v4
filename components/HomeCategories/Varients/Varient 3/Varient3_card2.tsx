@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const SubCardV3 = ({ item }: varientproptype) => {
   return (
-    <div className="mb-1 border-0 mb-3 card card-no-bg">
+    <div className="mb-1 mb-3 card card-no-bg">
       <Link className="link-style" href={`/post/${item.title_slug}`}>
         <div className="card-body">
           <div className="row">

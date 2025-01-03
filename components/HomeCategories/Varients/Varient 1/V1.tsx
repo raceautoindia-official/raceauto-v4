@@ -7,7 +7,7 @@ import { formatDate } from "@/components/Time";
 const Varient1 = ({ item }: varientproptype) => {
   return (
     <div className="mb-3 col-md-4">
-      <div className="card border-0 card-no-bg">
+      <div className="card card-no-bg" style={{height:'100%'}}>
         <Link className="link-style" href={`/post/${item.title_slug}`}>
           <div className="image-container">
             <Image

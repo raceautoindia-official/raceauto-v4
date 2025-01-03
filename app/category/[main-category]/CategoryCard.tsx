@@ -29,7 +29,7 @@ const PostListCard = async ({ item }: { item: CateoryPostType }) => {
 
   return (
     <div className="mb-3 col-md-6">
-      <div className="card border-0 bg-transparent">
+      <div className="card shadow bg-transparent">
         <Link className="link-style" href={`/post/${item.title_slug}`}>
           <div className={styles.postList_image_container}>
             <Image

@@ -33,7 +33,7 @@ const ProfileButton = ({ token }: { token: string }) => {
   };
   return (
     <DropdownButton
-      variant="secondary"
+      variant="primary"
       id="dropdown-basic-button"
       className="me-1"
       title={<FaUser />}

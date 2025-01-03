@@ -8,7 +8,7 @@ const SubcardV2_1 = ({ item }: varientproptype) => {
   return (
     <>
       <div className="col-md-6 mb-3 mx-0 p-0">
-        <div className="card border-0 card-no-bg">
+        <div className="card card-no-bg">
           <Link className="link-style" href={`/post/${item.title_slug}`}>
             <div className="card-body">
               <div className="row p-0">

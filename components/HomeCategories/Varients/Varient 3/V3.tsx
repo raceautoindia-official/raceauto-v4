@@ -18,7 +18,7 @@ const Varient3 = ({ item, Three }: VarientProps) => {
         <div className="row">
           {Three.map((item) => (
             <div className="col-12" key={item.id}>
-              <div className="h-100 card border-0 mb-3 card-no-bg">
+              <div className="h-100 card mb-3 card-no-bg">
                 <Link className="link-style" href={`/post/${item.title_slug}`}>
                   <div className="image-container">
                     <Image

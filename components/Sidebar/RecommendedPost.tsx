@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { RecommendedType } from "./Sidebar";
 import { formatDate } from "../Time";
+import '@/components/Home-Market/home-market.css'
 
 const RecommendedPost = ({ item }: { item: RecommendedType }) => {
   return (
@@ -13,11 +14,7 @@ const RecommendedPost = ({ item }: { item: RecommendedType }) => {
             <div className="row">
               <div className="col-6">
                 <div
-                  style={{
-                    aspectRatio: "16/9",
-                    width: "100%",
-                    position: "relative",
-                  }}
+                 className="image-container"
                 >
                   <Image
                     crossOrigin="anonymous"
@@ -25,6 +22,7 @@ const RecommendedPost = ({ item }: { item: RecommendedType }) => {
                     alt={item.title}
                     fill
                     priority
+                    className="varient-image"
                     sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, (max-width: 1200px) 25vw, 15vw"
                   />
                 </div>

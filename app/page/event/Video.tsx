@@ -8,8 +8,8 @@ const Video = () => {
     <ReactPlayer
       url="https://youtu.be/K11J7kKKeZw"
       controls
-      height="275px"
-      width="400px"
+      height="325px"
+      width="100%"
       playing
       muted
       loop

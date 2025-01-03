@@ -12,9 +12,7 @@ export default function MagazineLayout({
     <>
       <BreakingNews />
       <Navbar />
-      <div className="main_content__position">{children}</div>
-      <Footer />
-      <GreenBar/>
+     {children}
     </>
   );
 }

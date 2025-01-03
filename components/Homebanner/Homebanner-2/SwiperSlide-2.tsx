@@ -58,10 +58,9 @@ export default function SwiperSilde_2({ slides }: { slides: SliderType[] }) {
                 />
               </div>
               <div className="col-lg-4">
-                <div style={{ backgroundImage: 'linear-gradient(to bottom, #ffffff, #e6e6e6, #d9d9d9)' , color:'black', height:'100%'}}>
+                <div style={{ backgroundImage: "linear-gradient(to bottom,rgba(120, 117, 117, 0.97),rgba(90, 81, 81, 0.97))" , color:'white', height:'100%'}}>
                   <h4 className="mb-1 p-3">{item.title}</h4>
                   <h6 className="mb-1 p-3">{item.summary}</h6>
-                  <p className=" p-3">{formatDate(item.created_at)}</p>
                 </div>
               </div>
             </div>

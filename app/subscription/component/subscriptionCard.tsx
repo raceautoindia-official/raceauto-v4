@@ -34,11 +34,11 @@ const SubscriptionCard = ({ data }: { data: SubscriptionType[] }) => {
 
   return (
     <>
-      <div className={`${montserrat.className} row justify-content-center`}>
+      <div className={`row justify-content-center`}>
         <div className="col-md-8 text-center">
-          <h3 className="mt-3 font-weight-medium mb-1">
+          <h2 className="mt-3 font-weight-medium mb-1 text-primary">
             Grow better with right plan
-          </h3>
+          </h2>
           <h6 className="subtitle">We offer 100% satisfaction</h6>
           <div className="switcher-box mt-4 d-flex align-items-center justify-content-center"></div>
           <div className="btn-group">

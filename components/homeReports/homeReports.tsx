@@ -19,12 +19,12 @@ const HomeReports = async () => {
         <div
           style={{ width: "100%", aspectRatio: "16/9", position: "relative" }}
         >
-          <Image
+          <a href="https://raceinnovations.in/" target="_blank"><Image
             src={`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${data[0].image_url}`}
             alt={data[0].title}
             style={{objectFit:'cover'}}
             fill
-          />
+          /></a>
         </div>
       </div>
     </div>

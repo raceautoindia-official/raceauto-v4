@@ -7,6 +7,9 @@ const ExcelUpload = dynamic(() => import("./ExcelUpload"), { ssr: false });
 import { FaClipboardList, FaUser } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
 import { MdEventAvailable } from "react-icons/md";
+import MostViewedPost from "./MostViewedPost";
+import MostViewedMagazine from "./MostViewedMagazine";
+import LineChartAdmin from "./WeeklyReportChart";
 
 export type viewsCardType = {
   id: number;
@@ -64,6 +67,15 @@ const Dashboard = async () => {
       </div>
       <div className="col-12 mt-3">
         <ExcelUpload />
+      </div>
+      <div className="col-12 mt-3">
+        <MostViewedPost />
+      </div>
+      <div className="col-12 mt-3">
+        <MostViewedMagazine />
+      </div>
+      <div className="col-12 mt-3">
+        <LineChartAdmin />
       </div>
     </div>
   );

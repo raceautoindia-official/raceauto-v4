@@ -1,7 +1,11 @@
-'use client';
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import styles from './forex.module.css'; // Import CSS module for styling
+/* eslint-disable react-hooks/exhaustive-deps */
+"use client";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import styles from "./forex.module.css";
 
 const ForexRates = () => {
   const [rates, setRates] = useState([]);
@@ -25,7 +29,7 @@ const ForexRates = () => {
             )
           )
         );
-        const fetchedRates: any = responses.map((response, index) => ({
+        const fetchedRates:any = responses.map((response, index) => ({
           ...response.data,
           name: currencies[index].name,
         }));
@@ -41,27 +45,43 @@ const ForexRates = () => {
   }, []);
 
   if (loading) {
-    return <div className="text-center mt-5">Loading...</div>;
+    return <div className="text-center mt-1">Loading...</div>;
   }
 
   return (
     <div className={`d-flex align-items-center ${styles.tickerContainer}`}>
       <div className={`badge bg-danger ${styles.liveBadge}`}>LIVE</div>
-      <div className={`d-flex ${styles.tickerContent}`}>
-        {rates.map((rate:any, index) => (
-          <div key={index} className={`d-flex align-items-center ${styles.tickerItem}`}>
-            <span className={styles.currencyName}>{rate.name}</span>
-            <span
-              className={`mx-2 ${
-                parseFloat(rate.rate_change) > 0 ? styles.positive : styles.negative
-              }`}
-            >
-              {parseFloat(rate.rate_change) > 0 ? "▲" : "▼"} {rate.rate}
-            </span>
-            {index < rates.length - 1 && <span className={styles.separator}>|</span>}
-          </div>
+      <Swiper
+        direction="vertical"
+        slidesPerView={1}
+        spaceBetween={0}
+        loop={true}
+        autoplay={{
+          delay: 2000,
+          disableOnInteraction: false,
+        }}
+        modules={[Autoplay]}
+        style={{
+          height: 25,
+        }}
+      >
+        {rates.map((rate: any, index) => (
+          <SwiperSlide key={index}>
+            <div>
+              <span className={styles.currencyName}>{rate.name}</span>
+              <span
+                className={`mx-2 ${
+                  parseFloat(rate.rate_change) > 0
+                    ? styles.positive
+                    : styles.negative
+                }`}
+              >
+                {parseFloat(rate.rate_change) > 0 ? "▲" : "▼"} {rate.rate}
+              </span>
+            </div>
+          </SwiperSlide>
         ))}
-      </div>
+      </Swiper>
     </div>
   );
 };

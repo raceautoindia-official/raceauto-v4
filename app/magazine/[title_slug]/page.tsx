@@ -48,11 +48,17 @@ export async function generateMetadata({
 };
 }
 
-const page = () => {
+const page = ({
+  params,
+}: {
+  params: {
+    title_slug: string;
+  };
+}) => {
   return (
     <>
       <div className="magazine-page">
-        <PdfPage />
+        <PdfPage title={params.title_slug}/>
       </div>
     </>
   );

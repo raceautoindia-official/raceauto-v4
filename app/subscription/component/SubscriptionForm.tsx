@@ -81,7 +81,7 @@ const SubscriptionForm = () => {
       {/* Modal for Subscription Form */}
       <Modal size="lg" show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Subscription Form</Modal.Title>
+          <Modal.Title className="text-center">Subscription Form</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit}>

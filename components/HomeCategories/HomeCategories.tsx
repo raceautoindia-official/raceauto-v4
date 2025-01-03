@@ -5,6 +5,7 @@ import Varient2 from "./Varients/Varient 2/V2";
 import Varient5 from "./Varients/Varient 5/Varient5";
 import Varient4 from "./Varients/Varient 4/Varient4";
 import { catgeorypropType } from "@/types/category";
+import Varient6 from "./Varients/Varient 6/V6";
 
 type varient = {
   id: number;
@@ -31,7 +32,7 @@ const HomeCategories = async ({ item }: catgeorypropType) => {
   }
 
   const v3Single = data.slice(0, 1);
-
+  const twoData = data.slice(0, 2);
   const threeData = data.slice(0, 3);
   const v2data = data.slice(0, 6);
   const v3data = data.slice(3, 10);
@@ -39,20 +40,20 @@ const HomeCategories = async ({ item }: catgeorypropType) => {
   return (
     <>
       <div className="d-flex justify-content-between mt-5 align-items-center">
-        <h3 className="">
+        <h2 className="">
           <span
             className="home-component-heading"
             style={{
               borderLeft: `5px solid ${item.color}`,
-              fontWeight: "900",
+              fontWeight: "700",
               fontStyle: "normal",
               padding: 5,
               paddingLeft: 10,
             }}
           >
-            {item.name.toUpperCase()}
+            {item.name}
           </span>
-        </h3>
+        </h2>
       </div>
       <div className="row">
         <div className="col-12">
@@ -60,9 +61,8 @@ const HomeCategories = async ({ item }: catgeorypropType) => {
             {item.block_type == "block-1" &&
               threeData.map((item) => <Varient1 key={item.id} item={item} />)}
             {item.block_type == "block-2" && <Varient2 item={v2data} />}
-            {item.block_type == "block-3" && (
-              <Varient3 item={v3data} Three={threeData} />
-            )}
+
+            {item.block_type == "block-3" && <Varient6 item={v2data} />}
             {item.block_type == "block-4" &&
               data
                 .map((item) => <Varient4 key={item.id} item={item} />)

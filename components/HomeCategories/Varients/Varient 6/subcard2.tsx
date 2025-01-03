@@ -1,14 +1,14 @@
 import Link from "next/link";
-import "../Varient.css";
 import Image from "next/image";
 import { varientproptype } from "@/types/varient";
+import "../Varient 2/Varient2.css";
+import "../Varient.css";
 import { formatDate } from "@/components/Time";
-
 const SubcardV2_1 = ({ item }: varientproptype) => {
   return (
     <>
-      <div className="mb-3 col-md-6">
-        <div className="card card-no-bg">
+      <div className="col-md-4 mb-3 ">
+      <div className="card card-no-bg">
           <Link className="link-style" href={`/post/${item.title_slug}`}>
             <div className="image-container">
               <Image

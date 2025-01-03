@@ -34,7 +34,8 @@ const MainCategoryPage = async (context: {
     <>
       <div className="container mt-3">
         <div className="row my-3">
-          <h3 className="">{titledata[0].name.toUpperCase()}</h3>
+        <h1 className="" style={{ fontWeight: 700 }}>
+        {titledata[0].name.toUpperCase()}</h1>
           <div className="col-12 d-flex justify-content-center">
             <div className="row justify-content-center">
               <div className="col-lg-8 mt-4">
