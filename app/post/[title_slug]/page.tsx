@@ -19,10 +19,11 @@ export async function generateMetadata({
   return {
     title: title,
     description: summary,
+    keywords: keywords,
     openGraph: {
       title: title,
       description: summary,
-      keywords:keywords,
+      keywords: keywords,
       images: [
         {
           url: `${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${image_mid}`,
@@ -44,8 +45,8 @@ export async function generateMetadata({
       canonical: `${process.env.NEXT_PUBLIC_BACKEND_URL}post/${title_slug}`,
     },
     other: {
-      "MetaKeywords": keywords,
-      "MetaDescription": summary,
+      MetaKeywords: keywords,
+      MetaDescription: summary,
     },
   };
 }
@@ -59,7 +60,6 @@ const PostPage = ({
 }) => {
   return (
     <>
-    
       <div className="container">
         <div className={`row`}>
           <Post title={params.title_slug} />

@@ -33,7 +33,6 @@ const LinkedinPage = () => {
             </a>
           </div>
         </div>
-        {window.innerWidth < 600 && <hr />}
         <div className="col-md-8">
           <SubscribeComponent />
         </div>

@@ -1,5 +1,4 @@
 import React from "react";
-import FeatureCard from "../FeatureCard";
 import Slider_2 from "./Slider-2";
 import FeatureCard_2 from "./FeaturedCard-2";
 

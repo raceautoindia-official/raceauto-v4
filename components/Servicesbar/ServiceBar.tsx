@@ -38,9 +38,9 @@ const Services = () => {
             <div className="card h-100 border-0 shadow-sm text-center p-3 card__container">
               <h5 className="card-title mb-3 card__title">
                 {service.title}{" "}
-                <span className="text-muted">{service.icon}</span>
+                <span className="">{service.icon}</span>
               </h5>
-              <p className="card-text text-muted card__text">
+              <p className="card-text  card__text">
                 {service.description}
               </p>
             </div>

@@ -17,8 +17,8 @@ type SliderType = {
   title_slug: string;
   image_big: string;
   slider_order: number;
-  summary:string;
-  created_at:any;
+  summary: string;
+  created_at: any;
 };
 
 export default function SwiperSilde_2({ slides }: { slides: SliderType[] }) {
@@ -50,7 +50,7 @@ export default function SwiperSilde_2({ slides }: { slides: SliderType[] }) {
       {slides.map((item) => (
         <SwiperSlide key={item.id}>
           <Link href={`/post/${item.title_slug}`}>
-            <div className="row g-0">
+            <div className="row g-0" >
               <div className="col-lg-8">
                 <ImageWithPlaceholder
                   src={process.env.NEXT_PUBLIC_S3_BUCKET_URL + item.image_big}
@@ -58,7 +58,14 @@ export default function SwiperSilde_2({ slides }: { slides: SliderType[] }) {
                 />
               </div>
               <div className="col-lg-4">
-                <div style={{ backgroundImage: "linear-gradient(to bottom,rgba(120, 117, 117, 0.97),rgba(90, 81, 81, 0.97))" , color:'white', height:'100%'}}>
+                <div
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(to bottom,rgba(120, 117, 117, 0.97),rgba(90, 81, 81, 0.97))",
+                    color: "white",
+                    height: "100%",
+                  }}
+                >
                   <h4 className="mb-1 p-3">{item.title}</h4>
                   <h6 className="mb-1 p-3">{item.summary}</h6>
                 </div>

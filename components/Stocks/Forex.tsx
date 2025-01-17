@@ -29,7 +29,7 @@ const ForexRates = () => {
             )
           )
         );
-        const fetchedRates:any = responses.map((response, index) => ({
+        const fetchedRates: any = responses.map((response, index) => ({
           ...response.data,
           name: currencies[index].name,
         }));
@@ -49,39 +49,41 @@ const ForexRates = () => {
   }
 
   return (
-    <div className={`d-flex align-items-center ${styles.tickerContainer}`}>
-      <div className={`badge bg-danger ${styles.liveBadge}`}>LIVE</div>
-      <Swiper
-        direction="vertical"
-        slidesPerView={1}
-        spaceBetween={0}
-        loop={true}
-        autoplay={{
-          delay: 2000,
-          disableOnInteraction: false,
-        }}
-        modules={[Autoplay]}
-        style={{
-          height: 25,
-        }}
-      >
-        {rates.map((rate: any, index) => (
-          <SwiperSlide key={index}>
-            <div>
-              <span className={styles.currencyName}>{rate.name}</span>
-              <span
-                className={`mx-2 ${
-                  parseFloat(rate.rate_change) > 0
-                    ? styles.positive
-                    : styles.negative
-                }`}
-              >
-                {parseFloat(rate.rate_change) > 0 ? "▲" : "▼"} {rate.rate}
-              </span>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+    <div style={{ backgroundColor: "white" }}>
+      <div className={`d-inline-flex ${styles.tickerContainer}`}>
+        <div className={`badge bg-danger ${styles.liveBadge}`}>LIVE</div>
+        <Swiper
+          direction="vertical"
+          slidesPerView={1}
+          spaceBetween={0}
+          loop={true}
+          autoplay={{
+            delay: 2000,
+            disableOnInteraction: false,
+          }}
+          modules={[Autoplay]}
+          style={{
+            height: 25,
+          }}
+        >
+          {rates.map((rate: any, index) => (
+            <SwiperSlide key={index}>
+              <div className="text-start">
+                <span className={styles.currencyName}>{rate.name}</span>
+                <span
+                  className={`mx-2 ${
+                    parseFloat(rate.rate_change) > 0
+                      ? styles.positive
+                      : styles.negative
+                  }`}
+                >
+                  {parseFloat(rate.rate_change) > 0 ? "▲" : "▼"} {rate.rate}
+                </span>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
     </div>
   );
 };

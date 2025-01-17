@@ -337,7 +337,7 @@ export default function AdminPost({ token }) {
         isLoading: false,
         closeOnClick: true,
       });
-      
+
     } catch (err) {
       // Change the toast to error message
       toast.update(toastId, {
@@ -384,15 +384,23 @@ export default function AdminPost({ token }) {
                   placeholder="Enter title"
                   name="title"
                   value={title}
-                  onChange={(e)=>setTitle(e.target.value)}
+                  onChange={(e) => setTitle(e.target.value)}
                   className="form-input"
                   required
                 />
                 <Form.Control.Feedback type="invalid">
                   Title is required.
                 </Form.Control.Feedback>
+                {(title.length >= 1 && title.length <= 39) && (
+                  <p className="text-warning mt-2">Add more words for a stronger title.</p>
+                )}
+                {(title.length >= 40 && title.length <= 48) && (
+                  <p className="text-success mt-2">Perfect title length!</p>
+                )}
+                {title.length >= 49 && (
+                  <p className="text-danger mt-2">Keep it shorter for better impact.</p>
+                )}
               </Form.Group>
-
               <Form.Group className="mb-3">
                 <Form.Label>Slug</Form.Label>
                 <Form.Control
@@ -410,6 +418,15 @@ export default function AdminPost({ token }) {
                 <Form.Text className="text-muted">
                   Best practice slug to be in length of 60, no special symbols.
                 </Form.Text>
+                {(slug.length >= 1 && slug.length <= 39) && (
+                  <p className="text-warning mt-2">Add more words for a stronger slug.</p>
+                )}
+                {(slug.length >= 40 && slug.length <= 60) && (
+                  <p className="text-success mt-2">Perfect slug length!</p>
+                )}
+                {slug.length >= 61 && (
+                  <p className="text-danger mt-2">Keep it shorter for better impact.</p>
+                )}
               </Form.Group>
 
               <Form.Group className="mb-4" controlId="summary">
@@ -428,7 +445,7 @@ export default function AdminPost({ token }) {
                   Summary is required.
                 </Form.Control.Feedback>
                 <Form.Text className="text-muted">
-                10–30 characters for better clicks.
+                  10–30 characters for better clicks.
                 </Form.Text>
               </Form.Group>
               <div className="my-3">
@@ -455,7 +472,7 @@ export default function AdminPost({ token }) {
                   placeholder="Add a tag and press Enter"
                 />
                 <Form.Text className="text-muted">
-                Use up to 5 tags for best results
+                  Use up to 5 tags for best results
                 </Form.Text>
               </div>
               <Form.Group className="mb-4" controlId="content">
@@ -595,13 +612,13 @@ export default function AdminPost({ token }) {
                   required
                 />
                 <Form.Text className="text-muted">
-                Use 5–10 keywords.
+                  Use 5–10 keywords.
                 </Form.Text>
               </Form.Group>
               <Form.Group controlId="image_default" className="">
                 <Form.Label>Select Image</Form.Label>
                 <p className="text-muted">
-                Image upload is required; you can select multiple images
+                  Image upload is required; you can select multiple images
                 </p>
                 <div {...getRootProps({ style })}>
                   <p style={{ color: "orange" }}>
@@ -621,7 +638,7 @@ export default function AdminPost({ token }) {
                   {files}
                   <ul>{fileRejectionItems}</ul>
                 </aside>
-                
+
               </Form.Group>
               <Form.Group controlId="formimagedescription" className="mb-3">
                 <Form.Label>Image Description</Form.Label>
