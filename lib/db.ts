@@ -2,17 +2,16 @@ import mysql from "mysql2/promise";
 
 // Create the connection to database
 const db = mysql.createPool({
-  host: "localhost",
+  host: "racedev-db.c1u6o2ewayxy.ap-south-1.rds.amazonaws.com",
   user: "root",
-  database: "race_cloud_v2",
-  password: "Race@2023",
+  database: "race_news",
+  password: "Racedeveloper2024",
   waitForConnections: true,
   connectionLimit: 500,
-  maxIdle: 10, // max idle connections, the default value is the same as `connectionLimit`
-  idleTimeout: 60000, // idle connections timeout, in milliseconds, the default value 60000
+  keepAliveInitialDelay: 0,
   queueLimit: 0,
   enableKeepAlive: true,
-  keepAliveInitialDelay: 0,
+  idleTimeout: 60000,
 });
 
 console.log("Connected to MySQL database");
