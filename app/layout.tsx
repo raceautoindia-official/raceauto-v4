@@ -60,7 +60,7 @@ export async function generateMetadata(): Promise<Metadata> {
       url: "https://raceautoindia.com/",
       images: [
         {
-          url: '/images/favicon.ico' , //`${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${logoUrl}`
+          url:  `${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${logoUrl}`, //
           width: 1200,
           height: 630,
           alt: "Race Auto India - Latest News on Cars, Bikes, and Commercial Vehicles",
@@ -86,7 +86,7 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     icons: [
       {
-        url: `${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${faviconUrl}` || , // Correct property is 'url' instead of 'href'
+        url: '/images/favicon.ico' ,// `${process.env.NEXT_PUBLIC_S3_BUCKET_URL}${faviconUrl}`
         rel: "icon",
         type: "image/x-icon",
       },
